@@ -1,0 +1,24 @@
+{
+    "__comment": {
+        "##module": "some old node version does not support ES6 import yet"
+    },
+    "compilerOptions": {
+        "target": "es6",
+        "noImplicitAny": true,
+        "experimentalDecorators": true,
+        "sourceMap": false,
+        "moduleResolution": "node",
+        "listEmittedFiles": false,
+        "emitDecoratorMetadata": true,
+        "pretty": true,
+        "module": "commonjs",
+        "importHelpers": true
+    },
+    "exclude": [
+        "node_modules"
+    ],
+    "compileOnSave": false,
+    "atom": {
+        "rewriteTsconfig": false
+    }
+}

@@ -1,0 +1,62 @@
+{
+  "name": "typescript-commonutil",
+  "version": "0.1.0",
+  "description": "Common TypeScript code I used in multiple app, with tests.",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --forceExit",
+    "test:coverage": "jest --forceExit --coverage",
+    "test:watch": "jest --forceExit --watch",
+    "tslint": "    tslint -c tslint.json       '**/*.ts?(x)'",
+    "tslint:fix": "tslint -c tslint.json --fix '**/*.ts?(x)'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jokester/typescript-commonutil.git"
+  },
+  "keywords": [
+    "nodejs",
+    "TypeScript",
+    "util"
+  ],
+  "author": "Wang Guan <momocraft@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/jokester/typescript-commonutil/issues"
+  },
+  "engines": {
+    "node": ">= 6.0.0"
+  },
+  "homepage": "https://github.com/jokester/typescript-commonutil#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^20.0.2",
+    "@types/node": "^6.0.0",
+    "jest": "^20.0.4",
+    "tslib": "^1.7.1",
+    "ts-jest": "^20.0.6",
+    "tslint": "^5.4.3",
+    "typescript": "^2.4.0"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testMatch": [
+      "/**/__test__/*.(ts|js|tsx|jsx)",
+      "**/*\\.(spec|test)\\.(ts|js|tsx|jsx)"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx"
+    ],
+    "mapCoverage": true,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "html"
+    ]
+  }
+}
