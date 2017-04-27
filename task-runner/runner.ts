@@ -1,16 +1,16 @@
-import { toPromise } from '../type';
+import { toPromise } from "../type";
 
 export interface Task {
-    dep?: string[],
-    run: Function,
-    thisArg?: any
+    dep?: string[];
+    run: Function;
+    thisArg?: any;
 }
 
 type ConvertedTypeGraph = Map<string, Task>;
 
 export type TaskGraph = Map<string, Task> | { [taskName: string]: Task };
 
-// 
+//
 const targetStack: string[] = [];
 
 /**
@@ -39,11 +39,11 @@ export class TaskRunner {
     }
 
     /**
-     * Run task and throw() 
-     * 
+     * Run task and throw()
+     *
      * @param {string} target
      * @returns {Promise<any>}
-     * 
+     *
      * @memberOf TaskRunner
      */
     runSync(target: string): Promise<any> {

@@ -1,12 +1,12 @@
-import { readStream } from '../util/io';
+import { readStream } from "../util/io";
 
-export { infer } from './infer';
-export { format } from './format';
+export { infer } from "./infer";
+export { format } from "./format";
 
-import { infer } from './infer';
-import { format } from './format';
+import { infer } from "./infer";
+import { format } from "./format";
 
-module Main {
+namespace Main {
 
     export async function main() {
         try {

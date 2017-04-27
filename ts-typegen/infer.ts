@@ -5,15 +5,15 @@ export function infer(value: any): TSType {
     const jsType = typeof value;
     if (value === null || value === undefined) {
         return new TSAny();
-    } else if (jsType === 'number' || value instanceof Number) {
+    } else if (jsType === "number" || value instanceof Number) {
         return new TSNumber();
     } else if (jsType === "string" || value instanceof String) {
         return new TSString();
-    } else if (jsType === 'boolean') {
+    } else if (jsType === "boolean") {
         return new TSBoolean();
     } else if (value instanceof Array) {
         return new TSArray(value);
-    } else if (jsType === 'object') {
+    } else if (jsType === "object") {
         return new TSObject(value);
     } else
         throw new Error(`cannot recognize value: {${value}}`);
@@ -72,7 +72,7 @@ export class TSObject extends TSType {
         recursive = namedArg(recursive, false);
 
         if (recursive)
-            for (var key in this.propTypes) {
+            for (let key in this.propTypes) {
                 if (this.propTypes.hasOwnProperty(key)) {
                     const propType = this.propTypes[key];
                     if (propType instanceof TSObject) {
@@ -84,7 +84,7 @@ export class TSObject extends TSType {
 
     generateCode() {
         let result: string[] = [];
-        result.push('{');
+        result.push("{");
 
         const keys = Object.keys(this.propTypes);
         keys.forEach(childName => {
@@ -94,23 +94,23 @@ export class TSObject extends TSType {
             if (1 > 2) {
                 childTypeTokens = childType.generateCode();
             } else {
-                childTypeTokens = [this.optional ? `${childName}?` : childName, ':']
-                    .concat(childType.generateCode());;
+                childTypeTokens = [this.optional ? `${childName}?` : childName, ":"]
+                    .concat(childType.generateCode());
             }
             if (!(childType instanceof TSObject)) {
-                childTypeTokens.push(';');
+                childTypeTokens.push(";");
             }
             result = result.concat(childTypeTokens);
         });
 
-        result.push('}');
+        result.push("}");
         return result;
     }
 }
 
 /**
  * [a] (currently only homogeneous array is supported)
- * 
+ *
  * FIXME support non-homogeneous array via union types
  */
 class TSArray extends TSType {
@@ -125,7 +125,7 @@ class TSArray extends TSType {
     }
 
     generateCode() {
-        return this.memberType.generateCode().concat(['[]'])
+        return this.memberType.generateCode().concat(["[]"]);
     }
 }
 
@@ -144,20 +144,20 @@ export class TSTypeRef extends TSType {
 }
 
 class TSNumber extends TSTypeRef {
-    constructor() { super('number'); }
+    constructor() { super("number"); }
 }
 
 export class TSString extends TSTypeRef {
-    constructor() { super('string'); }
+    constructor() { super("string"); }
 }
 
 class TSBoolean extends TSTypeRef {
-    constructor() { super('boolean'); }
+    constructor() { super("boolean"); }
 }
 
 /**
  * what else can void do? only be return value?
  */
 class TSVoid extends TSTypeRef {
-    constructor(a: void) { super('void'); }
+    constructor(a: void) { super("void"); }
 }

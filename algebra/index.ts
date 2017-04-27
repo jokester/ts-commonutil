@@ -1,6 +1,6 @@
 /**
  * Fast computation for (a ⊗ k), when (a ⊕ b) forms a monoid
- * 
+ *
  * @ref https://jokester.io/post/2017-03/monoid-fast-exp/
  */
 export function fastMul<T>(id: T, mplus: (op1: T, op2: T) => T, a: T, k: number): T {
@@ -8,7 +8,7 @@ export function fastMul<T>(id: T, mplus: (op1: T, op2: T) => T, a: T, k: number)
         || k < 0
         || isNaN(k)
         || Math.floor(k) !== k)
-        throw new Error('exp must be positive integer');
+        throw new Error("exp must be positive integer");
 
     let ans = id;
 

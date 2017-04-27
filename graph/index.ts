@@ -1,7 +1,7 @@
 /**
  * ts-util / graph
  * @author Wang Guan <momocraft@gmail.com>
- * 
+ *
  * TODO freeze API / test
  */
 
@@ -9,12 +9,12 @@ interface Vertice {
     /**
      * id: a string. must be uniq in the whole graph
      */
-    id: string
+    id: string;
 }
 
 interface DirectedEdge {
-    from: string
-    to: string
+    from: string;
+    to: string;
 }
 
 class DirectedGraph<V extends Vertice, E extends DirectedEdge> {
@@ -24,7 +24,7 @@ class DirectedGraph<V extends Vertice, E extends DirectedEdge> {
 
     addVertice(v: V) {
         if (this.containsV(v)) {
-            throw new RangeError(`Vertex of id=${v.id} already existed.`)
+            throw new RangeError(`Vertex of id=${v.id} already existed.`);
         }
         this.vertices.set(v.id, v);
     }
@@ -39,11 +39,11 @@ class DirectedGraph<V extends Vertice, E extends DirectedEdge> {
     }
 
     containsV(vertice: V) {
-        return vertice.id in this.vertices
+        return vertice.id in this.vertices;
     }
 
     edgesFrom(vertice: V) {
-        return this.edges.filter(e => e.from === vertice.id)
+        return this.edges.filter(e => e.from === vertice.id);
     }
 
     edgesTo(vertice: V) {
