@@ -1,5 +1,5 @@
 {
-    "name": "typescript-commonutil",
+    "name": "ts-commonutil",
     "version": "0.1.0",
     "description": "Common TypeScript code I used in multiple app.",
     "scripts": {
@@ -12,7 +12,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/jokester/typescript-commonutil.git"
+        "url": "git+https://github.com/jokester/ts-commonutil.git"
     },
     "keywords": [
         "nodejs",
@@ -23,12 +23,12 @@
     "license": "MIT",
     "private": true,
     "bugs": {
-        "url": "https://github.com/jokester/typescript-commonutil/issues"
+        "url": "https://github.com/jokester/ts-commonutil/issues"
     },
     "engines": {
         "node": ">= 6.0.0"
     },
-    "homepage": "https://github.com/jokester/typescript-commonutil#readme",
+    "homepage": "https://github.com/jokester/ts-commonutil#readme",
     "dependencies": {},
     "devDependencies": {
         "@types/jest": "^20.0.2",
