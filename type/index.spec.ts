@@ -17,6 +17,6 @@ describe("promisify", () => {
         const result5 = await toPromise(foo5, "a", "b", "c", 5, false);
         expect(result5).toEqual("a5falseb5falsec");
 
-    })
+    });
 
 });

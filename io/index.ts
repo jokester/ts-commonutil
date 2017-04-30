@@ -20,3 +20,5 @@ export function readStream(stream: NodeJS.ReadableStream): Promise<Buffer> {
         });
     });
 }
+
+export { FS, FSType } from "./fs";
