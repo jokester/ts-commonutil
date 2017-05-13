@@ -11,8 +11,11 @@ export interface LoggerType {
  *
  * @param verbosity
  */
-export function createLogger(verbosity: 3 | 2 | 1 | 0): LoggerType {
+export function createLogger(verbosity: 3 | 2 | 1 | 0) {
     return {
+        setVerbosity(v: 3 | 2 | 1 | 0) {
+            verbosity = v;
+        },
         // lvl3
         debug(...param: any[]) {
             if (verbosity >= 3) {

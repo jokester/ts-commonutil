@@ -56,6 +56,7 @@ namespace FSImpl {
     export const rmdir = Promisify.toPromise1v(fs.rmdir);
     // NOTE 'rename' (and POSIX 'rename' syscall) is limited to same filesystem.
     export const rename = Promisify.toPromise2v(fs.rename);
+    export const writeFile = Promisify.toPromise2v(fs.writeFile);
 
     /**
      *
@@ -107,6 +108,7 @@ export interface FSType {
     mkdtemp(prefix: string): Promise<string>;
     rmdir(path: string | Buffer): Promise<void>;
     rename(oldPath: string, newPath: string): Promise<void>;
+    writeFile(filename: string, data: any): Promise<void>;
     readDirDetail(path: string): Promise<DirItem[]>;
 }
 

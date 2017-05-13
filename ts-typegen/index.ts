@@ -1,4 +1,4 @@
-import { readStream } from "../util/io";
+import { readStream } from "../io";
 
 export { infer } from "./infer";
 export { format } from "./format";
