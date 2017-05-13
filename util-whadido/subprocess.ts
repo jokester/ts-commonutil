@@ -1,5 +1,5 @@
 import { spawn, exec, execFile, SpawnOptions, ChildProcess } from "child_process";
-import { chunkToLines } from "../util";
+import { chunkToLines } from "../io/text";
 
 /**
  * Captured output of subprocess
