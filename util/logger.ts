@@ -19,7 +19,7 @@ export function createLogger(verbosity: 3 | 2 | 1 | 0) {
         // lvl3
         debug(...param: any[]) {
             if (verbosity >= 3) {
-                console.debug.call(console, "DEBUG", ...param);
+                (console.debug || console.info).call(console, "DEBUG", ...param);
             }
         },
         // lvl2
@@ -37,7 +37,7 @@ export function createLogger(verbosity: 3 | 2 | 1 | 0) {
         // lvl0
         error(...param: any[]) {
             if (verbosity >= 0) {
-                console.info.call(console, "ERROR", ...param);
+                console.error.call(console, "ERROR", ...param);
             }
         },
         // always
