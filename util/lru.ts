@@ -15,7 +15,7 @@
  *
  * WARNING there may be marginal case when the key
  * conflicts with JS's builtin property names.
- * (uuid / sha / md5 should be always safe to use)
+ * (uuid / sha / md5 should always be safe)
  *
  * @export
  * @class SingleThreadedLRU
@@ -37,8 +37,8 @@ export class SingleThreadedLRU<T> {
     private readonly recentKeyCount: { [key: string]: number } = {};
 
     constructor(readonly capacity: number) {
-        if (~~capacity !== capacity)
-            throw new Error(`capacity must be a integer`);
+        if (capacity !== (capacity >>> 0))
+            throw new Error(`capacity must be a positive integer`);
         else if (capacity > (1 << 20) || capacity < 1) {
             throw new Error(`capacity too large: ${capacity}`);
         }

@@ -1,7 +1,8 @@
 /**
- * Known problems:
+ * Type calcuation: usable in TS 2.1 and up
  *
- * Builtin types, like Function and RegExp, may be incorrectly mapped.
+ * Known problems of Mapped Type:
+ * Builtin types, including Function and RegExp, may be incorrectly mapped.
  *
  */
 export type DeepReadonly<T> = {

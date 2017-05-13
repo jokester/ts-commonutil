@@ -27,11 +27,11 @@ interface ToPromiseOverload {
 export namespace Callback2Promise {
 
     interface CallbackFun1<A1, R> {
-        (arg1: A1, callback: (err: Error, result: R) => void): void;
+        (arg1: A1, callback: (err: Error, result?: R) => void): void;
     }
 
     interface CallbackFun2<A1, A2, R> {
-        (arg1: A1, arg2: A2, callback: (err: Error, result: R) => void): void;
+        (arg1: A1, arg2: A2, callback: (err: Error, result?: R) => void): void;
     }
 
     export function toPromise1<A1, R>(fun: CallbackFun1<A1, R>) {
