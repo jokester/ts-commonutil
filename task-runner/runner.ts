@@ -1,4 +1,4 @@
-import { toPromise } from "../type";
+import { liftPromise, toPromise1 } from "../type";
 
 export interface Task {
     dep?: string[];
@@ -17,9 +17,9 @@ const targetStack: string[] = [];
  * Tasks cannot be recursively depended like A <- B <- A
  * A task is guaranteed to run at most once.
  */
-export class TaskRunner {
+export class TaskRunner<T> {
 
-    private readonly results = new Map<string, Promise<any>>();
+    private readonly results = new Map<string, Promise<T>>();
     private readonly taskDef: ConvertedTypeGraph;
 
     constructor(taskDef: TaskGraph) {
@@ -34,8 +34,8 @@ export class TaskRunner {
             throw new Error(`expect taskDef to be Map or Object`);
     }
 
-    run(target: string): Promise<any> {
-        return toPromise(this.runSync.bind(this), target);
+    run(target: string): Promise<T> {
+        return Promise.resolve(this.runSync(target));
     }
 
     /**
@@ -46,7 +46,7 @@ export class TaskRunner {
      *
      * @memberOf TaskRunner
      */
-    runSync(target: string): Promise<any> {
+    runSync(target: string): Promise<T> {
         // Array#indexOf() may be bad in performance
         // but we can have a better `stack` for error message
         if (targetStack.indexOf(target) !== -1) {

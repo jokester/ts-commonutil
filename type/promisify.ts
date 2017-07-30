@@ -1,40 +1,24 @@
-
-interface ToPromiseOverload {
-    <R>(fun: () => R): Promise<R>;
-
-    <A1, R>(fun: (a1: A1) => R,
-        a1: A1): Promise<R>;
-
-    <A1, A2, R>(fun: (a1: A1, a2: A2) => R,
-        a1: A1, a2: A2): Promise<R>;
-
-    <A1, A2, A3, R>(fun: (a1: A1, a2: A2, a3: A3) => R,
-        a1: A1, a2: A2, a3: A3): Promise<R>;
-
-    <A1, A2, A3, A4, R>(fun: (a1: A1, a2: A2, a3: A3, a4: A4) => R,
-        a1: A1, a2: A2, a3: A3, a4: A4): Promise<R>;
-
-    <A1, A2, A3, A4, A5, R>(fun: (a1: A1, a2: A2, a3: A3, a4: A4, a5: A5) => R,
-        a1: A1, a2: A2, a3: A3, a4: A4, a5: A5): Promise<R>;
-}
-
 /**
- * Methods that convert (err, result)=>void callback to promise
+ * Transform (err, result)=>void callback to promise
  *
- * NOTE not working well with overloaded functions
- * NOTE not working well with parameter names
+ * NOTE: not working well with overloaded functions
+ * NOTE: not working well with parameter names
  */
-export namespace Callback2Promise {
+namespace Callback2Promise {
 
-    interface CallbackFun1<A1, R> {
+    export interface CallbackFun1<A1, R> {
         (arg1: A1, callback: (err: Error, result?: R) => void): void;
+    }
+
+    export interface PromiseFun1<A1, R> {
+        (arg1: A1): Promise<R>;
     }
 
     interface CallbackFun2<A1, A2, R> {
         (arg1: A1, arg2: A2, callback: (err: Error, result?: R) => void): void;
     }
 
-    export function toPromise1<A1, R>(fun: CallbackFun1<A1, R>) {
+    export function toPromise1<A1, R = void>(fun: CallbackFun1<A1, R>) {
         return (arg1: A1) => new Promise<R>((resolve, reject) => {
             fun(arg1, (err, result) => {
                 if (err)
@@ -45,14 +29,7 @@ export namespace Callback2Promise {
         });
     }
 
-    /**
-     * partial specialization of toPromise1 where R is void
-     */
-    export function toPromise1v<A1>(fun: CallbackFun1<A1, void>) {
-        return toPromise1(fun);
-    }
-
-    export function toPromise2<A1, A2, R>(fun: CallbackFun2<A1, A2, R>) {
+    export function toPromise2<A1, A2, R = void>(fun: CallbackFun2<A1, A2, R>) {
         return (arg1: A1, arg2: A2) => new Promise<R>((resolve, reject) => {
             fun(arg1, arg2, (err, result) => {
                 if (err)
@@ -63,30 +40,38 @@ export namespace Callback2Promise {
         });
     }
 
-    /**
-     * partial specialization of toPromise2 where R is void
-     */
-    export function toPromise2v<A1, A2>(fun: CallbackFun2<A1, A2, void>) {
-        return toPromise2<A1, A2, void>(fun);
-    }
+    export const toPromise0 = toPromise1 as <T>(fun: CallbackFun1<void, void>) => PromiseFun1<void, void>;
 }
 
-/**
- * converts (foo(args) -> R) to Promise<R>
- *
- * @deprecated
- */
-export const toPromise: ToPromiseOverload = function (fun: Function, /* args */) {
-    const argArray = [].slice.call(arguments, 1);
-    return new Promise((fulfill, reject) => {
-        try {
-            const result = fun.apply(null, argArray);
-            fulfill(result);
-        } catch (e) {
-            reject(e);
-        }
-    });
-};
+export const toPromise0 = Callback2Promise.toPromise0;
+export const toPromise1 = Callback2Promise.toPromise1;
+export const toPromise2 = Callback2Promise.toPromise2;
+
+namespace WIP {
+
+    interface Callback<R> {
+        (err: Error, result: R): void;
+    }
+
+    interface CallbackAPI<R, A1 = void, A2 = void> {
+        (arg1: A1, arg2: A2, callback: Callback<R>): void;
+    }
+
+    interface PromiseTransformer<R, A1= void, A2 = void> {
+        (origApi: CallbackAPI<R, A1, A2>)
+    }
+
+    export function toPromise<R, A1 = void, A2 = void>(origApi: CallbackAPI<R, A1, A2>) {
+        return function (a1: A1, a2: A2) {
+            return new Promise<R>((fulfill, reject) => {
+                origApi(a1, a2, (err, result) => {
+                    if (err) reject(err);
+                    else fulfill(result);
+                });
+            });
+        };
+    }
+}
 
 type MaybePromise<T> = T | Promise<T>;
 

@@ -1,9 +1,5 @@
-import { fastMul } from "./";
+import { fastMul, Monoid } from "./monoid";
 
-interface Monoid<T> {
-    readonly id: T;
-    readonly mplus: (a1: T, a2: T) => T;
-}
 
 describe("fastMul", () => {
     it("add on integer forms a monoid", () => {

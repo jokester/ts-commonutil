@@ -3,7 +3,7 @@
  */
 export { DeepReadonly, freeze, deepFreeze } from "./freeze";
 
-export { toPromise, liftPromise } from "./promisify";
+export { toPromise1, liftPromise } from "./promisify";
 
 /**
  * lift2 f to Promise

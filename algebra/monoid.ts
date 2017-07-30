@@ -1,7 +1,13 @@
+export interface Monoid<T> {
+    // left & right identity
+    readonly id: T;
+    readonly mplus: (a1: T, a2: T) => T;
+}
+
 /**
  * Fast computation for (a ⊗ k), when (a ⊕ b) forms a monoid
  *
- * @ref https://jokester.io/post/2017-03/monoid-fast-exp/
+ * @see https://jokester.io/post/2017-03/monoid-fast-exp/
  */
 export function fastMul<T>(id: T, mplus: (op1: T, op2: T) => T, a: T, k: number): T {
     if (typeof k !== "number"

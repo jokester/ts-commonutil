@@ -1,6 +1,10 @@
 import * as fs from "fs";
 import * as path from "path";
-import { Callback2Promise as Promisify } from "../type/promisify";
+import {
+    toPromise1,
+    toPromise2
+} from "../type/promisify";
+import { chunkToLines } from "./text";
 
 /**
  * FS: node's builtin as module
@@ -44,23 +48,30 @@ namespace FSImpl {
         }
     }
 
-    export const readDir = Promisify.toPromise1(fs.readdir);
-    export const readFile = Promisify.toPromise1(fs.readFile);
-    export const readText = Promisify
-        .toPromise2<string, { encoding: string; flag?: string; }, string>(fs.readFile);
+    export const readDir = toPromise1(fs.readdir);
+    export const readFile = toPromise1(fs.readFile);
+    export const readText = toPromise2<string, { encoding: string; flag?: string; }, string>(fs.readFile);
 
-    export const lstat = Promisify.toPromise1(fs.lstat);
-    export const stat = Promisify.toPromise1(fs.stat);
-    export const unlink = Promisify.toPromise1v(fs.unlink);
-    export const mkdtemp = Promisify.toPromise1(fs.mkdtemp);
-    export const rmdir = Promisify.toPromise1v(fs.rmdir);
+    export const lstat = toPromise1(fs.lstat);
+    export const stat = toPromise1(fs.stat);
+    export const unlink = toPromise1(fs.unlink);
+    export const mkdtemp = toPromise1(fs.mkdtemp);
+    export const rmdir = toPromise1(fs.rmdir);
     // NOTE 'rename' (and POSIX 'rename' syscall) is limited to same filesystem.
-    export const rename = Promisify.toPromise2v(fs.rename);
-    export const writeFile = Promisify.toPromise2v(fs.writeFile);
+    export const rename = toPromise2(fs.rename);
+    export const writeFile = toPromise2(fs.writeFile);
 
     /**
+     * read lines from a (UTF-8 text) file
      *
-     *
+     * @param {string} filename
+     * @returns {Promise<string[]>}
+     */
+    export async function readLines(filename: string): Promise<string[]> {
+        return chunkToLines(await readText(filename, { encoding: "utf-8" }));
+    }
+
+    /**
      * @export
      * @param {string} dirName
      * @returns {Promise<DirItem[]>} (name + isDir + size) of entries
@@ -102,6 +113,7 @@ export interface FSType {
     readFile(filename: string): Promise<Buffer>;
     readText(filename: string,
         options: { encoding: string; flag?: string; }): Promise<string>;
+    readLines(filename: string): Promise<string[]>;
     lstat(path: string | Buffer): Promise<fs.Stats>;
     stat(path: string | Buffer): Promise<fs.Stats>;
     unlink(path: string | Buffer): Promise<void>;

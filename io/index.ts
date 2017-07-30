@@ -22,5 +22,7 @@ export function readStream(stream: NodeJS.ReadableStream): Promise<Buffer> {
 }
 
 export { FS, FSType } from "./fs";
+import { FS, FSType } from "./fs";
+export { chunkToLines } from "./text";
 
-export { readLines } from "./text";
+export const readLines = FS.readLines;
