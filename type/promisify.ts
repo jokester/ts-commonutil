@@ -57,10 +57,6 @@ namespace WIP {
         (arg1: A1, arg2: A2, callback: Callback<R>): void;
     }
 
-    interface PromiseTransformer<R, A1= void, A2 = void> {
-        (origApi: CallbackAPI<R, A1, A2>)
-    }
-
     export function toPromise<R, A1 = void, A2 = void>(origApi: CallbackAPI<R, A1, A2>) {
         return function (a1: A1, a2: A2) {
             return new Promise<R>((fulfill, reject) => {

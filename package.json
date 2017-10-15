@@ -1,64 +1,76 @@
 {
-    "name": "ts-commonutil",
-    "version": "0.1.0",
-    "description": "Common TypeScript code I used in multiple app.",
-    "scripts": {
-        "build": "tsc",
-        "test": "jest --forceExit",
-        "test:coverage": "jest --forceExit --coverage",
-        "test:watch": "jest --forceExit --watch",
-        "tslint": "    tslint -c tslint.json       '**/*.ts?(x)'",
-        "tslint:fix": "tslint -c tslint.json --fix '**/*.ts?(x)'"
+  "name": "ts-commonutil",
+  "version": "0.1.0",
+  "description": "Common TypeScript code Common TypeScript code for my multiple projects",
+  "scripts": {
+    "build": "      rm -rf lib/* && tsc",
+    "build:watch": "rm -rf lib/* && tsc --watch",
+    "test": "         npm run build && jest --forceExit",
+    "test:coverage": "npm run build && jest --forceExit --coverage",
+    "test:codecov-upload": "codecov -f coverage/*.json",
+    "test:watch": "   npm run build && jest --forceExit --watch",
+    "tslint": "    tslint -c tslint.json       'lib-ts/**/*.ts?(x)'",
+    "tslint:fix": "tslint -c tslint.json --fix 'lib-ts/**/*.ts?(x)'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jokester/ts-commonutil.git"
+  },
+  "keywords": [
+    "nodejs",
+    "TypeScript",
+    "util"
+  ],
+  "author": "Wang Guan <momocraft@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "bugs": {
+    "url": "https://github.com/jokester/ts-commonutil/issues"
+  },
+  "engines": {
+    "node": ">= 6.0.0"
+  },
+  "homepage": "https://github.com/jokester/ts-commonutil#readme",
+  "dependencies": {
+    "tslib": "^1.7.1"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.0.4",
+    "@types/jest": "^21.1.2",
+    "@types/node": "^8.0.27",
+    "chai": "^4.1.2",
+    "codecov": "^2.3.1",
+    "jest": "^21.0.1",
+    "ts-jest": "^21.0.0",
+    "ts-loader": "^2.3.6",
+    "ts-node": "^3.3.0",
+    "tslint": "^5.7.0",
+    "typescript": "^2.5.2"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/jokester/ts-commonutil.git"
-    },
-    "keywords": [
-        "nodejs",
-        "TypeScript",
-        "util"
+    "testMatch": [
+      "/**/__test__/*.(ts|js|tsx|jsx)",
+      "/**/*\\.(spec|test)\\.(ts|js|tsx|jsx)"
     ],
-    "author": "Wang Guan <momocraft@gmail.com>",
-    "license": "MIT",
-    "private": true,
-    "bugs": {
-        "url": "https://github.com/jokester/ts-commonutil/issues"
-    },
-    "engines": {
-        "node": ">= 6.0.0"
-    },
-    "homepage": "https://github.com/jokester/ts-commonutil#readme",
-    "dependencies": {
-    },
-    "devDependencies": {
-        "@types/jest": "^20.0.2",
-        "@types/node": "^6.0.0",
-        "chai": "^4.1.2",
-        "jest": "^20.0.4",
-        "ts-jest": "^20.0.6",
-        "tslib": "^1.7.1",
-        "tslint": "^5.4.3",
-        "typescript": "^2.4.0"
-    },
-    "jest": {
-        "transform": {
-            ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-        },
-        "testMatch": [
-            "/**/__test__/*.(ts|js|tsx|jsx)",
-            "/**/*\\.(spec|test)\\.(ts|js|tsx|jsx)"
-        ],
-        "moduleFileExtensions": [
-            "js",
-            "ts"
-        ],
-        "mapCoverage": true,
-        "coverageReporters": [
-            "json",
-            "lcov",
-            "text",
-            "html"
-        ]
-    }
+    "collectCoverageFrom": [
+      "lib/**/*.(js|ts)",
+      "lib-ts/**/*.(js|ts)"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "mapCoverage": true,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "html"
+    ]
+  }
 }
