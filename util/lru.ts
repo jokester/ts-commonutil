@@ -9,7 +9,7 @@
 /**
  * LRU cache for string-indexed, non-falsy values
  *
- * NOTE all methods are "thread-safe",
+ * NOTE all methods are synchronoized,
  * i.e. they do no use timeout/promise/async,await,
  *      and will not run before/after function calls.
  *

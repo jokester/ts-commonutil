@@ -56,8 +56,9 @@
       "/**/*\\.(spec|test)\\.(ts|js|tsx|jsx)"
     ],
     "collectCoverageFrom": [
-      "lib/**/*.(js|ts)",
-      "lib-ts/**/*.(js|ts)"
+      "**/*.(ts)",
+      "!**/node_modules",
+      "!/coverage"
     ],
     "moduleFileExtensions": [
       "ts",
