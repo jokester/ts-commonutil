@@ -9,7 +9,7 @@ export namespace StringUtil {
     export function randomString(palette: string, length: number) {
         const chars = new Array(length);
 
-        for (let i = 0; i < 4; i++)
+        for (let i = 0; i < length; i++)
             chars[i] = palette.charAt(Math.floor(Math.random() * palette.length));
 
         return chars.join("");
