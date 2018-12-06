@@ -10,10 +10,8 @@ Common TypeScript code I used in multiple app.
 ## How to Use
 
 1. Add this repository as a git submodule
-1. `exclude` this submodule `exclude` in `tsconfig.json`
-    - example: `"exclude": [ "node_modules", "lib-ts/common" ]`
-    - This prevent unused dependencies from causing compile error
-1. `import` required modules from your code
+2. Copy or symlink required files to anywhere appropriate
+    - if the submodule causes compile error, try set `"exclude": [ "node_modules", "lib-ts/common" ]` in `tsconfig.json`
 
 ## Content
 
@@ -26,8 +24,6 @@ Common TypeScript code I used in multiple app.
 
 - Directed graph
 
-###
-
 ### IO
 
 (node.js only) Promised version of file IO functions.
@@ -35,6 +31,7 @@ Common TypeScript code I used in multiple app.
 ### Concurrency Control
 
 - Mutex
+- Resource Pool
 
 ### Type
 
