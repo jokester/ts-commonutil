@@ -1,7 +1,7 @@
 export interface Monoid<T> {
   // left & right identity
   readonly id: T;
-  readonly mplus: (a1: T, a2: T) => T;
+  readonly mPlus: (a1: T, a2: T) => T;
 }
 
 /**
@@ -9,21 +9,24 @@ export interface Monoid<T> {
  *
  * @see https://jokester.io/post/2017-03/monoid-fast-exp/
  */
-export function fastMul<T>(id: T, mplus: (op1: T, op2: T) => T, a: T, k: number): T {
-  if ((k >>> 0) !== k || !(k > 0)) {
+export function fastMul<T>(monoid: Monoid<T>, a: T, pow: number): T {
+  if ((pow >>> 0) !== pow || !(pow > 0)) {
     throw new Error("exp must be positive integer");
   }
 
-  let ans = id;
-  let r = k;
+  const { id, mPlus } = monoid;
 
-  while (r > 0) {
-    if (r % 2 === 1) {
-      ans = mplus(ans, a);
-      r--;
+  let ans = id;
+  let f = a;
+  let p = pow;
+
+  while (p > 0) {
+    if (p % 2) {
+      ans = mPlus(ans, f);
+      p--;
     } else {
-      ans = mplus(a, a);
-      r /= 2;
+      f = mPlus(f, f);
+      p /= 2;
     }
   }
 

@@ -11,16 +11,16 @@ describe("SingleThreadedLRU", () => {
 
   function toInspectable<T>(s: SingleThreadedLRU<T>) {
     return s as any as {
-      values: { [key: string]: T }
-      recentKeys: string[]
-      recentKeyCount: { [key: string]: number }
+      values: Map<string, T>;
+      recentKeys: string[];
+      recentKeyCount: Map<string, number>;
     };
   }
 
   function countKeys(keys: string[]) {
-    const v: { [key: string]: number } = {};
+    const v = new Map<string, number>();
     for (const k of keys) {
-      v[k] = 1 + (v[k] || 0);
+      v.set(k, 1 + (v.get(k) || 0));
     }
     return v;
   }
@@ -41,47 +41,47 @@ describe("SingleThreadedLRU", () => {
     // lru with exposed private properties
     const lru$ = toInspectable(lru);
     expect(lru$.recentKeys).toEqual([]);
-    expect(lru$.recentKeyCount).toEqual({});
+    expect(lru$.recentKeyCount).toEqual(new Map);
 
     // initial status
     expect(lru$.recentKeys).toEqual([]);
-    expect(lru$.recentKeyCount).toEqual({});
+    expect(lru$.recentKeyCount).toEqual(new Map);
 
     // #1: get() or contain() on a non-existent key: should not cause squeeze
     expect(lru.contain("k1")).toEqual(false);
     expect(lru$.recentKeys).toEqual([]);
-    expect(lru$.recentKeyCount).toEqual({});
+    expect(lru$.recentKeyCount).toEqual(new Map());
     expect(lru.get(k2)).toEqual(null);
     expect(lru$.recentKeys).toEqual([]);
-    expect(lru$.recentKeyCount).toEqual({});
+    expect(lru$.recentKeyCount).toEqual(new Map);
 
     // #2: put new key
     lru.put(k1, "put#2");
-    expect(lru$.values).toEqual({ k1: "put#2" });
+    expect(lru$.values).toEqual(new Map([[k1, "put#2"]]));
     expect(lru$.recentKeys).toEqual([k1]);
-    expect(lru$.recentKeyCount).toEqual({ k1: 1 });
+    expect(lru$.recentKeyCount).toEqual(new Map([[k1, 1]]));
 
     // #3: put existing key, not causing squeeze
     lru.put(k1, "put#3");
-    expect(lru$.values).toEqual({ k1: "put#3" });
+    expect(lru$.values).toEqual(new Map([[k1, "put#3"]]));
     expect(lru$.recentKeys).toEqual([k1, k1]);
     expect(lru$.recentKeyCount).toEqual(countKeys(lru$.recentKeys));
 
     // #4: put new key & swap out least recent key
     lru.put(k2, "put#4");
-    expect(lru$.values).toEqual({ k2: "put#4" });
+    expect(lru$.values).toEqual(new Map([[k2, "put#4"]]));
     expect(lru$.recentKeys).toEqual([k2]);
     expect(lru$.recentKeyCount).toEqual(countKeys(lru$.recentKeys));
 
     // #5: put existing key, not causing swap out
     lru.put(k2, "put#5");
-    expect(lru$.values).toEqual({ k2: "put#5" });
+    expect(lru$.values).toEqual(new Map([[k2, "put#5"]]));
     expect(lru$.recentKeys).toEqual([k2, k2]);
     expect(lru$.recentKeyCount).toEqual(countKeys(lru$.recentKeys));
 
-    // #6: put existing key & remove nonnecessary key
+    // #6: put existing key & remove necessary key
     lru.put(k2, "put#6");
-    expect(lru$.values).toEqual({ k2: "put#6" });
+    expect(lru$.values).toEqual(new Map([[k2, "put#6"]]));
     expect(lru$.recentKeys).toEqual([k2]);
     expect(lru$.recentKeyCount).toEqual(countKeys(lru$.recentKeys));
   });
