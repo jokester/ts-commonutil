@@ -5,69 +5,69 @@ const isIdentifier = /^\w+$/;
 
 /**
  * @param tokens tokens returned by TSType#
+ * @param indentBase
  */
-export function format(tokens: string[], indentBase?: number): string[] {
-    let currentLine = "";
-    const lines: string[] = [];
-    if (indentBase === undefined) indentBase = 4;
+export function format(tokens: string[], indentBase = 2): string[] {
+  let currentLine = "";
+  const lines: string[] = [];
 
-    let indent = 0;
+  let indent = 0;
 
-    tokens.forEach((t, index) => {
-        const prevT = tokens[index - 1];
-        const nextT = tokens[index + 1];
-        currentLine = currentLine || spaces(indent);
+  tokens.forEach((t, index) => {
+    const prevT = tokens[index - 1];
+    const nextT = tokens[index + 1];
+    currentLine = currentLine || spaces(indent);
 
-        if (t === ":") {
-            currentLine += ": ";
-        } else if (t === "{" && nextT === "}") {
-            currentLine += " {";
-            indent += indentBase;
-        } else if (t === "{") {
-            currentLine += " {";
-            lines.push(currentLine);
-            indent += indentBase;
-            currentLine = null;
-        } else if (t === "}" && prevT === "{") {
-            currentLine += "}";
-            lines.push(currentLine);
-            indent -= indentBase;
-            currentLine = null;
-        } else if (t === "}") {
-            lines.push(currentLine);
-            indent -= indentBase;
-            lines.push(spaces(indent) + "}");
-            currentLine = null;
-        } else if (t === ";") {
-            currentLine += ";";
-            lines.push(currentLine);
-            currentLine = null;
-        } else {
-            currentLine += t;
-            if (isIdentifier.exec(t) && isIdentifier.exec(nextT)) {
-                currentLine += " ";
-            }
-        }
-    });
-
-    if (currentLine) {
-        lines.push(currentLine);
+    if (t === ":") {
+      currentLine += ": ";
+    } else if (t === "{" && nextT === "}") {
+      currentLine += " {";
+      indent += indentBase;
+    } else if (t === "{") {
+      currentLine += " {";
+      lines.push(currentLine);
+      indent += indentBase;
+      currentLine = "";
+    } else if (t === "}" && prevT === "{") {
+      currentLine += "}";
+      lines.push(currentLine);
+      indent -= indentBase;
+      currentLine = "";
+    } else if (t === "}") {
+      lines.push(currentLine);
+      indent -= indentBase;
+      lines.push(`${spaces(indent)}}`);
+      currentLine = "";
+    } else if (t === ";") {
+      currentLine += ";";
+      lines.push(currentLine);
+      currentLine = "";
+    } else {
+      currentLine += t;
+      if (isIdentifier.exec(t) && isIdentifier.exec(nextT)) {
+        currentLine += " ";
+      }
     }
+  });
 
-    return lines.filter(nonBlankLine);
+  if (currentLine) {
+    lines.push(currentLine);
+  }
+
+  return lines.filter(nonBlankLine);
 }
 
 /**
  * @param len num of spaces
  */
 function spaces(len: number) {
-    const spaces = [];
-    for (let index = 0; index < len; index++) {
-        spaces.push(" ");
-    }
-    return spaces.join("");
+  const spaces = [];
+  for (let index = 0; index < len; index++) {
+    spaces.push(" ");
+  }
+  return spaces.join("");
 }
 
 function nonBlankLine(line: string) {
-    return !(/^\s*$/.exec(line));
+  return !(/^\s*$/.exec(line));
 }

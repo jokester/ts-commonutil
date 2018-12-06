@@ -7,10 +7,8 @@
     "type": "git",
     "url": "git+https://github.com/jokester/ts-commonutil.git"
   },
-  "bin": {
-  },
-  "files": [
-  ],
+  "bin": {},
+  "files": [],
   "scripts": {
     "start": "node build/bin/example-bin",
     "start:ts": "ts-node src/bin/example-bin",
@@ -34,8 +32,7 @@
     "node": ">= 6.0.0"
   },
   "homepage": "https://github.com/jokester/ts-commonutil#readme",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/jest": "^23.3.9",
     "@types/node": "^10.12.3",

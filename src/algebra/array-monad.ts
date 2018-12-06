@@ -3,44 +3,45 @@
  */
 export class ArrayM<T> {
 
-    static wrap<T>(a: T[]) {
-        return new ArrayM(a);
-    }
+  static wrap<T>(a: T[]) {
+    return new ArrayM(a);
+  }
 
-    constructor(private readonly array: T[]) { }
+  constructor(private readonly array: T[]) {
+  }
 
-    /**
-     * >>= : taken from List Monad
-     */
-    bind<T2>(action: (v: T, index?: number, wholeArray?: T[]) => T2[]): ArrayM<T2> {
-        let result = [] as T2[];
+  /**
+   * >>= : taken from List Monad
+   */
+  bind<T2>(action: (v: T, index?: number, wholeArray?: T[]) => T2[]): ArrayM<T2> {
+    let result = [] as T2[];
 
-        this.array.forEach((v, i) => {
-            const r = action(v, i, this.array);
-            result = result.concat(r);
-        });
+    this.array.forEach((v, i) => {
+      const r = action(v, i, this.array);
+      result = result.concat(r);
+    });
 
-        return new ArrayM(result);
-    }
+    return new ArrayM(result);
+  }
 
-    /**
-     * map: a instance of Functor fmap
-     */
-    map<T2>(iteratee: (v: T, index?: number, wholeArray?: T[]) => T2): ArrayM<T2> {
-        return new ArrayM(this.array.map(iteratee));
-    }
+  /**
+   * map: a instance of Functor fmap
+   */
+  map<T2>(iteratee: (v: T, index?: number, wholeArray?: T[]) => T2): ArrayM<T2> {
+    return new ArrayM(this.array.map(iteratee));
+  }
 
-    /**
-     * filter: delegates to Array#filter
-     */
-    filter(predicate: (v: T, index?: number) => boolean): ArrayM<T> {
-        return new ArrayM(this.array.filter(predicate));
-    }
+  /**
+   * filter: delegates to Array#filter
+   */
+  filter(predicate: (v: T, index?: number) => boolean): ArrayM<T> {
+    return new ArrayM(this.array.filter(predicate));
+  }
 
-    /**
-     * unwraps ArrayM<T> and returns an array T[]
-     */
-    toArray() {
-        return this.array.slice();
-    }
+  /**
+   * unwraps ArrayM<T> and returns an array T[]
+   */
+  toArray() {
+    return this.array.slice();
+  }
 }

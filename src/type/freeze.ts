@@ -6,7 +6,7 @@
  *
  */
 export type DeepReadonly<T> = {
-    readonly [P in keyof T]: DeepReadonly<T[P]>
+  readonly [P in keyof T]: DeepReadonly<T[P]>
 };
 
 /**
@@ -18,9 +18,9 @@ export type DeepReadonly<T> = {
  * @returns
  */
 export function deepFreeze<T>(arg: T) {
-    return arg as any as DeepReadonly<T>;
+  return arg as any as DeepReadonly<T>;
 }
 
 export function freeze<T>(arg: T) {
-    return arg as Readonly<T>;
+  return arg as Readonly<T>;
 }

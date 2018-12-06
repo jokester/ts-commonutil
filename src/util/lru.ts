@@ -1,7 +1,4 @@
 /**
- * LRU cache
- */
-/**
  * A LRU cache for string-indexed values
  * @author Wang Guan
  */
@@ -22,144 +19,138 @@
  * @template T {type} type of cached values, must be non-falsy
  */
 export class SingleThreadedLRU<T> {
-    // FIXME: can we use map?
-    private readonly values: { [key: string]: T } = {};
+  private readonly values = new Map<string, T>();
 
-    /**
-     * Keys recently used in get() and put()
-     *
-     * Essentially the last elements in a unlimited ordered list of used keys.
-     */
-    private readonly recentKeys: string[] = [];
-    /**
-     * #occurance of key in recentKeys
-     */
-    private readonly recentKeyCount: { [key: string]: number } = {};
+  /**
+   * Keys recently used in get() and put()
+   *
+   * Essentially the last elements in a unlimited ordered list of used keys.
+   */
+  private readonly recentKeys: string[] = [];
+  /**
+   * #occurance of key in recentKeys
+   */
+  private readonly recentKeyCount = new Map<string, number>();
 
-    constructor(readonly capacity: number) {
-        if (capacity !== (capacity >>> 0))
-            throw new Error(`capacity must be a positive integer`);
-        else if (capacity > (1 << 20) || capacity < 1) {
-            throw new Error(`capacity too large: ${capacity}`);
-        }
+  constructor(readonly capacity: number) {
+    if (capacity !== (capacity >>> 0)) {
+      throw new Error(`capacity must be a positive integer`);
+    } else if (capacity > (1 << 20) || capacity < 1) {
+      throw new Error(`capacity too large: ${capacity}`);
     }
+  }
 
-    /**
-     * Query if key exists in cache
-     * (not mutating state in any way)
-     *
-     * @param {string} key
-     * @returns {boolean} it exists
-     *
-     * @memberOf SingleThreadLRU
-     */
-    contain(key: string): boolean {
-        this.assertKey(key);
-        return !!this.values.hasOwnProperty(key);
+  /**
+   * Query if key exists in cache
+   * (not mutating state in any way)
+   *
+   * @param {string} key
+   * @returns {boolean} it exists
+   */
+  contain(key: string): boolean {
+    return this.values.has(key);
+  }
+
+  /**
+   *
+   *
+   * @param {string} key
+   * @param {T} value must not be falsey
+   *
+   * @memberOf SingleThreadedLRU
+   */
+  put(key: string, value: T) {
+    if (!value) {
+      throw new Error(`falsy-value`);
     }
+    this.values.set(key, value);
+    this.refreshKey(key);
+    this.swapOut(this.capacity);
+  }
 
-    /**
-     *
-     *
-     * @param {string} key
-     * @param {T} value must not be falsey
-     *
-     * @memberOf SingleThreadedLRU
-     */
-    put(key: string, value: T) {
-        this.assertKey(key);
-        if (!value)
-            throw new Error(`falsy-value`);
-        this.values[key] = value;
-        this.refreshKey(key);
-        this.swapOut(this.capacity);
+  /**
+   *
+   *
+   * @param {string} key
+   * @returns {T} value if it exists in cache, null otherwise
+   *
+   * @memberOf SingleThreadedLRU
+   */
+  get(key: string): T | null {
+    const value = this.values.get(key);
+    if (value) {
+      this.refreshKey(key);
     }
+    // no need to squeeze(): get() only change order of recent-used keys
+    return value || null;
+  }
 
-    /**
-     *
-     *
-     * @param {string} key
-     * @returns {T} value if it exists in cache, null otherwise
-     *
-     * @memberOf SingleThreadedLRU
-     */
-    get(key: string): T {
-        this.assertKey(key);
-        const value = this.values[key];
-        if (value)
-            this.refreshKey(key);
-        // no need to squeeze(): get() only change order of recent-used keys
-        return value || null;
+  /**
+   * Swap out least recent values
+   *
+   * @param {number} targetSize loop until falls under targetSize
+   *
+   * @memberOf SingleThreadedLRU
+   */
+  swapOut(targetSize: number) {
+    while (Object.keys(this.values).length > targetSize) {
+      const k = this.recentKeys.shift()!;
+
+      const restOccurrence = (this.recentKeyCount.get(k) || 0) - 1;
+
+      if (!k || (restOccurrence < 0)) {
+        throw new Error(`squeeze: illegal state : k=${k} / keys=${JSON.stringify(this.recentKeyCount)}`);
+      } else if (restOccurrence === 0) {
+        /**
+         * k is the last occurrence of same key in this.recentKeys,
+         * so it's safe to remove it from values
+         */
+        this.values.delete(k);
+        this.recentKeyCount.delete(k);
+      }
     }
+  }
 
-    /**
-     * Swap out least recent values
-     *
-     * @param {number} targetSize loop until falls under targetSize
-     *
-     * @memberOf SingleThreadedLRU
-     */
-    swapOut(targetSize: number) {
-        while (Object.keys(this.values).length > targetSize) {
-            const k = this.recentKeys.shift();
-            const restOccurance = this.recentKeyCount[k] = this.recentKeyCount[k] - 1;
+  /**
+   * Current size of values
+   *
+   * @returns {number} recently used
+   *
+   * @memberOf SingleThreadedLRU
+   */
+  currentSize(): number {
+    return Object.keys(this.values).length;
+  }
 
-            if (!k || (restOccurance < 0))
-                throw new Error(`squeeze: illegal state : k=${k} / keys=${JSON.stringify(this.recentKeyCount)}`);
-            else if (restOccurance === 0) {
-                /**
-                 * k is the last occurance of same key in this.recentKeys,
-                 * so it's safe to remove it from values
-                 */
-                delete this.values[k];
-                delete this.recentKeyCount[k];
-            }
-        }
+  /**
+   * Refresh a key when it get used
+   */
+  private refreshKey(key: string) {
+    if (!this.values.get(key)) {
+      throw new Error(`refreshKey: called when key='${key}' is not in this.values`);
     }
+    this.recentKeys.push(key);
+    this.recentKeyCount.set(key, 1 + (this.recentKeyCount.get(key) || 0));
 
-    /**
-     * Current size of values
-     *
-     * @returns {number} recently used
-     *
-     * @memberOf SingleThreadedLRU
-     */
-    currentSize(): number {
-        return Object.keys(this.values).length;
+    // reduce keys when available, to prevent a long squeezeCache()
+    if (this.recentKeys.length > this.capacity * 2) {
+      this.squeezeRecentKeys();
     }
+  }
 
-    private assertKey(key: string) {
-        if (!key || Object.prototype.hasOwnProperty(key))
-            throw new Error(`Illegal key: ${JSON.stringify(key)}`);
+  /**
+   * Remove first ones from recent keys if they have other occurrences
+   */
+  private squeezeRecentKeys() {
+    while (this.recentKeys.length > this.capacity) {
+      const k = this.recentKeys[0];
+      const restOccurrence = this.recentKeyCount.get(k);
+      if (k && restOccurrence) {
+        this.recentKeys.shift();
+        this.recentKeyCount.set(k, (this.recentKeyCount.get(k) || 0) - 1);
+      } else {
+        break; // while
+      }
     }
-
-    /**
-     * Refresh a key when it get used
-     */
-    private refreshKey(key: string) {
-        if (!this.values[key])
-            throw new Error(`refreshKey: called when key='${key}' is not in this.values`);
-        this.recentKeys.push(key);
-        this.recentKeyCount[key] = 1 + (this.recentKeyCount[key] || 0);
-
-        // reduce keys when available, to prevent a long squeezeCache()
-        if (this.recentKeys.length > this.capacity * 2)
-            this.squeezeRecentKeys();
-    }
-
-    /**
-     * Remove first ones from recent keys if they have other occurances
-     */
-    private squeezeRecentKeys() {
-        while (this.recentKeys.length > this.capacity) {
-            const k = this.recentKeys[0];
-            const restOccurance = this.recentKeyCount[k];
-            if (k && restOccurance > 1) {
-                this.recentKeys.shift();
-                --this.recentKeyCount[k];
-            } else {
-                break; // while
-            }
-        }
-    }
+  }
 }

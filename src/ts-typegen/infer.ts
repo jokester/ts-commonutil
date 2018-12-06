@@ -2,21 +2,26 @@
  * Infer TS types for a JSON-serializable value
  */
 export function infer(value: any): TSType {
-    const jsType = typeof value;
-    if (value === null || value === undefined) {
-        return new TSAny();
-    } else if (jsType === "number" || value instanceof Number) {
-        return new TSNumber();
-    } else if (jsType === "string" || value instanceof String) {
-        return new TSString();
-    } else if (jsType === "boolean") {
-        return new TSBoolean();
-    } else if (value instanceof Array) {
-        return new TSArray(value);
-    } else if (jsType === "object") {
-        return new TSObject(value);
-    } else
-        throw new Error(`cannot recognize value: {${value}}`);
+  const jsType = typeof value;
+  if (value === null || value === undefined) {
+    return new TSAny();
+  }
+  if (jsType === "number" || value instanceof Number) {
+    return new TSNumber();
+  }
+  if (jsType === "string" || value instanceof String) {
+    return new TSString();
+  }
+  if (jsType === "boolean") {
+    return new TSBoolean();
+  }
+  if (value instanceof Array) {
+    return new TSArray(value);
+  }
+  if (jsType === "object") {
+    return new TSObject(value);
+  }
+  throw new Error(`cannot recognize value: {${value}}`);
 }
 
 /**
@@ -24,27 +29,27 @@ export function infer(value: any): TSType {
  */
 export abstract class TSType {
 
-    /**
-     * Generate code for this type
-     * @return tokens
-     */
-    abstract generateCode(): string[];
+  /**
+   * Generate code for this type
+   * @return tokens
+   */
+  abstract generateCode(): string[];
 }
 
 /**
  * Can be used when ES6 named parameter is not avaiable (e.g. node v4)
  */
 function namedArg<T>(absent: T, value?: T): T {
-    return (value === undefined) ? absent : value;
+  return (value === undefined) ? absent : value;
 }
 
 /**
  * "any"
  */
 class TSAny extends TSType {
-    generateCode() {
-        return [`any`];
-    }
+  generateCode() {
+    return [`any`];
+  }
 }
 
 type PropDict = { [propName: string]: TSType };
@@ -53,59 +58,59 @@ type PropDict = { [propName: string]: TSType };
  * key (propName: string) -- value (propType: TSType) pairs
  */
 export class TSObject extends TSType {
-    private readonly propTypes = {} as PropDict;
-    private optional = false;
+  private readonly propTypes = {} as PropDict;
+  private optional = false;
 
-    constructor(value: any) {
-        super();
-        const keys = Object.keys(value);
-        keys.forEach(k => {
-            this.propTypes[k] = infer(value[k]);
-        });
+  constructor(value: any) {
+    super();
+    const keys = Object.keys(value);
+    keys.forEach(k => {
+      this.propTypes[k] = infer(value[k]);
+    });
+  }
+
+  /**
+   * set all props to be optional
+   */
+  setOptional(optional: boolean, recursive = false) {
+    this.optional = optional;
+
+    if (recursive) {
+      for (const key in this.propTypes) {
+        if (this.propTypes.hasOwnProperty(key)) {
+          const propType = this.propTypes[key];
+          if (propType instanceof TSObject) {
+            propType.setOptional(optional);
+          }
+        }
+      }
     }
+  }
 
-    /**
-     * set all props to be optional
-     */
-    setOptional(optional: boolean, recursive?: boolean) {
-        this.optional = optional;
-        recursive = namedArg(recursive, false);
+  generateCode() {
+    let result: string[] = [];
+    result.push("{");
 
-        if (recursive)
-            for (let key in this.propTypes) {
-                if (this.propTypes.hasOwnProperty(key)) {
-                    const propType = this.propTypes[key];
-                    if (propType instanceof TSObject) {
-                        propType.setOptional(optional);
-                    }
-                }
-            }
-    }
+    const keys = Object.keys(this.propTypes);
+    keys.forEach(childName => {
+      // TODO different grammer on functions
+      const childType = this.propTypes[childName];
+      let childTypeTokens = null;
+      if (1 > 2) {
+        childTypeTokens = childType.generateCode();
+      } else {
+        childTypeTokens = [this.optional ? `${childName}?` : childName, ":"]
+          .concat(childType.generateCode());
+      }
+      if (!(childType instanceof TSObject)) {
+        childTypeTokens.push(";");
+      }
+      result = result.concat(childTypeTokens);
+    });
 
-    generateCode() {
-        let result: string[] = [];
-        result.push("{");
-
-        const keys = Object.keys(this.propTypes);
-        keys.forEach(childName => {
-            // TODO different grammer on functions
-            const childType = this.propTypes[childName];
-            let childTypeTokens = null;
-            if (1 > 2) {
-                childTypeTokens = childType.generateCode();
-            } else {
-                childTypeTokens = [this.optional ? `${childName}?` : childName, ":"]
-                    .concat(childType.generateCode());
-            }
-            if (!(childType instanceof TSObject)) {
-                childTypeTokens.push(";");
-            }
-            result = result.concat(childTypeTokens);
-        });
-
-        result.push("}");
-        return result;
-    }
+    result.push("}");
+    return result;
+  }
 }
 
 /**
@@ -114,19 +119,20 @@ export class TSObject extends TSType {
  * FIXME support non-homogeneous array via union types
  */
 class TSArray extends TSType {
-    memberType: TSType;
-    constructor(value: any[]) {
-        super();
-        if (value.length === 0) {
-            this.memberType = new TSAny();
-        } else {
-            this.memberType = infer(value[0]);
-        }
-    }
+  memberType: TSType;
 
-    generateCode() {
-        return this.memberType.generateCode().concat(["[]"]);
+  constructor(value: any[]) {
+    super();
+    if (value.length === 0) {
+      this.memberType = new TSAny();
+    } else {
+      this.memberType = infer(value[0]);
     }
+  }
+
+  generateCode() {
+    return this.memberType.generateCode().concat(["[]"]);
+  }
 }
 
 /**
@@ -134,30 +140,38 @@ class TSArray extends TSType {
  * e.g. primitive types, or other types defined by name
  */
 export class TSTypeRef extends TSType {
-    constructor(private name: string) {
-        super();
-    }
+  constructor(private name: string) {
+    super();
+  }
 
-    generateCode() {
-        return [this.name];
-    }
+  generateCode() {
+    return [this.name];
+  }
 }
 
 class TSNumber extends TSTypeRef {
-    constructor() { super("number"); }
+  constructor() {
+    super("number");
+  }
 }
 
 export class TSString extends TSTypeRef {
-    constructor() { super("string"); }
+  constructor() {
+    super("string");
+  }
 }
 
 class TSBoolean extends TSTypeRef {
-    constructor() { super("boolean"); }
+  constructor() {
+    super("boolean");
+  }
 }
 
 /**
  * what else can void do? only be return value?
  */
 class TSVoid extends TSTypeRef {
-    constructor(a: void) { super("void"); }
+  constructor(a: void) {
+    super("void");
+  }
 }

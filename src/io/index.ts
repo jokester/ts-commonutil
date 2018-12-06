@@ -2,27 +2,24 @@
  * Read stream until end
  */
 export function readStream(stream: NodeJS.ReadableStream): Promise<Buffer> {
-    return new Promise<Buffer>((resolve, reject) => {
-        let buffers = [] as Buffer[];
+  return new Promise<Buffer>((resolve, reject) => {
+    const buffers = [] as Buffer[];
 
-        stream.once("end", () => resolve(Buffer.concat(buffers)));
+    stream.once("end", () => resolve(Buffer.concat(buffers)));
 
-        stream.on("error", reject);
+    stream.on("error", reject);
 
-        stream.on("data", (chunk: string | Buffer) => {
-            if (Buffer.isBuffer(chunk))
-                buffers.push(chunk);
-            else if (typeof chunk === "string")
-                buffers.push(Buffer.from(chunk));
-            else {
-                reject(new Error("data not recognized"));
-            }
-        });
+    stream.on("data", (chunk: string | Buffer) => {
+      if (Buffer.isBuffer(chunk)) {
+        buffers.push(chunk);
+      } else /* (typeof chunk === "string") */ {
+        buffers.push(Buffer.from(chunk));
+      }
     });
+  });
 }
 
 export { FS, FSType } from "./fs";
 import { FS, FSType } from "./fs";
-export { chunkToLines } from "./text";
 
-export const readLines = FS.readLines;
+export { chunkToLines } from "./text";
