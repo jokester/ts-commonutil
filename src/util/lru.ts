@@ -1,18 +1,9 @@
 /**
- * A LRU cache for string-indexed values
- * @author Wang Guan
- */
-
-/**
  * LRU cache for string-indexed, non-falsy values
  *
- * NOTE all methods are synchronoized,
+ * NOTE all methods are synchronized,
  * i.e. they do no use timeout/promise/async,await,
  *      and will not run before/after function calls.
- *
- * WARNING there may be marginal case when the key
- * conflicts with JS's builtin property names.
- * (uuid / sha / md5 should always be safe)
  *
  * @export
  * @class SingleThreadedLRU
@@ -53,36 +44,36 @@ export class SingleThreadedLRU<T> {
 
   /**
    *
-   *
    * @param {string} key
-   * @param {T} value must not be falsey
    *
+   * @param value
+   * @param refreshKey
    * @memberOf SingleThreadedLRU
    */
   put(key: string, value: T) {
-    if (!value) {
-      throw new Error(`falsy-value`);
-    }
     this.values.set(key, value);
-    this.refreshKey(key);
-    this.swapOut(this.capacity);
+    this.updateRecentKeys(key);
+    this.swapOut();
   }
 
   /**
    *
-   *
    * @param {string} key
+   * @param refreshKey
    * @returns {T} value if it exists in cache, null otherwise
    *
    * @memberOf SingleThreadedLRU
    */
-  get(key: string): T | null {
-    const value = this.values.get(key);
-    if (value) {
-      this.refreshKey(key);
+  get(key: string, refreshKey = true): T | null {
+    if (this.values.has(key)) {
+      const value = this.values.get(key)!;
+      if (refreshKey) {
+        this.updateRecentKeys(key);
+      }
+      // no need to squeeze(): get() only change order of recent-used keys
+      return value;
     }
-    // no need to squeeze(): get() only change order of recent-used keys
-    return value || null;
+    return null;
   }
 
   /**
@@ -92,8 +83,8 @@ export class SingleThreadedLRU<T> {
    *
    * @memberOf SingleThreadedLRU
    */
-  swapOut(targetSize: number) {
-    while (Object.keys(this.values).length > targetSize) {
+  swapOut() {
+    while (this.values.size > this.capacity) {
       const k = this.recentKeys.shift()!;
 
       const restOccurrence = (this.recentKeyCount.get(k) || 0) - 1;
@@ -119,16 +110,13 @@ export class SingleThreadedLRU<T> {
    * @memberOf SingleThreadedLRU
    */
   currentSize(): number {
-    return Object.keys(this.values).length;
+    return this.values.size;
   }
 
   /**
    * Refresh a key when it get used
    */
-  private refreshKey(key: string) {
-    if (!this.values.get(key)) {
-      throw new Error(`refreshKey: called when key='${key}' is not in this.values`);
-    }
+  private updateRecentKeys(key: string) {
     this.recentKeys.push(key);
     this.recentKeyCount.set(key, 1 + (this.recentKeyCount.get(key) || 0));
 
