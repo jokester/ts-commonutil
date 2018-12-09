@@ -1,20 +1,22 @@
 {
   "name": "ts-commonutil",
   "version": "0.1.0",
+  "private": false,
   "description": "Common TypeScript code for my multiple projects",
-  "scripts": {
-    "build": "      rm -rf lib/* && tsc",
-    "build:watch": "rm -rf lib/* && tsc --watch",
-    "test": "         npm run build && jest --forceExit",
-    "test:coverage": "npm run build && jest --forceExit --coverage",
-    "test:codecov-upload": "codecov -f coverage/*.json",
-    "test:watch": "   npm run build && jest --forceExit --watch",
-    "tslint": "    tslint -c tslint.json       -e 'node_modules/**/*' '**/*.ts?(x)'",
-    "tslint:fix": "tslint -c tslint.json --fix -e 'node_modules/**/*' '**/*.ts?(x)'"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jokester/ts-commonutil.git"
+  },
+  "bin": {},
+  "files": [],
+  "scripts": {
+    "start": "node build/bin/example-bin",
+    "start:ts": "ts-node src/bin/example-bin",
+    "build": "rm -rvf build && tsc",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "lint": "    tslint --project .       'src/**/*.ts?(x)'",
+    "lint:fix": "tslint --project . --fix 'src/**/*.ts?(x)'"
   },
   "keywords": [
     "nodejs",
@@ -22,8 +24,7 @@
     "util"
   ],
   "author": "Wang Guan <momocraft@gmail.com>",
-  "license": "MIT",
-  "private": false,
+  "license": "WTFPL",
   "bugs": {
     "url": "https://github.com/jokester/ts-commonutil/issues"
   },
@@ -31,46 +32,18 @@
     "node": ">= 6.0.0"
   },
   "homepage": "https://github.com/jokester/ts-commonutil#readme",
-  "dependencies": {
-    "tslib": "^1.7.1"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@types/chai": "^4.0.4",
-    "@types/jest": "^21.1.2",
-    "@types/node": "^8.0.27",
-    "chai": "^4.1.2",
-    "codecov": "^2.3.1",
-    "jest": "^21.0.1",
-    "ts-jest": "^21.0.0",
-    "ts-node": "^3.3.0",
-    "tslint": "^5.7.0",
-    "typescript": "^2.5.2"
-  },
-  "jest": {
-    "transform": {
-      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testMatch": [
-      "/**/__test__/*.(ts|js|tsx|jsx)",
-      "/**/*\\.(spec|test)\\.(ts|js|tsx|jsx)"
-    ],
-    "collectCoverageFrom": [
-      "**/*.(ts)",
-      "!**/node_modules",
-      "!/coverage"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx"
-    ],
-    "mapCoverage": true,
-    "coverageReporters": [
-      "json",
-      "lcov",
-      "text",
-      "html"
-    ]
+    "@types/jest": "^23.3.9",
+    "@types/node": "^10.12.3",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.4",
+    "ts-node": "^7.0.1",
+    "tslib": "^1.9.3",
+    "tslint": "^5.11.0",
+    "tslint-config-airbnb": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "tslint-no-circular-imports": "^0.6.1",
+    "typescript": "^3.1.6"
   }
 }
