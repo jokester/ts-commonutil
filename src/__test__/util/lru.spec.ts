@@ -12,7 +12,6 @@ describe("SingleThreadedLRU", () => {
   function checkInvariant<T>(lru: SingleThreadedLRU<T>) {
     const lru$ = toInspectable(lru);
 
-
   }
 
   function toInspectable<T>(s: SingleThreadedLRU<T>) {
