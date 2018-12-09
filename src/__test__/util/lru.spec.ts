@@ -9,6 +9,12 @@ describe("SingleThreadedLRU", () => {
     return new SingleThreadedLRU<string>(capacity);
   }
 
+  function checkInvariant<T>(lru: SingleThreadedLRU<T>) {
+    const lru$ = toInspectable(lru);
+
+
+  }
+
   function toInspectable<T>(s: SingleThreadedLRU<T>) {
     return s as any as {
       values: Map<string, T>;
@@ -92,7 +98,7 @@ describe("SingleThreadedLRU", () => {
     // lru with non-private properties
     const lru$ = toInspectable(lru);
     expect(lru$.recentKeys).toEqual([]);
-    expect(lru$.recentKeyCount).toEqual({});
+    expect(lru$.recentKeyCount).toEqual(new Map);
 
     lru.put(k1, k1);
     for (let v = 0; v < 5; v++) {
@@ -114,7 +120,7 @@ describe("SingleThreadedLRU", () => {
     expect(lru.contain(k3)).toEqual(true);
 
     // swapout until last (k1)
-    lru.swapOut(1);
+    lru.squeezeValues(1);
     expect(lru.currentSize()).toEqual(1);
     expect(lru.contain(k1)).toEqual(true);
     expect(lru.contain(k3)).toEqual(false);
@@ -133,7 +139,7 @@ describe("SingleThreadedLRU", () => {
     expect(lru.currentSize()).toEqual(2);
 
     // swapout until last (k3)
-    lru.swapOut(1);
+    lru.squeezeValues(1);
     expect(lru.currentSize()).toEqual(1);
     expect(lru.contain(k1)).toEqual(false);
     expect(lru.contain(k3)).toEqual(true);

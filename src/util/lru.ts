@@ -23,10 +23,13 @@ export class SingleThreadedLRU<T> {
    */
   private readonly recentKeyCount = new Map<string, number>();
 
+  /**
+   * @param capacity max size of this.values
+   */
   constructor(readonly capacity: number) {
-    if (capacity !== (capacity >>> 0)) {
+    if (capacity !== (capacity >>> 0) || capacity < 1) {
       throw new Error(`capacity must be a positive integer`);
-    } else if (capacity > (1 << 20) || capacity < 1) {
+    } else if (capacity > (1 << 20)) {
       throw new Error(`capacity too large: ${capacity}`);
     }
   }
@@ -47,13 +50,16 @@ export class SingleThreadedLRU<T> {
    * @param {string} key
    *
    * @param value
-   * @param refreshKey
    * @memberOf SingleThreadedLRU
    */
   put(key: string, value: T) {
     this.values.set(key, value);
-    this.updateRecentKeys(key);
-    this.swapOut();
+    if (!this.refreshKey(key) && this.currentSize() > this.capacity) {
+      this.removeLeastUsedValue();
+    }
+    if (this.recentKeys.length > this.capacity * 2) {
+      this.squeezeRecentKeys();
+    }
   }
 
   /**
@@ -68,9 +74,8 @@ export class SingleThreadedLRU<T> {
     if (this.values.has(key)) {
       const value = this.values.get(key)!;
       if (refreshKey) {
-        this.updateRecentKeys(key);
+        this.refreshKey(key);
       }
-      // no need to squeeze(): get() only change order of recent-used keys
       return value;
     }
     return null;
@@ -83,23 +88,13 @@ export class SingleThreadedLRU<T> {
    *
    * @memberOf SingleThreadedLRU
    */
-  swapOut() {
-    while (this.values.size > this.capacity) {
-      const k = this.recentKeys.shift()!;
-
-      const restOccurrence = (this.recentKeyCount.get(k) || 0) - 1;
-
-      if (!k || (restOccurrence < 0)) {
-        throw new Error(`squeeze: illegal state : k=${k} / keys=${JSON.stringify(this.recentKeyCount)}`);
-      } else if (restOccurrence === 0) {
-        /**
-         * k is the last occurrence of same key in this.recentKeys,
-         * so it's safe to remove it from values
-         */
-        this.values.delete(k);
-        this.recentKeyCount.delete(k);
-      }
+  squeezeValues(targetSize: number) {
+    const initialSize = this.currentSize();
+    while (this.recentKeys.length && this.values.size > targetSize) {
+      this.removeLeastUsedValue();
     }
+
+    return this.currentSize() - initialSize;
   }
 
   /**
@@ -115,14 +110,23 @@ export class SingleThreadedLRU<T> {
 
   /**
    * Refresh a key when it get used
+   * @return whether the k existed before refresh
    */
-  private updateRecentKeys(key: string) {
-    this.recentKeys.push(key);
-    this.recentKeyCount.set(key, 1 + (this.recentKeyCount.get(key) || 0));
+  private refreshKey(k: string): boolean {
+    this.recentKeys.push(k);
+    return incNum(this.recentKeyCount, k, 1) > 1;
+  }
 
-    // reduce keys when available, to prevent a long squeezeCache()
-    if (this.recentKeys.length > this.capacity * 2) {
-      this.squeezeRecentKeys();
+  private removeLeastUsedValue() {
+    while (this.recentKeys.length) {
+      const k = this.recentKeys.shift()!;
+      if (getNum(this.recentKeyCount, k) === 1) {
+        this.recentKeyCount.delete(k);
+        this.values.delete(k);
+        break;
+      } else {
+        incNum(this.recentKeyCount, k, -1);
+      }
     }
   }
 
@@ -132,13 +136,57 @@ export class SingleThreadedLRU<T> {
   private squeezeRecentKeys() {
     while (this.recentKeys.length > this.capacity) {
       const k = this.recentKeys[0];
-      const restOccurrence = this.recentKeyCount.get(k);
-      if (k && restOccurrence) {
+      const restOccurrence = getNum(this.recentKeyCount, k);
+      if (restOccurrence > 1) {
         this.recentKeys.shift();
-        this.recentKeyCount.set(k, (this.recentKeyCount.get(k) || 0) - 1);
+        incNum(this.recentKeyCount, k, -1);
       } else {
         break; // while
       }
+    }
+  }
+}
+
+function getNum(map: Map<string, number>, k: string) {
+  return map.get(k) || 0;
+}
+
+function incNum(map: Map<string, number>, k: string, delta: number): number {
+  const newValue = getNum(map, k) + delta;
+  if (newValue) {
+    map.set(k, newValue);
+  } else {
+    map.delete(k);
+  }
+  return newValue;
+}
+
+function assertInvariant<T>(values: Map<string, T>, recentKeyCount: Map<string, number>, recentKeys: string[]) {
+  for (const k of values.keys()) {
+    if (!recentKeyCount.has(k)) {
+      throw new Error("assertion error");
+    }
+  }
+
+  if (Array.from(recentKeyCount.keys()).length !== Array.from(values.keys()).length) {
+    throw new Error("assertion error");
+  }
+
+  const actualCount = recentKeys.reduce(
+    (count, k) => {
+      incNum(count, k, 1);
+      return count;
+    },
+    new Map<string, number>()
+  );
+
+  if (Array.from(actualCount.keys()).length !== Array.from(actualCount.keys()).length) {
+    throw new Error("assertion error");
+  }
+
+  for (const k of actualCount.keys()) {
+    if (actualCount.get(k) !== recentKeyCount.get((k))) {
+      throw new Error("assertion error");
     }
   }
 }
