@@ -21,24 +21,24 @@ jobs:
 
       - run:
           name: Build (tsc)
-          command: npm run build
+          command: yarn build
 
       - run:
           name: Run tslint
-          command: npm run tslint
+          command: yarn lint
 
       - run:
           name: Test
-          command: npm run test
+          command: yarn test
 
       - run:
-          name: Measure Test Coverage
-          command: npm run test:coverage
+          name: Collect Test Coverage
+          command: yarn test:coverage
 
       - run:
-          name: Upload Coverage
-          command: npm run test:codecov-upload
+          name: Upload Test Coverage
+          command: yarn codecov
 
-      - store_artifacts:
-          path: coverage
-          prefix: coverage
+      # - store_artifacts:
+      #     path: coverage
+      #     prefix: coverage
