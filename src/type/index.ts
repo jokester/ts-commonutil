@@ -1,7 +1,7 @@
 /**
  * Type transformers and etc
  */
-export { DeepReadonly, freeze, deepFreeze } from "./freeze";
+export * from "./freeze";
 
 export { toPromise1, liftPromise } from "./promisify";
 
