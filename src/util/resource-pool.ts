@@ -37,6 +37,7 @@ export class ResourcePool<T> {
   private async borrow(): Promise<T> {
     return new Promise<T>(f => {
       this.consumers.push(f);
+      this.balance();
     });
   }
 
