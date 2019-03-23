@@ -19,34 +19,37 @@ Common TypeScript code I used in multiple app.
 
 ## Content
 
-### Algebra
-
-- Fast multiplication on monoid
-
 ### Algorithm / Graph
 
+- Fast multiplication on monoid
 - Directed graph
 
-### IO
+### nodejs only
 
-(node.js only) Promised version of file IO functions.
+- fs: promised version of node `fs` module
+- subprocess: start subprocess and capture stdout/stderr
 
 ### Logging
 
-- for any js environment: loglevel logger
-    - requires `loglevel
-- for nodejs: winston logger
+- console-logger
+- loglevel-logger
+    - requires `loglevel` `@types/loglevel`
+- `winston-logger` (nodejs only)
+    - requires `winston` `@types/winston`
 
 ### Concurrency Control
 
 - Resource Pool
-- Mutex
-    - effectively a 
+
+### Text
 
 ### Type Computation
 
-## 
+- deepFreeze
 
+### Util
+
+- LRU cache
 
 ## License
 
