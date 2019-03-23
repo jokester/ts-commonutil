@@ -1,38 +1,11 @@
 module.exports = {
-  "transform": {
-    ".(ts|tsx)": "ts-jest"
+  transform: {
+    '.(ts|tsx)': 'ts-jest',
   },
-  "roots": [
-    "src",
-    "build"
-  ],
-  "testMatch": [
-    "**/__test__/*\\.(ts|js|tsx|jsx)",
-    "**/*\\.(spec|test)\\.(ts|js|tsx|jsx)"
-  ],
-  "collectCoverageFrom": [
-    "src/**/*.(ts|tsx)",
-    "!build/",
-    "!**/node_modules",
-    "!/coverage"
-  ],
-  "moduleFileExtensions": [
-    "ts",
-    "tsx",
-    "js",
-    "jsx",
-    "json"
-  ],
-  "coverageReporters": [
-    "json",
-    "lcov",
-    "text",
-    "html"
-  ],
-  "globals": {
-    "ts-jest": {
-      // https://kulshekhar.github.io/ts-jest/user/config/diagnostics
-      "diagnostics": false,
-    }
-  }
-}
+  // roots: ['*', 'build'],
+  transformIgnorePatterns: ['<rootDir>/node_modules/.*\\.js', '<rootDir>/build/.*\\.js'],
+  testMatch: ['**/__test__/*\\.(ts|js|tsx|jsx)', '**/*\\.(spec|test)\\.(ts|js|tsx|jsx)'],
+  collectCoverageFrom: ['**/*.(ts|tsx)', '!build/', '!**/node_modules', '!/coverage'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
+  coverageReporters: ['json', 'lcov', 'text', 'html'],
+};

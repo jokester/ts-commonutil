@@ -10,14 +10,17 @@ Common TypeScript code I used in multiple app.
 ## How to Use
 
 1. Add this repository as a git submodule
-2. Copy or symlink required files to anywhere appropriate
-    - if the submodule causes compile error, try set `"exclude": [ "node_modules", "lib-ts/common" ]` in `tsconfig.json`
+2. Exclude the submodule itself in *root* tsconfig.json
+    - Example: `"exclude": [ "node_modules", "vendor/submodules/ts-commonutil" ]`
+    - This prevents tsc from compiling all the code (unless otherwise referenced).
+3. Install dependencies
+    - See [Content](#content) for xx
+4. Import from this submodule
 
 ## Content
 
 ### Algebra
 
-- Array monad
 - Fast multiplication on monoid
 
 ### Algorithm / Graph
@@ -28,13 +31,21 @@ Common TypeScript code I used in multiple app.
 
 (node.js only) Promised version of file IO functions.
 
+### Logging
+
+- for any js environment: loglevel logger
+    - requires `loglevel
+- for nodejs: winston logger
+
 ### Concurrency Control
 
-- Mutex
 - Resource Pool
+- Mutex
+    - effectively a 
 
-### Type
+### Type Computation
 
+## 
 
 
 ## License

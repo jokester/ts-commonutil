@@ -1,9 +1,13 @@
 !.gitkeep
-node_modules
+/node_modules
+/build
+/*.tgz
 tmp
 .DS_Store
 .idea
-npm-*.log
-*.js
 *.map
 /coverage
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
