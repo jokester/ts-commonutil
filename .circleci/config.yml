@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/ts-commonutil
     docker:
-      - image: circleci/node:6-stretch-browsers
+      - image: circleci/node:10-stretch-browsers
     steps:
       - checkout
 
