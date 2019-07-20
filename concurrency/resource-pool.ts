@@ -25,13 +25,21 @@ export class ResourcePool<T> {
     return this.resources.length;
   }
 
-  async queue<R>(task: (res: T) => Promise<R>): Promise<R> {
+  async use<R>(task: (res: T) => Promise<R>): Promise<R> {
     const r = await this.borrow();
     try {
       return await task(r);
     } finally {
       this.resources.push(r);
       this.balance();
+    }
+  }
+
+  async tryUse<R>(task: (res: T | null) => Promise<R>): Promise<R> {
+    if (/** some resource is immediately available */ this.freeCount > 0) {
+      return this.use(task);
+    } else {
+      return task(null);
     }
   }
 
