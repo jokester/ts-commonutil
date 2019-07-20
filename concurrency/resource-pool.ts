@@ -1,22 +1,23 @@
 /**
- * A resource pool to share resources to (mutex) tasks
- * tasks are started in a FIFO way
+ * A resource pool to ensure mutex-ed access to resources
+ * This pool is "fair": tasks {queue}-ed earlier get started earlier
  *
  * - NOT supported: replace / refresh / timeout of tasks
  */
 export class ResourcePool<T> {
-  static from1<T>(res: T) {
+  // can be used as a mutex
+  static single<T>(res: T) {
     return new ResourcePool([res]);
   }
 
-  static fromMany<T>(resArray: T[]) {
+  static multiple<T>(resArray: T[]) {
     return new ResourcePool(resArray);
   }
 
   private consumers: ((res: T) => void)[] = [];
   private readonly initialSize: number;
 
-  constructor(private readonly resources: T[]) {
+  private constructor(private readonly resources: T[]) {
     this.initialSize = resources.length;
   }
 
