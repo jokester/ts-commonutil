@@ -19,5 +19,6 @@ export function readStream(stream: NodeJS.ReadableStream): Promise<Buffer> {
   });
 }
 
-export { FS, FSType } from './fs';
-import { FS, FSType } from './fs';
+import * as fsp from './fsp';
+
+export { fsp };
