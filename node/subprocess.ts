@@ -1,8 +1,8 @@
-import { spawn, exec, execFile, SpawnOptions, ChildProcess } from 'child_process';
+import { execFile, ExecFileOptions } from 'child_process';
 import { chunkToLines } from '../text/chunk-to-lines';
 
 /**
- * Captured output of subprocess
+ * Result after subprocess finished
  */
 interface SubprocessOutput {
   stderr: string[];
@@ -10,44 +10,34 @@ interface SubprocessOutput {
 }
 
 /**
- * Result after subprocess finished
- */
-interface SubprocessResult {
-  stderr: string[];
-  stdout: string[];
-  exit: number;
-  signal: string;
-}
-
-/**
- * spawn a subprocess and capture its stdout/stderr/return value
+ * spawn a subprocess and capture its stdout/stderr
  *
- * rejects if the subprocess could not be spawned
- *
- * TODO change this to a process class
+ * rejects on (spawn error) or (non-zero exit code)
  */
-export function getSubprocessOutput(command: string, args: string[] = [], options?: SpawnOptions) {
+export function getSubprocessOutput(command: string, args: string[] = [], options?: ExecFileOptions) {
   return new Promise<SubprocessOutput>((fulfill, reject) => {
-    execFile(command, args, options, (error: null | Error, stdout: string | Buffer, stderr: string | Buffer) => {
+    execFile(command, args, options, (error, stdout, stderr) => {
       if (error) {
         reject(error);
-      } else {
-        try {
-          fulfill({
-            stdout: chunkToLines(stdout),
-            stderr: chunkToLines(stderr),
-          });
-        } catch (e) {
-          reject(e);
-        }
+        return;
+      }
+
+      try {
+        fulfill({
+          stdout: chunkToLines(stdout),
+          stderr: chunkToLines(stderr),
+        });
+      } catch (e) {
+        reject(e);
       }
     });
   });
 }
 
-export function rejectNonZeroReturn(result: SubprocessResult) {
-  if (result.exit !== 0) {
-    throw new Error(`subprocess returned non-zero: ${result.exit}`);
-  }
+/**
+ * @param result
+ * @deprecated getSubprocessOutput already rejects on non-zero exit code
+ */
+export function rejectNonZeroReturn(result: PromiseLike<SubprocessOutput>): PromiseLike<SubprocessOutput> {
   return result;
 }

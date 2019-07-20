@@ -8,13 +8,21 @@
  *
  */
 /* eslint-disable */
-export type DeepReadonly<T> =
-  T extends (string | number | symbol | null | undefined | void) ? T
-    : T extends RegExp ? T
-    : T extends Function ? T
-      : T extends (infer U)[] ? Readonly<U>[] // FIXME: this does not make U deep-readonly
-        : T extends {} ? { readonly [k in keyof T]: DeepReadonly<T[k]> }
-          : never;
+export type DeepReadonly<T> = T extends (string | number | symbol | null | undefined | void)
+  ? T
+  : T extends RegExp
+  ? T
+  : T extends Function
+  ? T
+  : T extends Map<infer K, infer V>
+  ? ReadonlyMap<K, V>
+  : T extends Set<infer E>
+  ? ReadonlySet<Readonly<E>>
+  : T extends Array<infer E>
+  ? readonly Readonly<E>[] // FIXME: this does not make U deep-readonly
+  : T extends {}
+  ? { readonly [k in keyof T]: Readonly<T[k]> }
+  : never;
 
 /* eslint-enable */
 

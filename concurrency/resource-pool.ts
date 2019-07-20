@@ -1,22 +1,23 @@
 /**
- * A resource pool to share resources to (mutex) tasks
- * tasks are started in a FIFO way
+ * A resource pool to ensure mutex-ed access to resources
+ * This pool is "fair": tasks {queue}-ed earlier get started earlier
  *
  * - NOT supported: replace / refresh / timeout of tasks
  */
 export class ResourcePool<T> {
-  static from1<T>(res: T) {
+  // can be used as a mutex
+  static single<T>(res: T) {
     return new ResourcePool([res]);
   }
 
-  static fromMany<T>(resArray: T[]) {
+  static multiple<T>(resArray: T[]) {
     return new ResourcePool(resArray);
   }
 
   private consumers: ((res: T) => void)[] = [];
   private readonly initialSize: number;
 
-  constructor(private readonly resources: T[]) {
+  private constructor(private readonly resources: T[]) {
     this.initialSize = resources.length;
   }
 
@@ -24,13 +25,21 @@ export class ResourcePool<T> {
     return this.resources.length;
   }
 
-  async queue<R>(task: (res: T) => Promise<R>): Promise<R> {
+  async use<R>(task: (res: T) => Promise<R>): Promise<R> {
     const r = await this.borrow();
     try {
       return await task(r);
     } finally {
       this.resources.push(r);
       this.balance();
+    }
+  }
+
+  async tryUse<R>(task: (res: T | null) => Promise<R>): Promise<R> {
+    if (/** some resource is immediately available */ this.freeCount > 0) {
+      return this.use(task);
+    } else {
+      return task(null);
     }
   }
 
