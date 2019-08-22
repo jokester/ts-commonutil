@@ -1,11 +1,8 @@
-import { getLogger } from '../../../src/util/logging';
-import { LogLevelDesc } from 'loglevel';
+import { Logger, LogLevelDesc } from 'loglevel';
 import { Operator, OperatorFunction, pipe } from 'rxjs';
 import { dematerialize, map, materialize } from 'rxjs/operators';
 
-export function tapLog<T>(name: string, logLevel: LogLevelDesc = 'warn'): OperatorFunction<T, T> {
-  const logger = getLogger(name, logLevel);
-
+export function tapLog<T>(logger: Logger): OperatorFunction<T, T> {
   return pipe(
     materialize(),
     map(v => {
