@@ -70,7 +70,7 @@ export const WrappedNextRouterHolder: React.FunctionComponent = props => {
   useEffect(() => {
     wrappedRouter.componentDidMount();
     return () => wrappedRouter.componentWillUnmount();
-  });
+  }, []);
 
   return React.createElement(WrappedNextRouterContext.Provider, { value: wrappedRouter }, props.children);
 };
