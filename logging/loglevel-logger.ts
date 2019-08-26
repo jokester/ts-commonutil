@@ -2,7 +2,7 @@ import { getLogger as _getLogLevelLogger, Logger, LogLevelDesc } from 'loglevel'
 
 type OurLogger = Pick<Logger, 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'getLevel' | 'setLevel'>;
 
-export function getLogLevelLogger(name: string, level: LogLevelDesc = 'WARN', isProd: boolean): OurLogger {
+export function getLogLevelLogger(name: string, level: LogLevelDesc = 'WARN', isProd = false): OurLogger {
   if (isProd) return dummyLogger;
   if (!(name && name.trim()) || name.startsWith('/index')) {
     throw new Error('logger must have a nonempty name. do not use __filename');
@@ -18,7 +18,7 @@ const dummyLogger: OurLogger = {
   info: noop,
   warn: noop,
   error: noop,
-  setLevel(): void {},
+  setLevel: noop,
   getLevel: () => 5,
 };
 
