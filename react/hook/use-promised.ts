@@ -7,7 +7,7 @@ type PromiseResult<T> =
 
 const pending: PromiseResult<any> = { pending: true };
 
-export function usePromised<T>(promise: PromiseLike<T>) {
+export function usePromised<T>(promise: PromiseLike<T>): PromiseResult<T> {
   const [state, setState] = useState<PromiseResult<T>>(pending);
 
   useEffect(() => {
