@@ -1,5 +1,5 @@
-export function wait(delayMs: number) {
-  return new Promise<void>(f => setTimeout(f, delayMs));
+export function wait<T = void>(delayMs: number, value?: T) {
+  return new Promise<T>(f => setTimeout(f, delayMs, value));
 }
 
 export function timeout<FakeRetType = never>(delayMs: number) {

@@ -1,5 +1,5 @@
 import { TicToc } from './tic-toc';
-import { withMinimumDuration } from './timing';
+import { wait, withMinimumDuration } from './timing';
 
 describe('timing.ts', () => {
   describe('withMinimumDuration', () => {
@@ -10,6 +10,14 @@ describe('timing.ts', () => {
 
       expect(result).toEqual(1);
       expect(tictoc.toc()).toBeGreaterThan(1e3);
+    });
+  });
+
+  describe('wait', () => {
+    it.skip('can be deducted to currect type ', () => {
+      const a: Promise<number> = wait(0, 1);
+
+      const b: Promise<void> = wait(0);
     });
   });
 });
