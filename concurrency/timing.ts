@@ -1,8 +1,8 @@
-export function wait(delayMs: number) {
-  return new Promise<void>(f => setTimeout(f, delayMs));
+export function wait<T = void>(delayMs: number, value?: T): Promise<T> {
+  return new Promise<T>(f => setTimeout(f, delayMs, value));
 }
 
-export function timeout<FakeRetType = never>(delayMs: number) {
+export function timeout<FakeRetType = never>(delayMs: number): Promise<FakeRetType> {
   return new Promise<FakeRetType>((f, e) => setTimeout(e, delayMs, new Error(`timeout after ${delayMs}`)));
 }
 

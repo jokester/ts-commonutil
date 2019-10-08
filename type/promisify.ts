@@ -84,7 +84,11 @@ interface LiftPromiseOverload {
 
   <A1, A2, R>(fun: (a1: A1, a2: A2) => R, thisArg?: any): (a1: MaybePromise<A1>, a2: MaybePromise<A2>) => Promise<R>;
 
-  <A1, A2, A3, R>(fun: (a1: A1, a2: A2, a3: A3) => R, thisArg?: any): (a1: MaybePromise<A1>, a2: MaybePromise<A2>, a3: MaybePromise<A3>) => Promise<R>;
+  <A1, A2, A3, R>(fun: (a1: A1, a2: A2, a3: A3) => R, thisArg?: any): (
+    a1: MaybePromise<A1>,
+    a2: MaybePromise<A2>,
+    a3: MaybePromise<A3>,
+  ) => Promise<R>;
 
   <A1, A2, A3, A4, R>(fun: (a1: A1, a2: A2, a3: A3, a4: A4) => R, thisArg?: any): (
     a1: MaybePromise<A1>,
