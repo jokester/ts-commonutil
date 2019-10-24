@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
 
-type PromiseResult<T> =
-  | { pending: true; fulfilled?: void; rejected?: void }
-  | { pending?: void; fulfilled: true; rejected?: void; value: T }
-  | { pending?: void; fulfilled?: void; rejected: true; reason: unknown };
+/**
+ * A discriminated union to represent the result of a Promise
+ * that can be destructured
+ */
+export type PromiseResult<T> =
+  | { pending: true; fulfilled?: undefined; rejected?: undefined }
+  | { pending?: undefined; fulfilled: true; rejected?: undefined; value: T }
+  | { pending?: undefined; fulfilled?: undefined; rejected: true; reason: unknown };
 
 const pending: PromiseResult<any> = { pending: true };
 
