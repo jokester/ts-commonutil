@@ -4,10 +4,11 @@ import { useState, useEffect } from 'react';
  * A discriminated union to represent the result of a Promise
  * that can be destructured
  */
-export type PromiseResult<T> =
+export type PromiseResult<T> = Readonly<
   | { pending: true; fulfilled?: undefined; rejected?: undefined }
   | { pending?: undefined; fulfilled: true; rejected?: undefined; value: T }
-  | { pending?: undefined; fulfilled?: undefined; rejected: true; reason: unknown };
+  | { pending?: undefined; fulfilled?: undefined; rejected: true; reason: unknown }
+>;
 
 const pending: PromiseResult<any> = { pending: true };
 
