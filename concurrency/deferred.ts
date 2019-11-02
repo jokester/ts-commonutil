@@ -4,36 +4,34 @@ function nop() {}
  * Deferred: a wrapper for Promise that exposes fulfill / reject / resolved
  */
 export class Deferred<T> implements PromiseLike<T> {
-  private readonly _promise: Promise<T>;
   private _fulfill: (v: T) => void = nop;
   private _reject: (e: any) => void = nop;
   private _resolved = false;
 
-  constructor(private readonly strict = false) {
-    const self = this;
-    this._promise = new Promise<T>((fulfill, reject) => {
-      self._fulfill = (v: T) => {
-        fulfill(v);
-        self._resolved = true;
-        self._fulfill = self._reject = nop;
-      };
-      self._reject = (e: any) => {
-        reject(e);
-        self._resolved = true;
-        self._fulfill = self._reject = nop;
-      };
-    });
-  }
+  private readonly _promise = new Promise<T>((fulfill, reject) => {
+    this._fulfill = (v: T) => {
+      fulfill(v);
+      this._resolved = true;
+      this._fulfill = this._reject = nop;
+    };
+    this._reject = (e: unknown) => {
+      reject(e);
+      this._resolved = true;
+      this._fulfill = this._reject = nop;
+    };
+  });
+
+  constructor(private readonly strict = false) {}
 
   get resolved() {
     return this._resolved;
   }
 
   then<TResult1 = T, TResult2 = never>(
-    onfulfilled?: ((value: T) => PromiseLike<TResult1> | TResult1) | undefined | null,
-    onrejected?: ((reason: any) => PromiseLike<TResult2> | TResult2) | undefined | null,
+    onFulfilled?: ((value: T) => PromiseLike<TResult1> | TResult1) | undefined | null,
+    onRejected?: ((reason: unknown) => PromiseLike<TResult2> | TResult2) | undefined | null,
   ): PromiseLike<TResult1 | TResult2> {
-    return this._promise.then(onfulfilled, onrejected);
+    return this._promise.then(onFulfilled, onRejected);
   }
 
   /**
@@ -47,7 +45,7 @@ export class Deferred<T> implements PromiseLike<T> {
     }
   }
 
-  reject(e: any) {
+  reject(e: unknown) {
     if (this.strict && this._resolved) {
       throw new Error('already resolved');
     } else {
