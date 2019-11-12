@@ -19,7 +19,6 @@
     "noUnusedParameters": false,
     "outDir": "./build",
     "resolveJsonModule": true,
-    "rootDir": "./src",
     "strict": true,
     "target": "es6"
   },
