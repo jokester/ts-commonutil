@@ -116,8 +116,7 @@ interface LiftPromiseOverload {
  * Lift a function's argument and return value to Promise
  */
 export const liftPromise: LiftPromiseOverload = function(fun: Function, thisArg?: any) {
-  return function(/* promised args */) {
-    const args: MaybePromise<any>[] = [].slice.call(arguments);
+  return function(...args: any[]) {
     return Promise.all(args).then(gotAwaits => fun.apply(thisArg, gotAwaits));
   };
 };
