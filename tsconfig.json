@@ -9,7 +9,6 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "isolatedModules": false,
     "jsx": "react",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -17,10 +16,10 @@
     "noImplicitReturns": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "outDir": "./build",
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "strict": true,
-    "target": "es6"
+    "target": "esnext"
   },
   "exclude": [
     "node_modules",
