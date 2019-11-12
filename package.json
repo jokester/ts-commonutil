@@ -8,8 +8,6 @@
     "type": "git",
     "url": "git+https://github.com/jokester/ts-commonutil.git"
   },
-  "bin": {},
-  "files": [],
   "scripts": {
     "build": "tsc",
     "test": "jest",
@@ -53,6 +51,5 @@
     "tslib": "^1.10.0",
     "typescript": "^3.7",
     "winston": "^3.2.1"
-  },
-  "resolutions": {}
+  }
 }
