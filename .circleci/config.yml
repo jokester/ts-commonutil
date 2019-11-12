@@ -20,8 +20,8 @@ jobs:
             - ~/.cache/yarn
 
       - run:
-          name: Build (tsc)
-          command: yarn build
+          name: Type Check
+          command: yarn typecheck
 
       - run:
           name: Lint

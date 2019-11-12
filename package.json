@@ -9,10 +9,11 @@
     "url": "git+https://github.com/jokester/ts-commonutil.git"
   },
   "scripts": {
-    "build": "tsc",
     "test": "jest",
+    "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "typecheck": "tsc --watch --noEmit",
+    "typecheck:watch": "tsc --watch --noEmit",
     "lint": "    eslint '**/*.@(ts|js|tsx|jsx)'",
     "lint:fix": "eslint '**/*.@(ts|js|tsx|jsx)' --fix"
   },
