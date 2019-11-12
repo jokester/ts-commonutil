@@ -5,7 +5,7 @@ import { chunkToLines } from '../text/chunk-to-lines';
 export const readDir = util.promisify(fs.readdir);
 export const readFile = util.promisify(fs.readFile);
 
-export const readText = (filename: string, encoding: string = 'UTF-8') => readFile(filename, { encoding });
+export const readText = (filename: string, encoding = 'UTF-8') => readFile(filename, { encoding });
 
 export const readLines = (filename: string) => readText(filename).then(chunkToLines);
 
