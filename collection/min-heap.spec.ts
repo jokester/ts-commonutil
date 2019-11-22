@@ -49,4 +49,22 @@ describe('MinHeap', () => {
     expect(() => testee.peek()).toThrow(/nothing to peek/);
     expect(() => testee.insert(1).removeMany(2)).toThrow(/nothing to remove/);
   });
+
+  it('can be initialized with initialTree', () => {
+    const testee = new MinHeap(NumericOrder, false, /* illegal tree */ [1, 0]);
+
+    expect(() => new MinHeap(NumericOrder, true, [1, 0])).toThrow(/assertInvariants/);
+  });
+
+  it('can be cloned', () => {
+    const testee = new MinHeap(NumericOrder, false, /* illegal tree */ [1, 0]);
+
+    expect(testee.clone().slice()).toEqual([1, 0]);
+  });
+
+  it('can be shrinked', () => {
+    const testee = new MinHeap(NumericOrder).insertMany(5, 4, 3, 2, 1, -1);
+
+    expect(testee.shrink(3).removeMany(3)).toEqual([-1, 1, 2]);
+  });
 });

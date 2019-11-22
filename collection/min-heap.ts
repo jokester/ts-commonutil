@@ -5,7 +5,10 @@ export class MinHeap<T> {
   private readonly tree: T[] = [];
   slice = this.tree.slice.bind(this.tree);
 
-  constructor(private readonly order: TotalOrdered<T>, private readonly strict = false) {}
+  constructor(private readonly order: TotalOrdered<T>, private readonly strict = false, initialTree?: T[]) {
+    if (initialTree) this.tree.push(...initialTree);
+    if (strict) this.assertInvariants();
+  }
 
   get size() {
     return this.tree.length;
@@ -97,5 +100,24 @@ export class MinHeap<T> {
   peek(): T | undefined {
     if (!this.size && this.strict) throw new Error('MinHeap#peek(): nothing to peek');
     return this.tree[0];
+  }
+
+  clone() {
+    return new MinHeap(this.order, this.strict, this.tree);
+  }
+
+  shrink(size: number): this {
+    const tmpHeap = new MinHeap(this.order, true, this.removeMany(size));
+    this.tree.splice(0, this.tree.length, ...tmpHeap.slice());
+    return this;
+  }
+
+  private assertInvariants() {
+    for (let i = 1; i < this.tree.length; i++) {
+      const p = positions.parent(i);
+      if (!this.order.before(this.tree[p], this.tree[i])) {
+        throw new Error(`MinHeap#assertInvariants(): expected this.tree[${p} to be ordered before this.tree[${i}]`);
+      }
+    }
   }
 }
