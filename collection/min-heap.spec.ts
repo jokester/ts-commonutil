@@ -11,6 +11,8 @@ describe('MinHeap', () => {
     expect(testee.insert(1).slice()).toEqual([1, 5, 2]);
     expect(testee.insert(6).slice()).toEqual([1, 5, 2, 6]);
     expect(testee.insert(0).slice()).toEqual([0, 1, 2, 6, 5]);
+
+    expect(testee.peek()).toStrictEqual(0);
   });
 
   it('removes element', () => {
