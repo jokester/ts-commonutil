@@ -1,4 +1,16 @@
 export abstract class TotalOrdered<T> {
+  static invert<T>(orig: TotalOrdered<T>): TotalOrdered<T> {
+    return new (class extends TotalOrdered<T> {
+      before(a: T, b: T): boolean {
+        return !orig.before(a, b);
+      }
+
+      equal(a: T, b: T): boolean {
+        return orig.equal(a, b);
+      }
+    })();
+  }
+
   abstract before(a: T, b: T): boolean;
 
   abstract equal(a: T, b: T): boolean;
