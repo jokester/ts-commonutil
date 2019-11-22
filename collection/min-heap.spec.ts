@@ -3,7 +3,7 @@ import { NumericOrder } from '../algebra/total-ordered';
 
 describe('MinHeap', () => {
   it('insert elements', () => {
-    const testee = new MinHeap(NumericOrder, 5);
+    const testee = new MinHeap(NumericOrder);
     expect(testee.slice()).toEqual([]);
 
     expect(testee.insert(5).slice()).toEqual([5]);
@@ -14,7 +14,7 @@ describe('MinHeap', () => {
   });
 
   it('removes element', () => {
-    const testee = new MinHeap(NumericOrder, 5).insertMany(5, 2, 1, 6, 0);
+    const testee = new MinHeap(NumericOrder).insertMany(5, 2, 1, 6, 0);
 
     expect(testee.remove()).toEqual(0);
     expect(testee.slice()).toEqual([1, 5, 2, 6]);
@@ -28,7 +28,7 @@ describe('MinHeap', () => {
   });
 
   it('removes element - 2', () => {
-    const testee = new MinHeap(NumericOrder, 5)
+    const testee = new MinHeap(NumericOrder)
       .insert(0)
       .insert(2)
       .insert(3)
@@ -42,7 +42,7 @@ describe('MinHeap', () => {
   });
 
   it('throws when remove from or peek an empty && strict heap', () => {
-    const testee = new MinHeap(NumericOrder, 5, true);
+    const testee = new MinHeap(NumericOrder, true);
     expect(testee.slice()).toEqual([]);
 
     expect(() => testee.remove()).toThrow(/nothing to remove/);

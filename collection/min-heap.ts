@@ -5,7 +5,7 @@ export class MinHeap<T> {
   private readonly tree: T[] = [];
   slice = this.tree.slice.bind(this.tree);
 
-  constructor(private readonly order: TotalOrdered<T>, readonly capacity: number, private readonly strict = false) {}
+  constructor(private readonly order: TotalOrdered<T>, private readonly strict = false) {}
 
   get size() {
     return this.tree.length;
