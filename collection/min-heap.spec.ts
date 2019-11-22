@@ -13,26 +13,21 @@ describe('MinHeap', () => {
     expect(testee.insert(0).slice()).toEqual([0, 1, 2, 6, 5]);
   });
 
-  it('pops element', () => {
-    const testee = new MinHeap(NumericOrder, 5)
-      .insert(5)
-      .insert(2)
-      .insert(1)
-      .insert(6)
-      .insert(0);
+  it('removes element', () => {
+    const testee = new MinHeap(NumericOrder, 5).insertMany(5, 2, 1, 6, 0);
 
-    expect(testee.pop()).toEqual(0);
+    expect(testee.remove()).toEqual(0);
     expect(testee.slice()).toEqual([1, 5, 2, 6]);
-    expect(testee.pop()).toEqual(1);
+    expect(testee.remove()).toEqual(1);
     expect(testee.slice()).toEqual([2, 5, 6]);
-    expect(testee.pop()).toEqual(2);
-    expect(testee.pop()).toEqual(5);
-    expect(testee.pop()).toEqual(6);
-    expect(testee.pop()).toEqual(undefined);
+    expect(testee.remove()).toEqual(2);
+    expect(testee.remove()).toEqual(5);
+    expect(testee.remove()).toEqual(6);
+    expect(testee.remove()).toEqual(undefined);
     expect(testee.slice()).toEqual([]);
   });
 
-  it('pops element - 2', () => {
+  it('removes element - 2', () => {
     const testee = new MinHeap(NumericOrder, 5)
       .insert(0)
       .insert(2)
@@ -42,13 +37,16 @@ describe('MinHeap', () => {
       .insert(4);
 
     expect(testee.slice()).toEqual([0, 2, 3, 100, 200, 4]);
-    expect(testee.pop()).toEqual(0);
+    expect(testee.remove()).toEqual(0);
     expect(testee.slice()).toEqual([2, 4, 3, 100, 200]);
   });
 
-  it('throws when pop from an empty && strict heap', () => {
+  it('throws when remove from or peek an empty && strict heap', () => {
     const testee = new MinHeap(NumericOrder, 5, true);
     expect(testee.slice()).toEqual([]);
-    expect(() => testee.pop()).toThrow(/nothing to pop/);
+
+    expect(() => testee.remove()).toThrow(/nothing to remove/);
+    expect(() => testee.peek()).toThrow(/nothing to peek/);
+    expect(() => testee.insert(1).removeMany(2)).toThrow(/nothing to remove/);
   });
 });
