@@ -3,7 +3,7 @@ import { positions } from './btree';
 
 export class MinHeap<T> {
   private readonly tree: T[] = [];
-  constructor(private readonly order: TotalOrdered<T>, readonly capacity: number) {}
+  constructor(private readonly order: TotalOrdered<T>, readonly capacity: number, private readonly strict = false) {}
 
   get size() {
     return this.tree.length;
@@ -27,6 +27,56 @@ export class MinHeap<T> {
     }
 
     return this;
+  }
+
+  pop(): T | undefined {
+    if (!this.size) {
+      if (this.strict) throw new Error('MinHeap#pop(): nothing to pop');
+      return undefined;
+    } else if (this.size === 1) {
+      return this.tree.pop();
+    } else {
+      const ret = this.tree[0];
+
+      const v = (this.tree[0] = this.tree.pop()!);
+
+      for (let i = 0; i < this.tree.length; ) {
+        const l = positions.leftChild(i),
+          r = positions.rightChild(i);
+
+        /**
+         *     [i] === v
+         *     / \
+         *   [l] [r]
+         *
+         */
+        if (r < this.tree.length) {
+          // when it has 2 children
+          if (this.order.before(this.tree[l], this.tree[r]) && this.order.before(this.tree[l], v)) {
+            // swap [i] and [l] and continue
+            this.tree[i] = this.tree[l];
+            this.tree[l] = v;
+            i = l;
+          } else if (this.order.before(this.tree[r], this.tree[l]) && this.order.before(this.tree[r], v)) {
+            // swap [i] and [l] and continue
+            this.tree[i] = this.tree[r];
+            this.tree[r] = v;
+            i = r;
+          } else {
+            break; // v is already before all children
+          }
+        } else if (l < this.tree.length && this.order.before(this.tree[l], v)) {
+          this.tree[i] = this.tree[l];
+          this.tree[l] = v;
+          i = l;
+          break; // there cannot be next level
+        } else {
+          break; // when we couldn't exchange this.tree[i] with any of its children
+        }
+      }
+
+      return ret;
+    }
   }
 
   slice = this.tree.slice.bind(this.tree);
