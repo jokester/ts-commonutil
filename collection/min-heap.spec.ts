@@ -14,8 +14,7 @@ describe('MinHeap', () => {
   });
 
   it('pops element', () => {
-    const testee = new MinHeap(NumericOrder, 5);
-    testee
+    const testee = new MinHeap(NumericOrder, 5)
       .insert(5)
       .insert(2)
       .insert(1)
@@ -31,6 +30,20 @@ describe('MinHeap', () => {
     expect(testee.pop()).toEqual(6);
     expect(testee.pop()).toEqual(undefined);
     expect(testee.slice()).toEqual([]);
+  });
+
+  it('pops element - 2', () => {
+    const testee = new MinHeap(NumericOrder, 5)
+      .insert(0)
+      .insert(2)
+      .insert(3)
+      .insert(100)
+      .insert(200)
+      .insert(4);
+
+    expect(testee.slice()).toEqual([0, 2, 3, 100, 200, 4]);
+    expect(testee.pop()).toEqual(0);
+    expect(testee.slice()).toEqual([2, 4, 3, 100, 200]);
   });
 
   it('throws when pop from an empty && strict heap', () => {
