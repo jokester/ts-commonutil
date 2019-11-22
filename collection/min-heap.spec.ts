@@ -29,5 +29,13 @@ describe('MinHeap', () => {
     expect(testee.pop()).toEqual(2);
     expect(testee.pop()).toEqual(5);
     expect(testee.pop()).toEqual(6);
+    expect(testee.pop()).toEqual(undefined);
+    expect(testee.slice()).toEqual([]);
+  });
+
+  it('throws when pop from an empty && strict heap', () => {
+    const testee = new MinHeap(NumericOrder, 5, true);
+    expect(testee.slice()).toEqual([]);
+    expect(() => testee.pop()).toThrow(/nothing to pop/);
   });
 });
