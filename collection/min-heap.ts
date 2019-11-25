@@ -73,7 +73,6 @@ export class MinHeap<T> {
         } else if (l < this.tree.length && this.order.before(this.tree[l], v)) {
           this.tree[i] = this.tree[l];
           this.tree[l] = v;
-          i = l;
           break; // there cannot be next level
         } else {
           break; // when we couldn't exchange this.tree[i] with any of its children
