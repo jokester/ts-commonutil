@@ -1,4 +1,4 @@
-import { positions } from './btree';
+import { positions, powOf2 } from './btree';
 
 describe('btree.ts', () => {
   it('calculates position', () => {
@@ -9,5 +9,18 @@ describe('btree.ts', () => {
 
     expect(positions.leftChild(1)).toEqual(3);
     expect(positions.rightChild(1)).toEqual(4);
+  });
+
+  it('calculates next pow of 2', () => {
+    expect(powOf2.nextPowOf2(1)).toEqual(1);
+    expect(powOf2.nextPowOf2(2)).toEqual(2);
+    expect(powOf2.nextPowOf2(3)).toEqual(4);
+    expect(powOf2.nextPowOf2(4)).toEqual(4);
+  });
+  it('calculates prev pow of 2', () => {
+    expect(powOf2.prevPowOf2(1)).toEqual(1);
+    expect(powOf2.prevPowOf2(2)).toEqual(2);
+    expect(powOf2.prevPowOf2(3)).toEqual(2);
+    expect(powOf2.prevPowOf2(4)).toEqual(4);
   });
 });
