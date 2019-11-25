@@ -112,6 +112,18 @@ export class MinHeap<T> {
     return this;
   }
 
+  shrinkUntil(v: T, inclusive = false): this {
+    const afterShrink: T[] = [];
+    while (
+      this.tree.length &&
+      (this.order.before(this.tree[0], v) || (inclusive && this.order.equal(this.tree[0], v)))
+    ) {
+      afterShrink.push(this.remove()!);
+    }
+    this.tree.splice(0, this.tree.length, ...afterShrink);
+    return this;
+  }
+
   private assertInvariants() {
     for (let i = 1; i < this.tree.length; i++) {
       const p = positions.parent(i);

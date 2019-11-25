@@ -69,4 +69,22 @@ describe('MinHeap', () => {
 
     expect(testee.shrink(3).removeMany(3)).toEqual([-1, 1, 2]);
   });
+
+  it('can shrink to a given upperlimit', () => {
+    const testee = new MinHeap(NumericOrder).insertMany(5, 4, 3, 2, 1, -1);
+
+    expect(
+      testee
+        .clone()
+        .shrinkUntil(4)
+        .removeMany(100),
+    ).toEqual([-1, 1, 2, 3]);
+
+    expect(
+      testee
+        .clone()
+        .shrinkUntil(4, true)
+        .removeMany(100),
+    ).toEqual([-1, 1, 2, 3, 4]);
+  });
 });
