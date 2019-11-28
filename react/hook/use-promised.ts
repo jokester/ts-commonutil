@@ -7,24 +7,24 @@ import { useState, useEffect } from 'react';
 export type PromiseResult<T, E = unknown> = Readonly<
   | {
       pending: true;
-      fulfilled: false;
-      rejected: false;
+      fulfilled: null;
+      rejected: null;
     }
   | {
-      pending: false;
+      pending: null;
       fulfilled: true;
-      rejected: false;
+      rejected: null;
       value: T;
     }
   | {
-      pending: false;
-      fulfilled: false;
+      pending: null;
+      fulfilled: null;
       rejected: true;
       reason: E;
     }
 >;
 
-const pending: PromiseResult<any, any> = { pending: true, fulfilled: false, rejected: false };
+const pending: PromiseResult<any, any> = { pending: true, fulfilled: null, rejected: null };
 
 export function usePromised<T>(promise: PromiseLike<T>): PromiseResult<T> {
   const [state, setState] = useState<PromiseResult<T>>(pending);
@@ -34,8 +34,8 @@ export function usePromised<T>(promise: PromiseLike<T>): PromiseResult<T> {
     if (!state.pending) setState(pending);
 
     promise.then(
-      value => !unmounted && setState({ pending: false, fulfilled: true, rejected: false, value }),
-      reason => !unmounted && setState({ pending: false, fulfilled: false, rejected: true, reason }),
+      value => !unmounted && setState({ pending: null, fulfilled: true, rejected: null, value }),
+      reason => !unmounted && setState({ pending: null, fulfilled: null, rejected: true, reason }),
     );
 
     return () => {
