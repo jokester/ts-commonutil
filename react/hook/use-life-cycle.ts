@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 
 interface PublicLifecycleDelegate {
   readonly mounted: boolean;
+  readonly unmounted: Promise<void>;
 
   /**
    * equivalent to a {@code useEffect(callback, []) }
@@ -25,6 +26,7 @@ class LifecycleDelegate implements PublicLifecycleDelegate {
   private _unmounted = false;
   private unmountCallback: (() => void)[] = [];
   private mountCallback: (() => void)[] = [];
+  readonly unmounted = new Promise<void>(f => this.unmountCallback.push(f));
 
   constructor(private readonly displayName?: string) {}
 
