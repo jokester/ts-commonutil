@@ -73,7 +73,6 @@ export class MinHeap<T> {
         } else if (l < this.tree.length && this.order.before(this.tree[l], v)) {
           this.tree[i] = this.tree[l];
           this.tree[l] = v;
-          i = l;
           break; // there cannot be next level
         } else {
           break; // when we couldn't exchange this.tree[i] with any of its children
@@ -109,6 +108,18 @@ export class MinHeap<T> {
   shrink(size: number): this {
     const tmpHeap = new MinHeap(this.order, true, this.removeMany(size));
     this.tree.splice(0, this.tree.length, ...tmpHeap.slice());
+    return this;
+  }
+
+  shrinkUntil(v: T, inclusive = false): this {
+    const afterShrink: T[] = [];
+    while (
+      this.tree.length &&
+      (this.order.before(this.tree[0], v) || (inclusive && this.order.equal(this.tree[0], v)))
+    ) {
+      afterShrink.push(this.remove()!);
+    }
+    this.tree.splice(0, this.tree.length, ...afterShrink);
     return this;
   }
 
