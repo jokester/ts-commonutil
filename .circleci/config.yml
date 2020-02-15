@@ -29,7 +29,7 @@ jobs:
 
       - run:
           name: Test
-          command: yarn test --detectOpenHandles
+          command: yarn test --detectOpenHandles --force-exit
 
       - run:
           name: Collect Test Coverage
