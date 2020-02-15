@@ -1,5 +1,3 @@
-function nop() {}
-
 /**
  * Deferred: a wrapper for Promise that exposes fulfill / reject / resolved
  */
@@ -27,12 +25,7 @@ export class Deferred<T> implements PromiseLike<T> {
     return this._resolved;
   }
 
-  then<TResult1 = T, TResult2 = never>(
-    onFulfilled?: ((value: T) => PromiseLike<TResult1> | TResult1) | undefined | null,
-    onRejected?: ((reason: unknown) => PromiseLike<TResult2> | TResult2) | undefined | null,
-  ): PromiseLike<TResult1 | TResult2> {
-    return this._promise.then(onFulfilled, onRejected);
-  }
+  readonly then = this._promise.then.bind(this._promise);
 
   /**
    * @param v the value
@@ -52,4 +45,14 @@ export class Deferred<T> implements PromiseLike<T> {
       this._reject(e);
     }
   }
+
+  readonly completeCallback = (error: unknown, resolved: T | undefined | null) => {
+    if (error) {
+      this.reject(error);
+    } else {
+      this.fulfill(resolved!);
+    }
+  };
 }
+
+function nop() {}
