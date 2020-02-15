@@ -1,0 +1,21 @@
+/**
+ * magic css to implement aspect-ratio
+ * @see https://css-tricks.com/aspect-ratio-boxes/
+ * @see https://caniuse.com/#feat=css-variables
+*/
+@supports (--custom: property) {
+  [style*='--aspect-ratio'] {
+    position: relative;
+  }
+  [style*='--aspect-ratio']::before {
+    content: '';
+    display: block;
+    padding-bottom: calc(100% / (var(--aspect-ratio)));
+  }
+  [style*='--aspect-ratio'] > :first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+}
