@@ -1,4 +1,4 @@
-export const getDebugNamespace = (rootDir: string, stripCodeExt = true) => (srcFile: string) => {
+export const getDebugNamespace = (rootDir: string, stripCodeExt = true) => (srcFile: string, appendee?: string) => {
   const namespace = srcFile.startsWith(rootDir)
     ? srcFile
         .slice(rootDir.length, srcFile.length)
@@ -6,5 +6,6 @@ export const getDebugNamespace = (rootDir: string, stripCodeExt = true) => (srcF
         .replace(/\//g, ':')
     : srcFile.replace(/^\//, '').replace(/\//g, ':');
 
-  return stripCodeExt ? namespace.replace(/\.(ts|js)x?$/i, '') : namespace;
+  const striped = stripCodeExt ? namespace.replace(/\.(ts|js)x?$/i, '') : namespace;
+  return appendee ? `${striped}:${appendee}` : striped;
 };
