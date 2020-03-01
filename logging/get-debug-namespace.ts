@@ -1,9 +1,10 @@
-export const getDebugNamespace = (rootDir: string) => (srcFile: string) => {
-  if (srcFile.startsWith(rootDir)) {
-    return srcFile
-      .slice(rootDir.length, srcFile.length)
-      .replace(/^\//, '')
-      .replace(/\//g, ':');
-  }
-  return srcFile.replace(/^\//, '').replace(/\//g, ':');
+export const getDebugNamespace = (rootDir: string, stripCodeExt = true) => (srcFile: string) => {
+  const namespace = srcFile.startsWith(rootDir)
+    ? srcFile
+        .slice(rootDir.length, srcFile.length)
+        .replace(/^\//, '')
+        .replace(/\//g, ':')
+    : srcFile.replace(/^\//, '').replace(/\//g, ':');
+
+  return stripCodeExt ? namespace.replace(/\.(ts|js)x?$/i, '') : namespace;
 };
