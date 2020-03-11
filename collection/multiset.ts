@@ -8,7 +8,11 @@ export class Multiset<T> {
     const existedCount = this.countMap.get(obj);
 
     if (existedCount && existedCount !== count) {
-      this.map.get(existedCount)!.delete(obj);
+      const existedSet = this.map.get(existedCount)!;
+      existedSet.delete(obj);
+      if (!existedSet.size) {
+        this.map.delete(existedCount);
+      }
       // not updating countMap: it will be overwritten / removed anyway
     }
 
@@ -25,7 +29,7 @@ export class Multiset<T> {
   }
 
   maxCount() {
-    return Math.max(...Array.from(this.map.keys()));
+    return Math.max(0, ...Array.from(this.map.keys()));
   }
 
   getElemsOfCount(count: number): readonly T[] {
