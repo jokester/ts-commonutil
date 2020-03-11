@@ -13,6 +13,7 @@ describe(Multiset, () => {
     expect(testee.getElemsOfCount(0)).toEqual([]);
 
     testee.setCount('abc', 0);
+    testee.setCount('abc', 0);
     expect(testee.maxCount()).toEqual(0);
     expect(testee.getCount('abc')).toEqual(0);
     expect(testee.getElemsOfCount(0)).toEqual([]);
