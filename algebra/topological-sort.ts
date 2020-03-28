@@ -8,7 +8,7 @@ interface TopologicalLayer<T> {
 
 const empty: readonly never[] = [];
 
-export function* topologicalSort<T>(edges: Iterable<[T, T]>, throwOnLoop = false): Generator<TopologicalLayer<T>> {
+export function* topologicalSort<T>(edges: Iterable<[T, T]>, throwOnLoop = true): Generator<TopologicalLayer<T>> {
   const inDegreeMap = new Multiset<T>();
   const edgesMap = new DefaultMap<T, T[]>(_ => []);
 
