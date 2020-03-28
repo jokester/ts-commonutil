@@ -14,7 +14,7 @@ describe('timing.ts', () => {
   });
 
   describe('wait', () => {
-    it.skip('can be deducted to currect type ', () => {
+    it.skip('infers correct generic type', () => {
       const a: Promise<number> = wait(0, 1);
 
       const b: Promise<void> = wait(0);
