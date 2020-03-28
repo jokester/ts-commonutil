@@ -46,7 +46,12 @@ export class Deferred<T> implements PromiseLike<T> {
     }
   }
 
-  readonly completeCallback = (error: unknown, resolved: T | undefined | null) => {
+  /**
+   * complete the Deferred with a node-style callback
+   * @param error
+   * @param resolved
+   */
+  readonly completeCallback = (error: unknown, resolved: T) => {
     if (error) {
       this.reject(error);
     } else {
