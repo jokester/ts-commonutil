@@ -2,25 +2,27 @@ import { DefaultMap } from './default-map';
 
 export class Multiset<T> {
   private map = new DefaultMap</* count */ number, /* objects */ Set<T>>(k => new Set());
-  private countMap = new DefaultMap</* object*/ T, /* count */ number>(() => 0);
+  private countMap = new Map</* object*/ T, /* count */ number>();
 
-  setCount(obj: T, count: number) {
+  setCount(obj: T, count: number, removeOnZeroFreq = true) {
     const existedCount = this.countMap.get(obj);
 
-    if (existedCount && existedCount !== count) {
+    if (existedCount === count) {
+      // noop
+    } else if (existedCount !== undefined) {
+      // modify
+      this.countMap.set(obj, count);
+      this.map.getOrCreate(count).add(obj);
+
       const existedSet = this.map.get(existedCount)!;
       existedSet.delete(obj);
-      if (!existedSet.size) {
+      if (!existedSet.size && removeOnZeroFreq) {
         this.map.delete(existedCount);
       }
-      // not updating countMap: it will be overwritten / removed anyway
-    }
-
-    if (count) {
-      this.map.getOrCreate(count).add(obj);
-      this.countMap.set(obj, count);
     } else {
-      this.countMap.delete(obj);
+      // just add
+      this.countMap.set(obj, count);
+      this.map.getOrCreate(count).add(obj);
     }
   }
 
@@ -28,11 +30,33 @@ export class Multiset<T> {
     return this.countMap.get(obj) ?? 0;
   }
 
+  touch(obj: T) {
+    const existedCount = this.countMap.get(obj);
+
+    if (existedCount === undefined) {
+      this.map.getOrCreate(0).add(obj);
+      this.countMap.set(obj, 0);
+    }
+  }
+
+  /**
+   * deference objects with freq=0
+   */
+  shrink() {
+    const nils = this.map.get(0);
+    if (nils) {
+      for (const obj of nils) {
+        this.countMap.delete(obj);
+      }
+      this.map.delete(0);
+    }
+  }
+
   maxCount() {
     return Math.max(0, ...Array.from(this.map.keys()));
   }
 
-  getElemsOfCount(count: number): readonly T[] {
+  findByCount(count: number): T[] {
     return Array.from(this.map.get(count) || []);
   }
 }
