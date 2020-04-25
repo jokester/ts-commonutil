@@ -30,6 +30,22 @@ export class Multiset<T> {
     return this.countMap.get(obj) ?? 0;
   }
 
+  /**
+   * delete an object and deference it
+   * @param obj
+   * @returns count (0 when it wasn't referenced in this set)
+   */
+  delete(obj: T): number {
+    const count = this.countMap.get(obj);
+    if (count !== undefined) {
+      this.countMap.delete(obj);
+      const s = this.map.get(count)!;
+      s.delete(obj);
+      if (!s.size) this.map.delete(count);
+    }
+    return 0;
+  }
+
   touch(obj: T) {
     const existedCount = this.countMap.get(obj);
 
