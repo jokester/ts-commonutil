@@ -14,6 +14,10 @@ export class TotalOrdered<T> {
   }
 
   sort(elements: T[]): T[] {
+    return elements.slice().sort(this.compare);
+  }
+
+  sortInPlace(elements: T[]) {
     return elements.sort(this.compare);
   }
 }
