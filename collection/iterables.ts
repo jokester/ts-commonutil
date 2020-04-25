@@ -55,6 +55,14 @@ function find<T>(iterator: Iterable<T>, predicate: (value: T) => unknown, onAbse
   return onAbsent();
 }
 
+function* fromIterator<T>(iterator: Iterator<T>): Generator<T> {
+  while (true) {
+    const x = iterator.next();
+    yield x.value;
+    if (x.done) break;
+  }
+}
+
 async function findAsync<T>(
   iterator: GeneralIterable<T>,
   predicate: (t: T) => MaybePromise<unknown>,
