@@ -33,10 +33,13 @@ export function* topologicalSort<T>(edges: Iterable<[T, T]>, throwOnLoop = false
 
     for (const from of topMost) {
       for (const to of edgesMap.get(from) || empty) {
-        inDegreeMap.setCount(to, inDegreeMap.getCount(to) - 1, false);
+        inDegreeMap.setCount(to, inDegreeMap.getCount(to) - 1);
       }
       inDegreeMap.delete(from);
       edgesMap.delete(from);
     }
+  }
+  if (throwOnLoop && edgesMap.size) {
+    throw new Error('topologicalSort(): loop found');
   }
 }
