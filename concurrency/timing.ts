@@ -6,6 +6,17 @@ export function timeout<FakeRetType = never>(delayMs: number): Promise<FakeRetTy
   return new Promise<FakeRetType>((f, e) => setTimeout(e, delayMs, new Error(`timeout after ${delayMs}`)));
 }
 
+function neverResolve() {
+  return Never;
+}
+
+export const Never: Promise<any> = {
+  then: neverResolve,
+  catch: neverResolve,
+  finally: neverResolve,
+  [Symbol.toStringTag]: `Never`,
+};
+
 export async function withTimeout<T>(p: PromiseLike<T>, delayMs: number): Promise<T> {
   return Promise.race([p, timeout<T>(delayMs)]);
 }

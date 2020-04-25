@@ -1,45 +1,29 @@
-export abstract class TotalOrdered<T> {
+export class TotalOrdered<T> {
   static invert<T>(orig: TotalOrdered<T>): TotalOrdered<T> {
-    return new (class extends TotalOrdered<T> {
-      before(a: T, b: T): boolean {
-        return !orig.before(a, b);
-      }
-
-      equal(a: T, b: T): boolean {
-        return orig.equal(a, b);
-      }
-    })();
+    return new TotalOrdered<T>((a, b) => -orig.compare(a, b) as 1 | 0 | -1);
   }
 
-  abstract before(a: T, b: T): boolean;
+  constructor(readonly compare: (a: T, b: T) => 1 | 0 | -1) {}
 
-  abstract equal(a: T, b: T): boolean;
+  before(a: T, b: T): boolean {
+    return this.compare(a, b) < 0;
+  }
+
+  equal(a: T, b: T): boolean {
+    return this.compare(a, b) === 0;
+  }
 
   sort(elements: T[]): T[] {
-    return elements.sort((a, b) => {
-      if (this.equal(a, b)) return 0;
-
-      const before = this.before(a, b);
-      return before ? -1 : 1;
-    });
+    return elements.sort(this.compare);
   }
 }
 
-export const NumericOrder = new (class extends TotalOrdered<number> {
-  before(a: number, b: number): boolean {
-    return a < b;
-  }
-  equal(a: number, b: number): boolean {
-    return a === b;
-  }
-})();
+function builtinOrder<T extends string | number>(a: T, b: T): 1 | 0 | -1 {
+  if (a < b) return -1;
+  if (a === b) return 0;
+  return 1;
+}
 
-export const LexicographicalOrder = new (class extends TotalOrdered<string> {
-  before(a: string, b: string): boolean {
-    return a < b;
-  }
+export const NumericOrder = new TotalOrdered<number>(builtinOrder);
 
-  equal(a: string, b: string): boolean {
-    return a === b;
-  }
-})();
+export const LexicographicalOrder = new TotalOrdered<string>(builtinOrder);
