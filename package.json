@@ -14,6 +14,7 @@
     "test:coverage": "jest --coverage",
     "typecheck": "tsc --noEmit",
     "typecheck:watch": "tsc --watch --noEmit",
+    "build": "rm -rf lib cjs && tsc -p tsconfig.esm.json && tsc -p tsconfig.json",
     "lint": "    eslint '**/*.@(ts|js|tsx|jsx)'",
     "lint:fix": "eslint '**/*.@(ts|js|tsx|jsx)' --fix"
   },
@@ -22,13 +23,14 @@
     "TypeScript",
     "util"
   ],
+  "module": "lib/index.js",
+  "main": "cjs/index.js",
   "license": "WTFPL",
   "bugs": {
     "url": "https://github.com/jokester/ts-commonutil/issues"
   },
   "homepage": "https://github.com/jokester/ts-commonutil#readme",
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {},
   "devDependencies": {
     "@types/jest": "^25",
@@ -38,21 +40,21 @@
     "@typescript-eslint/eslint-plugin": "^2.19.2",
     "@typescript-eslint/parser": "^2.19.2",
     "codecov": "^3.6.5",
-    "eventemitter3": "<4",
     "eslint": "6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
+    "eventemitter3": "<4",
     "fp-ts": "<2",
     "jest": "^25",
     "loglevel": "^1.6.7",
-    "next": "^9.3.2",
+    "next": "^9.2.1",
     "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "tslib": "^1.10.0",
     "ts-jest": "^25",
     "ts-node": "^8.6.2",
-    "typescript": "^3.7",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9",
     "winston": "^3.2.1"
   }
 }
