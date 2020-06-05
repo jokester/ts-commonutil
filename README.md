@@ -6,16 +6,14 @@ Common TypeScript code I used in multiple app.
 
 ![Check](https://github.com/jokester/ts-commonutil/workflows/Check/badge.svg)
 [![codecov](https://codecov.io/gh/jokester/ts-commonutil/branch/master/graph/badge.svg)](https://codecov.io/gh/jokester/ts-commonutil)
+[![npm version](https://badge.fury.io/js/%40jokester%2Fts-commonutil.svg)](https://badge.fury.io/js/%40jokester%2Fts-commonutil)
 
 ## How to Use
 
-1. Add this repository as a git submodule
-2. Exclude the submodule itself in *root* tsconfig.json
-    - Example: `"exclude": [ "node_modules", "vendor/submodules/ts-commonutil" ]`
-    - This prevents tsc from compiling all the code (unless otherwise referenced).
-3. Install dependencies
-    - See [Content](#content) for xx
-4. Import from this submodule
+```
+yarn add @jokester/ts-commonutil
+
+```
 
 ## Content
 
