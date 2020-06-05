@@ -4,7 +4,7 @@
 
 Common TypeScript code I used in multiple app.
 
-[![CircleCI](https://circleci.com/gh/jokester/ts-commonutil.svg?style=svg)](https://circleci.com/gh/jokester/ts-commonutil)
+![Github Action](https://github.com/jokester/ts-commonutil/workflows/.github/workflows/check.yaml/badge.svg?branch=master)
 [![codecov](https://codecov.io/gh/jokester/ts-commonutil/branch/master/graph/badge.svg)](https://codecov.io/gh/jokester/ts-commonutil)
 
 ## How to Use
