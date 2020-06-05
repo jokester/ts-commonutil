@@ -2,11 +2,11 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "jsx": "preserve",
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
-    "target": "es2017",
+    "target": "esnext",
     "sourceRoot": "src",
-    "outDir": "cjs"
+    "outDir": "lib"
   },
   "exclude": [
     "node_modules",

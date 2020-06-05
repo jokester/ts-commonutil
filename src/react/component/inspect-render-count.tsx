@@ -10,7 +10,7 @@ import {
 
 export const RenderCountsToWidget: React.FC<MutationCounts> = counter => (
   <>
-    attrs={counter.attributes}}
+    attrs={counter.attributes}
     <br />
     characterData={counter.characterData}
     <br />
