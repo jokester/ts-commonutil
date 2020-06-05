@@ -1,6 +1,6 @@
 {
-  "name": "ts-commonutil",
-  "version": "0.1.0",
+  "name": "@jokester/ts-commonutil",
+  "version": "0.2.0",
   "author": "Wang Guan <momocraft@gmail.com>",
   "private": false,
   "description": "Common TypeScript code for my multiple projects",
@@ -15,9 +15,13 @@
     "typecheck": "tsc --noEmit",
     "typecheck:watch": "tsc --watch --noEmit",
     "build": "rm -rf lib cjs && tsc -p tsconfig.esm.json && tsc -p tsconfig.json",
-    "lint": "    eslint '**/*.@(ts|js|tsx|jsx)'",
-    "lint:fix": "eslint '**/*.@(ts|js|tsx|jsx)' --fix"
+    "lint": "    eslint 'src/**/*.@(ts|js|tsx|jsx)'",
+    "lint:fix": "eslint 'src/**/*.@(ts|js|tsx|jsx)' --fix"
   },
+  "files": [
+    "cjs",
+    "lib"
+  ],
   "keywords": [
     "nodejs",
     "TypeScript",
