@@ -1,8 +1,7 @@
 {
   "name": "@jokester/ts-commonutil",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Wang Guan <momocraft@gmail.com>",
-  "private": false,
   "description": "Common TypeScript code for my multiple projects",
   "repository": {
     "type": "git",
