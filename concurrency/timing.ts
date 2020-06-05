@@ -21,15 +21,21 @@ export async function withTimeout<T>(p: PromiseLike<T>, delayMs: number): Promis
   return Promise.race([p, timeout<T>(delayMs)]);
 }
 
-export async function withMinimumDuration<T>(minimumPeriod: number, task: () => Promise<T>): Promise<T> {
-  const start = Date.now();
-
+/**
+ * @param {number} minimumPeriod
+ * @param {() => Promise<T>} task
+ * @param waitOnException {boolean=true} wait even if task() throws
+ * @returns {Promise<T>}
+ */
+export async function withMinimumDuration<T>(
+  minimumPeriod: number,
+  task: () => Promise<T>,
+  waitOnException = true,
+): Promise<T> {
   try {
-    return await task();
-  } finally {
-    const elapsed = Date.now() - start;
-    if (elapsed < minimumPeriod) {
-      await wait(minimumPeriod - elapsed);
-    }
+    return wait(minimumPeriod, task());
+  } catch (e) {
+    if (waitOnException) await wait(minimumPeriod);
+    throw e;
   }
 }
