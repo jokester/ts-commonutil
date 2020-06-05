@@ -1,0 +1,40 @@
+name: Check
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-20.04
+
+    steps:
+
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - uses: bahmutov/npm-install@v1
+
+    - name: Type Check
+      run: yarn typecheck
+
+    - name: Lint
+      run: yarn lint
+
+    - name: Test
+      run: yarn test
+
+    - name: Collect Coverage
+      run: yarn test:coverage
+
+    - uses: codecov/codecov-action@v1
