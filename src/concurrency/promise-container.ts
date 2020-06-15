@@ -1,3 +1,5 @@
+import { Doomed } from './timing';
+
 export const enum PromiseState {
   pending = 'pending',
   fulfilled = 'fulfilled',
@@ -10,12 +12,6 @@ interface ReplaceOptions {
   onRejected?: boolean;
 }
 
-const empty = {
-  then() {
-    return Promise.reject('empty');
-  },
-} as const;
-
 export class PromiseContainer<T> implements PromiseLike<T> {
   private innerPromise!: Promise<T>;
   private _state!: PromiseState;
@@ -23,17 +19,8 @@ export class PromiseContainer<T> implements PromiseLike<T> {
   private _value: null | T = null;
   private _reason: unknown = null;
 
-  constructor(initial?: T | PromiseLike<T>, private readonly debug = false) {
-    if (initial) {
-      /* @eslint-disable-next-line */
-      this.replaceInnerPromise(
-        // safe to case: p will be Promise.resolve() anyway
-        initial as PromiseLike<T>,
-      );
-    } else {
-      this._state = PromiseState.rejected;
-      this.innerPromise = (empty as unknown) as Promise<T>; // safe to cast: innerPromise only requires then
-    }
+  constructor(initial?: T | PromiseLike<T>) {
+    this.replaceInnerPromise(initial ?? Doomed);
   }
 
   get state(): PromiseState {

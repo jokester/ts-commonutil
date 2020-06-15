@@ -12,6 +12,18 @@ describe('promise-container', () => {
     expect(testee.isFulfilled() && testee.value).toEqual(1);
   });
 
+  it('is doomed by default', async complete => {
+    const testee = new PromiseContainer<number>();
+
+    try {
+      await testee;
+      complete.fail('should not be here');
+    } catch (e) {
+      expect(e).toMatch(/doomed/i);
+      complete();
+    }
+  });
+
   it('only exposes value/reason after type guards', () => {
     const testee = new PromiseContainer<number>(0);
 

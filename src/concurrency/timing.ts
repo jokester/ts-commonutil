@@ -17,6 +17,12 @@ export const Never: Promise<any> = {
   [Symbol.toStringTag]: `Never`,
 };
 
+export const Doomed: PromiseLike<any> = {
+  then(f1, f2) {
+    return Promise.reject('Doomed').then(f1, f2);
+  },
+};
+
 export async function withTimeout<T>(p: PromiseLike<T>, delayMs: number): Promise<T> {
   return Promise.race([p, timeout<T>(delayMs)]);
 }
