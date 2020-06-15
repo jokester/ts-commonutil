@@ -1,5 +1,6 @@
 import { PromiseContainer, PromiseState } from './promise-container';
 import { wait } from './timing';
+import { TicToc } from './tic-toc';
 
 describe('promise-container', () => {
   it('keeps promised value', async () => {
@@ -85,7 +86,14 @@ describe('promise-container', () => {
   it('DOES cause deadlock when replace() referenced self', async () => {
     const testee = new PromiseContainer<number>(1);
 
-    const replaced = await testee.replace(async prev => 1 + (await testee) + (await prev), { onPending: true });
-    expect(replaced).toBe(3);
+    const tic = new TicToc();
+
+    await Promise.race([
+      testee.replace(async prev => 1 + (await testee) + (await prev), {
+        onPending: true,
+      }),
+      wait(1e3),
+    ]);
+    expect(tic.toc()).toBeGreaterThan(1e3);
   });
 });
