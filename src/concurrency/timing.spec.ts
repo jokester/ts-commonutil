@@ -1,5 +1,5 @@
 import { TicToc } from './tic-toc';
-import { wait, withMinimumDuration } from './timing';
+import { timeout, wait, withMinimumDuration } from './timing';
 
 describe('timing.ts', () => {
   describe('withMinimumDuration', () => {
@@ -18,6 +18,14 @@ describe('timing.ts', () => {
       const a: Promise<number> = wait(0, 1);
 
       const b: Promise<void> = wait(0);
+    });
+  });
+
+  describe('timeout', () => {
+    it('rejects after a timeout', async () => {
+      const tic = new TicToc();
+      await expect(timeout(0.1e3)).rejects.toThrowError(/timeout/i);
+      expect(tic.toc()).toBeGreaterThanOrEqual(0.1e3);
     });
   });
 });

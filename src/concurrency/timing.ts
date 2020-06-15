@@ -3,7 +3,9 @@ export function wait<T = void>(delayMs: number, value?: T): Promise<T> {
 }
 
 export function timeout<FakeRetType = never>(delayMs: number): Promise<FakeRetType> {
-  return wait<FakeRetType>(delayMs, Promise.reject(new Error(`timeout after ${delayMs}`)) as any);
+  return wait(delayMs).then(_ => {
+    throw new Error(`timeout after ${delayMs}`);
+  });
 }
 
 function neverResolve() {

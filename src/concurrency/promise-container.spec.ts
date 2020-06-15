@@ -106,6 +106,6 @@ describe('promise-container', () => {
       }),
       wait(1e3),
     ]);
-    expect(tic.toc()).toBeGreaterThan(1e3);
+    expect(tic.toc()).toBeGreaterThanOrEqual(1e3);
   });
 });
