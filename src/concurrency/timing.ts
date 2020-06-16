@@ -3,7 +3,9 @@ export function wait<T = void>(delayMs: number, value?: T): Promise<T> {
 }
 
 export function timeout<FakeRetType = never>(delayMs: number): Promise<FakeRetType> {
-  return new Promise<FakeRetType>((f, e) => setTimeout(e, delayMs, new Error(`timeout after ${delayMs}`)));
+  return wait(delayMs).then(_ => {
+    throw new Error(`timeout after ${delayMs}`);
+  });
 }
 
 function neverResolve() {
@@ -15,6 +17,12 @@ export const Never: Promise<any> = {
   catch: neverResolve,
   finally: neverResolve,
   [Symbol.toStringTag]: `Never`,
+};
+
+export const Doomed: PromiseLike<any> = {
+  then(f1, f2) {
+    return Promise.reject('Doomed').then(f1, f2);
+  },
 };
 
 export async function withTimeout<T>(p: PromiseLike<T>, delayMs: number): Promise<T> {
