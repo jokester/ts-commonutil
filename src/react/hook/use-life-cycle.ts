@@ -63,6 +63,7 @@ class LifecycleDelegate implements PublicLifecycleDelegate {
 }
 
 /**
+ * @deprecated prefer useLifeCycles / useUnmount etc (react-use)
  * @param displayName a name to log to console.debug with
  */
 export function useLifeCycle(displayName?: string) {

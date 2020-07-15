@@ -9,37 +9,41 @@ export type PromiseResult<T, E = unknown> = Readonly<
       pending: true;
       fulfilled: null;
       rejected: null;
+      value: null;
+      reason: null;
     }
   | {
       pending: null;
       fulfilled: true;
       rejected: null;
       value: T;
+      reason: null;
     }
   | {
       pending: null;
       fulfilled: null;
       rejected: true;
+      value: null;
       reason: E;
     }
 >;
 
-const pending: PromiseResult<any, any> = { pending: true, fulfilled: null, rejected: null };
+const pending: PromiseResult<any, any> = { pending: true, fulfilled: null, rejected: null, value: null, reason: null };
 
 export function usePromised<T>(promise: PromiseLike<T>): PromiseResult<T> {
   const [state, setState] = useState<PromiseResult<T>>(pending);
 
   useEffect(() => {
-    let unmounted = false;
+    let inEffect = true;
     if (!state.pending) setState(pending);
 
     promise.then(
-      value => !unmounted && setState({ pending: null, fulfilled: true, rejected: null, value }),
-      reason => !unmounted && setState({ pending: null, fulfilled: null, rejected: true, reason }),
+      value => inEffect && setState({ pending: null, fulfilled: true, rejected: null, value, reason: null }),
+      reason => inEffect && setState({ pending: null, fulfilled: null, rejected: true, value: null, reason }),
     );
 
     return () => {
-      unmounted = true;
+      inEffect = false;
     };
   }, [promise]);
 

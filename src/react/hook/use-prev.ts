@@ -1,16 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
-export function usePrev<T>(value: T, ignoreUnchanged = true) {
+const defaultIgnore = (v1: unknown, v2: unknown) => Object.is(v1, v2);
+
+export function usePrev<T>(value: T, shouldIgnore: (last: T, current: T) => boolean = defaultIgnore) {
   const ref = useRef(value);
 
-  useEffect(
-    () => {
+  useEffect(() => {
+    if (!shouldIgnore(ref.current, value)) {
       ref.current = value;
-    },
-    ignoreUnchanged
-      ? [value] // when the value (the identity) changes
-      : undefined, // whenever call site component runs (cant think of a valid use case ATM but who knows)
-  );
+    }
+  }, [value]);
 
   return ref.current;
 }
