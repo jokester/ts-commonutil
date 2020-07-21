@@ -9,7 +9,7 @@ describe('timing.ts', () => {
       const result = await withMinimumDuration(1e3, async () => 1);
 
       expect(result).toEqual(1);
-      expect(tictoc.toc()).toBeGreaterThan(1e3);
+      expect(tictoc.toc()).toBeGreaterThanOrEqual(1e3);
     });
   });
 
