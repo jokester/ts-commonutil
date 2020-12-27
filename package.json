@@ -28,7 +28,7 @@
   ],
   "module": "lib/index.js",
   "main": "cjs/index.js",
-  "license": "WTFPL",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/jokester/ts-commonutil/issues"
   },
