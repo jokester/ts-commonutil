@@ -1,6 +1,6 @@
 {
   "name": "@jokester/ts-commonutil",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "author": "Wang Guan <momocraft@gmail.com>",
   "description": "Common TypeScript code for my multiple projects",
   "repository": {
@@ -28,12 +28,13 @@
   ],
   "module": "lib/index.js",
   "main": "cjs/index.js",
-  "license": "WTFPL",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/jokester/ts-commonutil/issues"
   },
   "homepage": "https://github.com/jokester/ts-commonutil#readme",
-  "dependencies": {},
+  "dependencies": {
+  },
   "peerDependencies": {},
   "devDependencies": {
     "@types/jest": "^25",
@@ -50,6 +51,7 @@
     "fp-ts": "<2",
     "jest": "^25",
     "loglevel": "^1.6.7",
+    "mobx": "^6.0.3",
     "next": "^9.2.1",
     "prettier": "^1.19.1",
     "react": "^16.12.0",
@@ -58,6 +60,7 @@
     "ts-node": "^8.6.2",
     "tslib": "^2.0.0",
     "typescript": "^3.9",
+    "use-constant": "^1.0.0",
     "winston": "^3.2.1"
   }
 }

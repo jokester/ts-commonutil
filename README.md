@@ -51,4 +51,4 @@ yarn add @jokester/ts-commonutil
 
 ## License
 
-WTFPL
+MIT
