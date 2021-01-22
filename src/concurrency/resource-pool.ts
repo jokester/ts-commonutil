@@ -6,22 +6,19 @@
  */
 export class ResourcePool<T> {
   // can be used as a mutex
-  static single<T>(res: T) {
+  static single<T>(res: T): ResourcePool<T> {
     return new ResourcePool([res]);
   }
 
-  static multiple<T>(resArray: T[]) {
+  static multiple<T>(resArray: T[]): ResourcePool<T> {
     return new ResourcePool(resArray);
   }
 
   private consumers: ((res: T) => void)[] = [];
-  private readonly initialSize: number;
 
-  private constructor(private readonly resources: T[]) {
-    this.initialSize = resources.length;
-  }
+  private constructor(private readonly resources: T[]) {}
 
-  get freeCount() {
+  get freeCount(): number {
     return this.resources.length;
   }
 
@@ -35,7 +32,7 @@ export class ResourcePool<T> {
     }
   }
 
-  async tryUse<R>(task: (res: T | null) => Promise<R>): Promise<R> {
+  tryUse<R>(task: (res: T | null) => Promise<R>): Promise<R> {
     if (/** some resource is immediately available */ this.freeCount > 0) {
       return this.use(task);
     } else {
@@ -43,14 +40,14 @@ export class ResourcePool<T> {
     }
   }
 
-  private async borrow(): Promise<T> {
+  private borrow(): Promise<T> {
     return new Promise<T>(f => {
       this.consumers.push(f);
       this.balance();
     });
   }
 
-  private balance() {
+  private balance(): void {
     while (this.resources.length && this.consumers.length) {
       const r = this.resources.shift()!;
       const c = this.consumers.shift()!;
