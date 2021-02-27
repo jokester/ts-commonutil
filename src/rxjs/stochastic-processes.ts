@@ -1,7 +1,5 @@
-import { Observable, from, timer } from 'rxjs';
+import { Observable, from, timer, Subscriber } from 'rxjs';
 import { gaussianRandom } from './distributions';
-import { concatMap, mergeMap } from 'rxjs/operators';
-import { Subscribable } from 'rxjs/src/internal/types';
 import { wait } from '../concurrency/timing';
 
 export function bernoulli(p: number): Observable<boolean> {
@@ -23,15 +21,35 @@ export function wiener(dt = 1): Observable<number> {
   });
 }
 
-export function poisson(lambda = 1): Observable<void> {
-  const intervals = from(function*() {
-    yield -Math.log(Math.random()) / lambda;
+/**
+ * @param {number} lambda reciprocal of average arrive interval, in {@code s^{-1}}
+ * @returns {Observable<void>
+ */
+export function poisson(lambda = 1): Observable<number> {
+  return new Observable<number>(subscriber => {
+    let subscribed = true;
+
+    setTimeout(() => postPoissonEvents(subscriber, lambda, () => subscriber.closed));
+
+    return (): void => {
+      subscribed = false;
+    };
   });
-  // FIXME
-  if (1) throw 'not usable';
-  return intervals.pipe(mergeMap(interval => delayed(interval)));
 }
 
-function delayed(delay: number): Observable<void> {
-  return from(wait(delay));
+/**
+ * @internal
+ */
+async function postPoissonEvents(
+  subscriber: Subscriber<number>,
+  lambda: number,
+  shouldStop: () => boolean,
+): Promise<void> {
+  let eventNo = 0;
+  while (true) {
+    const poissonDelay = (-1 / lambda) * Math.log(Math.random()) * 1e3;
+    await wait(poissonDelay);
+    if (shouldStop()) break;
+    subscriber.next(eventNo++);
+  }
 }
