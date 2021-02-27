@@ -11,8 +11,8 @@ export function bernoulli(p: number): Observable<boolean> {
 }
 
 export function wiener(dt = 1): Observable<number> {
-  let sum = 0;
   return from(function*() {
+    let sum = 0;
     yield sum;
     while (true) {
       const d = Math.sqrt(dt) * gaussianRandom();
@@ -22,8 +22,8 @@ export function wiener(dt = 1): Observable<number> {
 }
 
 /**
- * @param {number} lambda reciprocal of average arrive interval, in {@code s^{-1}}
- * @returns {Observable<void>
+ * @param {number} lambda expected occurrence rate in {@code $ s^{-1} $ }
+ * @returns {Observable<number>} A observable that emits 0-based integers at Poissonic random interval
  */
 export function poisson(lambda = 1): Observable<number> {
   return new Observable<number>(subscriber => {
