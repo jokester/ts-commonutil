@@ -4,6 +4,8 @@
  *
  * - NOT supported: replace / refresh / timeout of tasks
  */
+import { wait } from './timing';
+
 export class ResourcePool<T> {
   // can be used as a mutex
   static single<T>(res: T): ResourcePool<T> {
@@ -16,7 +18,16 @@ export class ResourcePool<T> {
 
   private consumers: ((res: T) => void)[] = [];
 
-  private constructor(private readonly resources: T[]) {}
+  /**
+   * (free) resource objects
+   */
+  private readonly resources: T[] = [];
+  private readonly resourceCount: number;
+
+  private constructor(_resources: readonly T[]) {
+    this.resources = _resources.slice();
+    this.resourceCount = _resources.length;
+  }
 
   get freeCount(): number {
     return this.resources.length;
@@ -37,6 +48,24 @@ export class ResourcePool<T> {
       return this.use(task);
     } else {
       return task(null);
+    }
+  }
+
+  async waitComplete(timeout = 5e3, precision = 0.05e3): Promise<boolean> {
+    const start = Date.now();
+    while (true) {
+      const noOtherTasks = await this.use(
+        async () =>
+          this.freeCount === this.resourceCount - /* except the one running task */ 1 && this.consumers.length === 0,
+      );
+      if (noOtherTasks) {
+        return true;
+      } else if (Date.now() > start + timeout) {
+        return false;
+      } else {
+        await wait(precision);
+        // else: continue
+      }
     }
   }
 

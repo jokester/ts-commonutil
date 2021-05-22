@@ -8,18 +8,18 @@ export function timeout<FakeRetType = never>(delayMs: number): Promise<FakeRetTy
   });
 }
 
-function neverResolve() {
+function neverResolve(): Promise<never> {
   return Never;
 }
 
-export const Never: Promise<any> = {
+export const Never: Promise<never> = {
   then: neverResolve,
   catch: neverResolve,
   finally: neverResolve,
   [Symbol.toStringTag]: `Never`,
 };
 
-export const Doomed: PromiseLike<any> = {
+export const Doomed: PromiseLike<never> = {
   then(f1, f2) {
     return Promise.reject('Doomed').then(f1, f2);
   },
