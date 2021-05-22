@@ -6,12 +6,11 @@
     "moduleResolution": "node",
     "target": "es2017",
     "sourceRoot": "src",
-    "outDir": "cjs"
+    "outDir": "lib"
   },
   "exclude": [
     "node_modules",
     "coverage",
-    "cjs",
     "lib",
     "jest.config.js"
   ]
