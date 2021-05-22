@@ -1,41 +1,22 @@
-import fs from 'fs';
-import util from 'util';
+import { promises as fsPromised } from 'fs';
 import { chunkToLines } from '../text/chunk-to-lines';
 
-export const readDir = util.promisify(fs.readdir);
-export const readFile = util.promisify(fs.readFile);
+export const readText = (filename: string, encoding = 'UTF-8'): Promise<string> =>
+  fsPromised.readFile(filename, { encoding }) as Promise<string>;
 
-export const readText = (filename: string, encoding = 'UTF-8') => readFile(filename, { encoding });
+export const readLines = (filename: string): Promise<string[]> => readText(filename).then(chunkToLines);
 
-export const readLines = (filename: string) => readText(filename).then(chunkToLines);
-
-export const lstat = util.promisify(fs.lstat);
-
-export const stat = util.promisify(fs.stat);
-
-export const unlink = util.promisify(fs.unlink);
-
-export const mkdtemp = util.promisify(fs.mkdtemp);
-
-export const rmdir = util.promisify(fs.rmdir);
-
-export const rename = util.promisify(fs.rename);
-
-export const writeFile = util.promisify(fs.writeFile);
-
-export const cp = util.promisify(fs.copyFile);
-
-export const mv = async (oldPath: string, newPath: string) => {
+export const mv = async (oldPath: string, newPath: string): Promise<void> => {
   try {
-    return await rename(oldPath, newPath);
+    return await fsPromised.rename(oldPath, newPath);
   } catch (e) {
     if (e && e.code === 'EXDEV') {
       /**
        * on "EXDEV: cross-device link not permitted" error
        * fallback to cp + unlink
        */
-      await cp(oldPath, newPath);
-      return await unlink(oldPath);
+      await fsPromised.copyFile(oldPath, newPath);
+      return await fsPromised.unlink(oldPath);
     } else {
       throw e;
     }
