@@ -1,6 +1,6 @@
 {
   "name": "@jokester/ts-commonutil",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "Wang Guan <momocraft@gmail.com>",
   "description": "Common TypeScript code for my multiple projects",
   "repository": {
@@ -66,256 +66,256 @@
   },
   "exports": {
     "./lib/algebra/monoid": {
-      "import": "./lib/algebra/monoid",
-      "require": "./lib/__esm/algebra/monoid"
+      "import": "./lib/__esm/algebra/monoid.js",
+      "require": "./lib/algebra/monoid.js"
     },
     "./lib/algebra/topological-sort": {
-      "import": "./lib/algebra/topological-sort",
-      "require": "./lib/__esm/algebra/topological-sort"
+      "import": "./lib/__esm/algebra/topological-sort.js",
+      "require": "./lib/algebra/topological-sort.js"
     },
     "./lib/algebra/total-ordered": {
-      "import": "./lib/algebra/total-ordered",
-      "require": "./lib/__esm/algebra/total-ordered"
+      "import": "./lib/__esm/algebra/total-ordered.js",
+      "require": "./lib/algebra/total-ordered.js"
     },
     "./lib/collection/btree": {
-      "import": "./lib/collection/btree",
-      "require": "./lib/__esm/collection/btree"
+      "import": "./lib/__esm/collection/btree.js",
+      "require": "./lib/collection/btree.js"
     },
     "./lib/collection/default-map": {
-      "import": "./lib/collection/default-map",
-      "require": "./lib/__esm/collection/default-map"
+      "import": "./lib/__esm/collection/default-map.js",
+      "require": "./lib/collection/default-map.js"
     },
     "./lib/collection/iterables": {
-      "import": "./lib/collection/iterables",
-      "require": "./lib/__esm/collection/iterables"
+      "import": "./lib/__esm/collection/iterables.js",
+      "require": "./lib/collection/iterables.js"
     },
     "./lib/collection/maps": {
-      "import": "./lib/collection/maps",
-      "require": "./lib/__esm/collection/maps"
+      "import": "./lib/__esm/collection/maps.js",
+      "require": "./lib/collection/maps.js"
     },
     "./lib/collection/min-heap": {
-      "import": "./lib/collection/min-heap",
-      "require": "./lib/__esm/collection/min-heap"
+      "import": "./lib/__esm/collection/min-heap.js",
+      "require": "./lib/collection/min-heap.js"
     },
     "./lib/collection/multiset": {
-      "import": "./lib/collection/multiset",
-      "require": "./lib/__esm/collection/multiset"
+      "import": "./lib/__esm/collection/multiset.js",
+      "require": "./lib/collection/multiset.js"
     },
     "./lib/collection/segment-tree": {
-      "import": "./lib/collection/segment-tree",
-      "require": "./lib/__esm/collection/segment-tree"
+      "import": "./lib/__esm/collection/segment-tree.js",
+      "require": "./lib/collection/segment-tree.js"
     },
     "./lib/collection/sets": {
-      "import": "./lib/collection/sets",
-      "require": "./lib/__esm/collection/sets"
+      "import": "./lib/__esm/collection/sets.js",
+      "require": "./lib/collection/sets.js"
     },
     "./lib/concurrency/deferred": {
-      "import": "./lib/concurrency/deferred",
-      "require": "./lib/__esm/concurrency/deferred"
+      "import": "./lib/__esm/concurrency/deferred.js",
+      "require": "./lib/concurrency/deferred.js"
     },
     "./lib/concurrency/promise-container": {
-      "import": "./lib/concurrency/promise-container",
-      "require": "./lib/__esm/concurrency/promise-container"
+      "import": "./lib/__esm/concurrency/promise-container.js",
+      "require": "./lib/concurrency/promise-container.js"
     },
     "./lib/concurrency/resource-pool": {
-      "import": "./lib/concurrency/resource-pool",
-      "require": "./lib/__esm/concurrency/resource-pool"
+      "import": "./lib/__esm/concurrency/resource-pool.js",
+      "require": "./lib/concurrency/resource-pool.js"
     },
     "./lib/concurrency/tic-toc": {
-      "import": "./lib/concurrency/tic-toc",
-      "require": "./lib/__esm/concurrency/tic-toc"
+      "import": "./lib/__esm/concurrency/tic-toc.js",
+      "require": "./lib/concurrency/tic-toc.js"
     },
     "./lib/concurrency/timing": {
-      "import": "./lib/concurrency/timing",
-      "require": "./lib/__esm/concurrency/timing"
+      "import": "./lib/__esm/concurrency/timing.js",
+      "require": "./lib/concurrency/timing.js"
     },
     "./lib/event-emitter/typed-event-emitter": {
-      "import": "./lib/event-emitter/typed-event-emitter",
-      "require": "./lib/__esm/event-emitter/typed-event-emitter"
+      "import": "./lib/__esm/event-emitter/typed-event-emitter.js",
+      "require": "./lib/event-emitter/typed-event-emitter.js"
     },
     "./lib/fpts1/promise-to-either": {
-      "import": "./lib/fpts1/promise-to-either",
-      "require": "./lib/__esm/fpts1/promise-to-either"
+      "import": "./lib/__esm/fpts1/promise-to-either.js",
+      "require": "./lib/fpts1/promise-to-either.js"
     },
     "./lib/frontend/measure-img": {
-      "import": "./lib/frontend/measure-img",
-      "require": "./lib/__esm/frontend/measure-img"
+      "import": "./lib/__esm/frontend/measure-img.js",
+      "require": "./lib/frontend/measure-img.js"
     },
     "./lib/frontend/observe-dom-mutation": {
-      "import": "./lib/frontend/observe-dom-mutation",
-      "require": "./lib/__esm/frontend/observe-dom-mutation"
+      "import": "./lib/__esm/frontend/observe-dom-mutation.js",
+      "require": "./lib/frontend/observe-dom-mutation.js"
     },
     "./lib/index": {
-      "import": "./lib/index",
-      "require": "./lib/__esm/index"
+      "import": "./lib/__esm/index.js",
+      "require": "./lib/index.js"
     },
     "./lib/logging/console-logger": {
-      "import": "./lib/logging/console-logger",
-      "require": "./lib/__esm/logging/console-logger"
+      "import": "./lib/__esm/logging/console-logger.js",
+      "require": "./lib/logging/console-logger.js"
     },
     "./lib/logging/get-debug-namespace": {
-      "import": "./lib/logging/get-debug-namespace",
-      "require": "./lib/__esm/logging/get-debug-namespace"
+      "import": "./lib/__esm/logging/get-debug-namespace.js",
+      "require": "./lib/logging/get-debug-namespace.js"
     },
     "./lib/logging/loglevel-logger": {
-      "import": "./lib/logging/loglevel-logger",
-      "require": "./lib/__esm/logging/loglevel-logger"
+      "import": "./lib/__esm/logging/loglevel-logger.js",
+      "require": "./lib/logging/loglevel-logger.js"
     },
     "./lib/logging/winston-logger": {
-      "import": "./lib/logging/winston-logger",
-      "require": "./lib/__esm/logging/winston-logger"
+      "import": "./lib/__esm/logging/winston-logger.js",
+      "require": "./lib/logging/winston-logger.js"
     },
     "./lib/node/fsp": {
-      "import": "./lib/node/fsp",
-      "require": "./lib/__esm/node/fsp"
+      "import": "./lib/__esm/node/fsp.js",
+      "require": "./lib/node/fsp.js"
     },
     "./lib/node/index": {
-      "import": "./lib/node/index",
-      "require": "./lib/__esm/node/index"
+      "import": "./lib/__esm/node/index.js",
+      "require": "./lib/node/index.js"
     },
     "./lib/node/subprocess": {
-      "import": "./lib/node/subprocess",
-      "require": "./lib/__esm/node/subprocess"
+      "import": "./lib/__esm/node/subprocess.js",
+      "require": "./lib/node/subprocess.js"
     },
     "./lib/obsolete/array-monad": {
-      "import": "./lib/obsolete/array-monad",
-      "require": "./lib/__esm/obsolete/array-monad"
+      "import": "./lib/__esm/obsolete/array-monad.js",
+      "require": "./lib/obsolete/array-monad.js"
     },
     "./lib/obsolete/task-runner/runner": {
-      "import": "./lib/obsolete/task-runner/runner",
-      "require": "./lib/__esm/obsolete/task-runner/runner"
+      "import": "./lib/__esm/obsolete/task-runner/runner.js",
+      "require": "./lib/obsolete/task-runner/runner.js"
     },
     "./lib/obsolete/task-runner/unit": {
-      "import": "./lib/obsolete/task-runner/unit",
-      "require": "./lib/__esm/obsolete/task-runner/unit"
+      "import": "./lib/__esm/obsolete/task-runner/unit.js",
+      "require": "./lib/obsolete/task-runner/unit.js"
     },
     "./lib/obsolete/ts-typegen/decl": {
-      "import": "./lib/obsolete/ts-typegen/decl",
-      "require": "./lib/__esm/obsolete/ts-typegen/decl"
+      "import": "./lib/__esm/obsolete/ts-typegen/decl.js",
+      "require": "./lib/obsolete/ts-typegen/decl.js"
     },
     "./lib/obsolete/ts-typegen/format": {
-      "import": "./lib/obsolete/ts-typegen/format",
-      "require": "./lib/__esm/obsolete/ts-typegen/format"
+      "import": "./lib/__esm/obsolete/ts-typegen/format.js",
+      "require": "./lib/obsolete/ts-typegen/format.js"
     },
     "./lib/obsolete/ts-typegen/index": {
-      "import": "./lib/obsolete/ts-typegen/index",
-      "require": "./lib/__esm/obsolete/ts-typegen/index"
+      "import": "./lib/__esm/obsolete/ts-typegen/index.js",
+      "require": "./lib/obsolete/ts-typegen/index.js"
     },
     "./lib/obsolete/ts-typegen/infer": {
-      "import": "./lib/obsolete/ts-typegen/infer",
-      "require": "./lib/__esm/obsolete/ts-typegen/infer"
+      "import": "./lib/__esm/obsolete/ts-typegen/infer.js",
+      "require": "./lib/obsolete/ts-typegen/infer.js"
     },
     "./lib/react/component/aspect-ratio/aspect-ratio": {
-      "import": "./lib/react/component/aspect-ratio/aspect-ratio",
-      "require": "./lib/__esm/react/component/aspect-ratio/aspect-ratio"
+      "import": "./lib/__esm/react/component/aspect-ratio/aspect-ratio.js",
+      "require": "./lib/react/component/aspect-ratio/aspect-ratio.js"
     },
     "./lib/react/component/inspect-render-count": {
-      "import": "./lib/react/component/inspect-render-count",
-      "require": "./lib/__esm/react/component/inspect-render-count"
+      "import": "./lib/__esm/react/component/inspect-render-count.js",
+      "require": "./lib/react/component/inspect-render-count.js"
     },
     "./lib/react/component/pre-json": {
-      "import": "./lib/react/component/pre-json",
-      "require": "./lib/__esm/react/component/pre-json"
+      "import": "./lib/__esm/react/component/pre-json.js",
+      "require": "./lib/react/component/pre-json.js"
     },
     "./lib/react/fpts1/Eithered": {
-      "import": "./lib/react/fpts1/Eithered",
-      "require": "./lib/__esm/react/fpts1/Eithered"
+      "import": "./lib/__esm/react/fpts1/Eithered.js",
+      "require": "./lib/react/fpts1/Eithered.js"
     },
     "./lib/react/hoc/render-promise": {
-      "import": "./lib/react/hoc/render-promise",
-      "require": "./lib/__esm/react/hoc/render-promise"
+      "import": "./lib/__esm/react/hoc/render-promise.js",
+      "require": "./lib/react/hoc/render-promise.js"
     },
     "./lib/react/hook/use-concurrency-control": {
-      "import": "./lib/react/hook/use-concurrency-control",
-      "require": "./lib/__esm/react/hook/use-concurrency-control"
+      "import": "./lib/__esm/react/hook/use-concurrency-control.js",
+      "require": "./lib/react/hook/use-concurrency-control.js"
     },
     "./lib/react/hook/use-depending-state": {
-      "import": "./lib/react/hook/use-depending-state",
-      "require": "./lib/__esm/react/hook/use-depending-state"
+      "import": "./lib/__esm/react/hook/use-depending-state.js",
+      "require": "./lib/react/hook/use-depending-state.js"
     },
     "./lib/react/hook/use-life-cycle": {
-      "import": "./lib/react/hook/use-life-cycle",
-      "require": "./lib/__esm/react/hook/use-life-cycle"
+      "import": "./lib/__esm/react/hook/use-life-cycle.js",
+      "require": "./lib/react/hook/use-life-cycle.js"
     },
     "./lib/react/hook/use-mounted": {
-      "import": "./lib/react/hook/use-mounted",
-      "require": "./lib/__esm/react/hook/use-mounted"
+      "import": "./lib/__esm/react/hook/use-mounted.js",
+      "require": "./lib/react/hook/use-mounted.js"
     },
     "./lib/react/hook/use-prev": {
-      "import": "./lib/react/hook/use-prev",
-      "require": "./lib/__esm/react/hook/use-prev"
+      "import": "./lib/__esm/react/hook/use-prev.js",
+      "require": "./lib/react/hook/use-prev.js"
     },
     "./lib/react/hook/use-promised": {
-      "import": "./lib/react/hook/use-promised",
-      "require": "./lib/__esm/react/hook/use-promised"
+      "import": "./lib/__esm/react/hook/use-promised.js",
+      "require": "./lib/react/hook/use-promised.js"
     },
     "./lib/react/hook/use-versioned-memo": {
-      "import": "./lib/react/hook/use-versioned-memo",
-      "require": "./lib/__esm/react/hook/use-versioned-memo"
+      "import": "./lib/__esm/react/hook/use-versioned-memo.js",
+      "require": "./lib/react/hook/use-versioned-memo.js"
     },
     "./lib/react/mobx/use-derived": {
-      "import": "./lib/react/mobx/use-derived",
-      "require": "./lib/__esm/react/mobx/use-derived"
+      "import": "./lib/__esm/react/mobx/use-derived.js",
+      "require": "./lib/react/mobx/use-derived.js"
     },
     "./lib/react/next/wrapped-next-router": {
-      "import": "./lib/react/next/wrapped-next-router",
-      "require": "./lib/__esm/react/next/wrapped-next-router"
+      "import": "./lib/__esm/react/next/wrapped-next-router.js",
+      "require": "./lib/react/next/wrapped-next-router.js"
     },
     "./lib/react/rxjs/Streamed": {
-      "import": "./lib/react/rxjs/Streamed",
-      "require": "./lib/__esm/react/rxjs/Streamed"
+      "import": "./lib/__esm/react/rxjs/Streamed.js",
+      "require": "./lib/react/rxjs/Streamed.js"
     },
     "./lib/react/util/prop-of": {
-      "import": "./lib/react/util/prop-of",
-      "require": "./lib/__esm/react/util/prop-of"
+      "import": "./lib/__esm/react/util/prop-of.js",
+      "require": "./lib/react/util/prop-of.js"
     },
     "./lib/rxjs/distributions": {
-      "import": "./lib/rxjs/distributions",
-      "require": "./lib/__esm/rxjs/distributions"
+      "import": "./lib/__esm/rxjs/distributions.js",
+      "require": "./lib/rxjs/distributions.js"
     },
     "./lib/rxjs/stochastic-processes": {
-      "import": "./lib/rxjs/stochastic-processes",
-      "require": "./lib/__esm/rxjs/stochastic-processes"
+      "import": "./lib/__esm/rxjs/stochastic-processes.js",
+      "require": "./lib/rxjs/stochastic-processes.js"
     },
     "./lib/rxjs/tap-log": {
-      "import": "./lib/rxjs/tap-log",
-      "require": "./lib/__esm/rxjs/tap-log"
+      "import": "./lib/__esm/rxjs/tap-log.js",
+      "require": "./lib/rxjs/tap-log.js"
     },
     "./lib/text/chunk-to-lines": {
-      "import": "./lib/text/chunk-to-lines",
-      "require": "./lib/__esm/text/chunk-to-lines"
+      "import": "./lib/__esm/text/chunk-to-lines.js",
+      "require": "./lib/text/chunk-to-lines.js"
     },
     "./lib/text/random-string": {
-      "import": "./lib/text/random-string",
-      "require": "./lib/__esm/text/random-string"
+      "import": "./lib/__esm/text/random-string.js",
+      "require": "./lib/text/random-string.js"
     },
     "./lib/type/freeze": {
-      "import": "./lib/type/freeze",
-      "require": "./lib/__esm/type/freeze"
+      "import": "./lib/__esm/type/freeze.js",
+      "require": "./lib/type/freeze.js"
     },
     "./lib/type/index": {
-      "import": "./lib/type/index",
-      "require": "./lib/__esm/type/index"
+      "import": "./lib/__esm/type/index.js",
+      "require": "./lib/type/index.js"
     },
     "./lib/type/omit": {
-      "import": "./lib/type/omit",
-      "require": "./lib/__esm/type/omit"
+      "import": "./lib/__esm/type/omit.js",
+      "require": "./lib/type/omit.js"
     },
     "./lib/type/promisify": {
-      "import": "./lib/type/promisify",
-      "require": "./lib/__esm/type/promisify"
+      "import": "./lib/__esm/type/promisify.js",
+      "require": "./lib/type/promisify.js"
     },
     "./lib/util/lru": {
-      "import": "./lib/util/lru",
-      "require": "./lib/__esm/util/lru"
+      "import": "./lib/__esm/util/lru.js",
+      "require": "./lib/util/lru.js"
     },
     "./lib/util/proxys": {
-      "import": "./lib/util/proxys",
-      "require": "./lib/__esm/util/proxys"
+      "import": "./lib/__esm/util/proxys.js",
+      "require": "./lib/util/proxys.js"
     },
     "./lib/util/randoms": {
-      "import": "./lib/util/randoms",
-      "require": "./lib/__esm/util/randoms"
+      "import": "./lib/__esm/util/randoms.js",
+      "require": "./lib/util/randoms.js"
     }
   }
 }

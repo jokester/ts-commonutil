@@ -16,7 +16,7 @@ exports = Hash[
   entries.map do |e|
     r = e.relative_path_from(src_dir).sub(/\.[tj]sx?$/i, '').to_s
     [ "./lib/#{r}",
-      { import: "./lib/#{r}", require: "./lib/__esm/#{r}" }
+      { import: "./lib/__esm/#{r}.js", require: "./lib/#{r}.js" }
     ]
   end
 ]
