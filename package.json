@@ -35,8 +35,10 @@
     "url": "https://github.com/jokester/ts-commonutil/issues"
   },
   "homepage": "https://github.com/jokester/ts-commonutil#readme",
-  "dependencies": {},
-  "peerDependencies": {},
+  "dependencies": {
+  },
+  "peerDependencies": {
+  },
   "devDependencies": {
     "@types/jest": "^26",
     "@types/node": "^14",
@@ -129,10 +131,6 @@
       "import": "./lib/__esm/event-emitter/typed-event-emitter.js",
       "require": "./lib/event-emitter/typed-event-emitter.js"
     },
-    "./lib/fpts1/promise-to-either": {
-      "import": "./lib/__esm/fpts1/promise-to-either.js",
-      "require": "./lib/fpts1/promise-to-either.js"
-    },
     "./lib/frontend/measure-img": {
       "import": "./lib/__esm/frontend/measure-img.js",
       "require": "./lib/frontend/measure-img.js"
@@ -185,22 +183,6 @@
       "import": "./lib/__esm/obsolete/task-runner/unit.js",
       "require": "./lib/obsolete/task-runner/unit.js"
     },
-    "./lib/obsolete/ts-typegen/decl": {
-      "import": "./lib/__esm/obsolete/ts-typegen/decl.js",
-      "require": "./lib/obsolete/ts-typegen/decl.js"
-    },
-    "./lib/obsolete/ts-typegen/format": {
-      "import": "./lib/__esm/obsolete/ts-typegen/format.js",
-      "require": "./lib/obsolete/ts-typegen/format.js"
-    },
-    "./lib/obsolete/ts-typegen/index": {
-      "import": "./lib/__esm/obsolete/ts-typegen/index.js",
-      "require": "./lib/obsolete/ts-typegen/index.js"
-    },
-    "./lib/obsolete/ts-typegen/infer": {
-      "import": "./lib/__esm/obsolete/ts-typegen/infer.js",
-      "require": "./lib/obsolete/ts-typegen/infer.js"
-    },
     "./lib/react/component/aspect-ratio/aspect-ratio": {
       "import": "./lib/__esm/react/component/aspect-ratio/aspect-ratio.js",
       "require": "./lib/react/component/aspect-ratio/aspect-ratio.js"
@@ -212,10 +194,6 @@
     "./lib/react/component/pre-json": {
       "import": "./lib/__esm/react/component/pre-json.js",
       "require": "./lib/react/component/pre-json.js"
-    },
-    "./lib/react/fpts1/Eithered": {
-      "import": "./lib/__esm/react/fpts1/Eithered.js",
-      "require": "./lib/react/fpts1/Eithered.js"
     },
     "./lib/react/hoc/render-promise": {
       "import": "./lib/__esm/react/hoc/render-promise.js",
@@ -296,10 +274,6 @@
     "./lib/type/omit": {
       "import": "./lib/__esm/type/omit.js",
       "require": "./lib/type/omit.js"
-    },
-    "./lib/type/promisify": {
-      "import": "./lib/__esm/type/promisify.js",
-      "require": "./lib/type/promisify.js"
     },
     "./lib/util/lru": {
       "import": "./lib/__esm/util/lru.js",

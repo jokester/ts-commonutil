@@ -1,24 +1,34 @@
-import { Observable, from, timer, Subscriber } from 'rxjs';
+import { Observable, from, Subscriber } from 'rxjs';
 import { gaussianRandom } from './distributions';
 import { wait } from '../concurrency/timing';
 
 export function bernoulli(p: number): Observable<boolean> {
-  return from(function* () {
-    while (true) {
-      yield Math.random() < p;
-    }
-  });
+  return from(bernoulliIterator(p));
 }
 
+/**
+ * @internal
+ * @param p
+ */
+function* bernoulliIterator(p: number) {
+  while (true) yield Math.random() < p;
+}
+
+/**
+ * @internal
+ * @param dt
+ */
 export function wiener(dt = 1): Observable<number> {
-  return from(function* () {
-    let sum = 0;
-    yield sum;
-    while (true) {
-      const d = Math.sqrt(dt) * gaussianRandom();
-      yield (sum += d);
-    }
-  });
+  return from(wienerIterator(dt));
+}
+
+function* wienerIterator(dt: number) {
+  let sum = 0;
+  yield sum;
+  while (true) {
+    const d = Math.sqrt(dt) * gaussianRandom();
+    yield (sum += d);
+  }
 }
 
 /**
@@ -27,13 +37,7 @@ export function wiener(dt = 1): Observable<number> {
  */
 export function poisson(lambda = 1): Observable<number> {
   return new Observable<number>((subscriber) => {
-    let subscribed = true;
-
     setTimeout(() => postPoissonEvents(subscriber, lambda, () => subscriber.closed));
-
-    return (): void => {
-      subscribed = false;
-    };
   });
 }
 
