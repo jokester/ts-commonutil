@@ -3,8 +3,6 @@
  */
 export * from './freeze';
 
-export { toPromise1, liftPromise } from './promisify';
-
 /**
  * lift2 f to Promise
  */

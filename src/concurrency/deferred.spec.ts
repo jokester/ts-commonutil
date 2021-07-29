@@ -47,8 +47,8 @@ describe('Deferred', () => {
     setTimeout(() => p.completeCallback(null, 'str'));
     expect(
       (await pToEither(p)).fold(
-        l => l,
-        r => r,
+        (l) => l,
+        (r) => r,
       ),
     ).toEqual('str');
   });
@@ -59,8 +59,8 @@ describe('Deferred', () => {
     setTimeout(() => p.completeCallback('err', 'str'));
     expect(
       (await pToEither(p)).fold(
-        l => l,
-        r => r,
+        (l) => l,
+        (r) => r,
       ),
     ).toEqual('err');
   });

@@ -30,7 +30,7 @@ export type DeepReadonly<T> = T extends (string | number | symbol | null | undef
  * Cast a T value to its DeepReadonly<T> type
  */
 export function deepFreeze<T>(arg: T) {
-  return (arg as any) as DeepReadonly<T>;
+  return arg as any as DeepReadonly<T>;
 }
 
 export function freeze<T>(arg: T) {

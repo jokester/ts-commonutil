@@ -12,7 +12,7 @@ describe('promise-container', () => {
     expect(testee.isFulfilled() && testee.value).toEqual(1);
   });
 
-  it('is doomed by default', async complete => {
+  it('is doomed by default', async (complete) => {
     const testee = new PromiseContainer<number>();
 
     try {
@@ -29,34 +29,34 @@ describe('promise-container', () => {
 
     if (testee.isFulfilled()) {
       const shouldBeNum: number = testee.value;
-      // @ts-expect-error
+      // @ts-expect-error reason :: unknown
       const reason: string = testee.reason;
     }
 
     if (testee.isRejected()) {
       // reason is accessible, but unknown
       const reason = testee.reason as string;
-      // @ts-expect-error
+      // @ts-expect-error :: unknown
       const uncastedReason: string = testee.reason;
     }
 
     if (testee.isPending()) {
-      // @ts-expect-error
+      // @ts-expect-error reason
       testee.reason;
-      // @ts-expect-error
+      // @ts-expect-error value :: number
       testee.value;
     }
   });
 
-  it('does not replace a pending promise by default', async complete => {
+  it('does not replace a pending promise by default', async (complete) => {
     const testee = new PromiseContainer<number>(1);
 
-    const notReplaced = testee.replace(async prev => {
+    const notReplaced = testee.replace(async (prev) => {
       complete.fail('should not be called');
       return NaN;
     });
 
-    await testee.replace(async prev => 1 + (await prev), { onPending: true });
+    await testee.replace(async (prev) => 1 + (await prev), { onPending: true });
 
     expect(await notReplaced).toBe(1);
     expect(testee.isFulfilled() && testee.value).toBe(2);
@@ -64,30 +64,32 @@ describe('promise-container', () => {
     complete();
   });
 
-  it('does not replace fulfilled promise by default', async complete => {
+  it('does not replace fulfilled promise by default', async (complete) => {
     const testee = new PromiseContainer<number>(1);
     await testee;
     expect(testee.isFulfilled() && testee.value).toBe(1);
 
-    const notReplaced = await testee.replace(async prev => {
+    const notReplaced = await testee.replace(async (prev) => {
       complete.fail('should not be called');
       return NaN;
     });
     expect(testee.isFulfilled() && testee.value).toBe(1);
 
-    await testee.replace(async prev => 1 + (await prev), { onFulfilled: true });
+    await testee.replace(async (prev) => 1 + (await prev), { onFulfilled: true });
     expect(testee.isFulfilled() && testee.value).toBe(2);
 
     complete();
   });
 
-  it('does replace rejected promise by default', async complete => {
+  it('does replace rejected promise by default', async (complete) => {
     const testee = new PromiseContainer<number>(Promise.reject('rejected'));
 
     try {
       await testee;
       complete.fail('should throw');
-    } catch {}
+    } catch {
+      // ignored
+    }
 
     const replaced = await testee.replace(() => 1);
     expect(replaced).toEqual(1);
@@ -101,7 +103,7 @@ describe('promise-container', () => {
     const tic = new TicToc();
 
     await Promise.race([
-      testee.replace(async prev => 1 + (await testee) + (await prev), {
+      testee.replace(async (prev) => 1 + (await testee) + (await prev), {
         onPending: true,
       }),
       wait(1e3),

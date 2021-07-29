@@ -3,7 +3,7 @@ import { gaussianRandom } from './distributions';
 import { wait } from '../concurrency/timing';
 
 export function bernoulli(p: number): Observable<boolean> {
-  return from(function*() {
+  return from(function* () {
     while (true) {
       yield Math.random() < p;
     }
@@ -11,7 +11,7 @@ export function bernoulli(p: number): Observable<boolean> {
 }
 
 export function wiener(dt = 1): Observable<number> {
-  return from(function*() {
+  return from(function* () {
     let sum = 0;
     yield sum;
     while (true) {
@@ -26,7 +26,7 @@ export function wiener(dt = 1): Observable<number> {
  * @returns {Observable<number>} A observable that emits 0-based integers at Poissonic random interval
  */
 export function poisson(lambda = 1): Observable<number> {
-  return new Observable<number>(subscriber => {
+  return new Observable<number>((subscriber) => {
     let subscribed = true;
 
     setTimeout(() => postPoissonEvents(subscriber, lambda, () => subscriber.closed));

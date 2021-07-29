@@ -9,7 +9,7 @@ function fromIterable<T>(items: Iterable<T>) {
 }
 
 function intersect<T>(as: ReadonlySet<T>, bs: ReadonlySet<T>): Set<T> {
-  return fromIterable(Iterables.filter(as, _ => bs.has(_)));
+  return fromIterable(Iterables.filter(as, (_) => bs.has(_)));
 }
 
 export const Sets = {

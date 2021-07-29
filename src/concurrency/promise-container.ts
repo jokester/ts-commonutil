@@ -78,8 +78,8 @@ export class PromiseContainer<T> implements PromiseLike<T> {
     this._value = this._reason = null;
     const newInner = Promise.resolve(p);
     newInner.then(
-      v => this.onInnerPromiseComplete(newInner, PromiseState.fulfilled, v),
-      e => this.onInnerPromiseComplete(newInner, PromiseState.rejected, e),
+      (v) => this.onInnerPromiseComplete(newInner, PromiseState.fulfilled, v),
+      (e) => this.onInnerPromiseComplete(newInner, PromiseState.rejected, e),
     );
     return (this.innerPromise = newInner);
   }

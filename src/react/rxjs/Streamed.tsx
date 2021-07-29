@@ -22,7 +22,7 @@ export function Streamed<T>(props: Props<T>): React.ReactElement | null {
 
   useEffect(() => {
     // console.log('subscribed');
-    const subscription = props.observable.pipe(materialize()).subscribe(value => {
+    const subscription = props.observable.pipe(materialize()).subscribe((value) => {
       setN(value);
 
       value.do(props.onValue || renderNothing, props.onError, props.onComplete);

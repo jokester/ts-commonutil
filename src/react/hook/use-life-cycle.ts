@@ -26,7 +26,7 @@ class LifecycleDelegate implements PublicLifecycleDelegate {
   private _unmounted = false;
   private unmountCallback: (() => void)[] = [];
   private mountCallback: (() => void)[] = [];
-  readonly unmounted = new Promise<void>(f => this.unmountCallback.push(f));
+  readonly unmounted = new Promise<void>((f) => this.unmountCallback.push(f));
 
   constructor(private readonly displayName?: string) {}
 

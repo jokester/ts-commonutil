@@ -1,7 +1,7 @@
 import { DefaultMap } from './default-map';
 
 export class Multiset<T> {
-  private map = new DefaultMap</* count */ number, /* objects */ Set<T>>(k => new Set());
+  private map = new DefaultMap</* count */ number, /* objects */ Set<T>>((k) => new Set());
   private countMap = new Map</* object*/ T, /* count */ number>();
 
   setCount(obj: T, count: number, removeOnZeroFreq = true) {

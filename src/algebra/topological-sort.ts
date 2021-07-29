@@ -10,7 +10,7 @@ const empty: readonly never[] = [];
 
 export function* topologicalSort<T>(edges: Iterable<[T, T]>, throwOnLoop = true): Generator<TopologicalLayer<T>> {
   const inDegreeMap = new Multiset<T>();
-  const edgesMap = new DefaultMap<T, T[]>(_ => []);
+  const edgesMap = new DefaultMap<T, T[]>((_) => []);
 
   for (const [from, to] of edges) {
     inDegreeMap.touch(from);
@@ -28,7 +28,7 @@ export function* topologicalSort<T>(edges: Iterable<[T, T]>, throwOnLoop = true)
 
     yield {
       rank,
-      edges: topMost.map(from => ({ from, to: edgesMap.get(from) || [] })),
+      edges: topMost.map((from) => ({ from, to: edgesMap.get(from) || [] })),
     };
 
     for (const from of topMost) {

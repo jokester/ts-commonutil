@@ -28,7 +28,7 @@ export class SingleThreadedLRU<T> {
    */
   constructor(readonly capacity: number) {
     if (capacity !== capacity >>> 0 || capacity < 1) {
-      throw new Error(`capacity must be a positive integer`);
+      throw new Error('capacity must be a positive integer');
     } else if (capacity > 1 << 20) {
       throw new Error(`capacity too large: ${capacity}`);
     }

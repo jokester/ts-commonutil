@@ -53,6 +53,7 @@ export class ResourcePool<T> {
 
   async waitComplete(timeout = 5e3, precision = 0.05e3): Promise<boolean> {
     const start = Date.now();
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       const noOtherTasks = await this.use(
         async () =>
@@ -64,13 +65,13 @@ export class ResourcePool<T> {
         return false;
       } else {
         await wait(precision);
-        // else: continue
+        // and continue
       }
     }
   }
 
   private borrow(): Promise<T> {
-    return new Promise<T>(f => {
+    return new Promise<T>((f) => {
       this.consumers.push(f);
       this.balance();
     });

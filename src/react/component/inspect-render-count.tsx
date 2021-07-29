@@ -8,7 +8,7 @@ import {
   startObserve,
 } from '../../frontend/observe-dom-mutation';
 
-export const RenderCountsToWidget: React.FC<MutationCounts> = counter => (
+export const RenderCountsToWidget: React.FC<MutationCounts> = (counter) => (
   <>
     attrs={counter.attributes}
     <br />
@@ -18,7 +18,7 @@ export const RenderCountsToWidget: React.FC<MutationCounts> = counter => (
   </>
 );
 
-const RenderCountsToConsole: React.FC<MutationCounts> = counter => {
+const RenderCountsToConsole: React.FC<MutationCounts> = (counter) => {
   console.log(counter);
   return null! as React.ReactElement;
 };
