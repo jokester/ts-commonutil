@@ -1,5 +1,4 @@
 import { Deferred } from './deferred';
-import { pToEither } from '../fpts1/promise-to-either';
 
 describe('Deferred', () => {
   it('resolves when fulfill() is called', async () => {
@@ -46,7 +45,7 @@ describe('Deferred', () => {
 
     setTimeout(() => p.completeCallback(null, 'str'));
     expect(
-      (await pToEither(p)).fold(
+      await p.then(
         (l) => l,
         (r) => r,
       ),
@@ -58,7 +57,7 @@ describe('Deferred', () => {
 
     setTimeout(() => p.completeCallback('err', 'str'));
     expect(
-      (await pToEither(p)).fold(
+      await p.then(
         (l) => l,
         (r) => r,
       ),
