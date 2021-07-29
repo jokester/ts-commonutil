@@ -64,7 +64,7 @@ const WrappedNextRouterContext = React.createContext<WrappedNextRouter>(Proxies.
 
 const createRouter = () => new WrappedNextRouter(Router);
 
-export const WrappedNextRouterHolder: React.FunctionComponent = props => {
+export const WrappedNextRouterHolder: React.FunctionComponent = (props) => {
   const [wrappedRouter] = useState(createRouter);
 
   useEffect(() => {

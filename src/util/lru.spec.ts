@@ -14,7 +14,7 @@ describe('SingleThreadedLRU', () => {
   }
 
   function toInspectable<T>(s: SingleThreadedLRU<T>) {
-    return (s as any) as {
+    return s as any as {
       values: Map<string, T>;
       recentKeys: string[];
       recentKeyCount: Map<string, number>;

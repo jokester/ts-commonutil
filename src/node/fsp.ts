@@ -1,7 +1,7 @@
 import { promises as fsPromised } from 'fs';
 import { chunkToLines } from '../text/chunk-to-lines';
 
-export const readText = (filename: string, encoding = 'UTF-8'): Promise<string> =>
+export const readText = (filename: string, encoding: BufferEncoding = 'utf-8'): Promise<string> =>
   fsPromised.readFile(filename, { encoding }) as Promise<string>;
 
 export const readLines = (filename: string): Promise<string[]> => readText(filename).then(chunkToLines);

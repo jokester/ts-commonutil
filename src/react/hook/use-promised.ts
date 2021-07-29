@@ -38,8 +38,8 @@ export function usePromised<T>(promise: PromiseLike<T>): PromiseResult<T> {
     if (!state.pending) setState(pending);
 
     promise.then(
-      value => inEffect && setState({ pending: null, fulfilled: true, rejected: null, value, reason: null }),
-      reason => inEffect && setState({ pending: null, fulfilled: null, rejected: true, value: null, reason }),
+      (value) => inEffect && setState({ pending: null, fulfilled: true, rejected: null, value, reason: null }),
+      (reason) => inEffect && setState({ pending: null, fulfilled: null, rejected: true, value: null, reason }),
     );
 
     return () => {

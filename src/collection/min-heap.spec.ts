@@ -30,13 +30,7 @@ describe('MinHeap', () => {
   });
 
   it('removes element - 2', () => {
-    const testee = new MinHeap(NumericOrder)
-      .insert(0)
-      .insert(2)
-      .insert(3)
-      .insert(100)
-      .insert(200)
-      .insert(4);
+    const testee = new MinHeap(NumericOrder).insert(0).insert(2).insert(3).insert(100).insert(200).insert(4);
 
     expect(testee.slice()).toEqual([0, 2, 3, 100, 200, 4]);
     expect(testee.remove()).toEqual(0);
@@ -73,18 +67,8 @@ describe('MinHeap', () => {
   it('can shrink to a given upperlimit', () => {
     const testee = new MinHeap(NumericOrder).insertMany(5, 4, 3, 2, 1, -1);
 
-    expect(
-      testee
-        .clone()
-        .shrinkUntil(4)
-        .removeMany(100),
-    ).toEqual([-1, 1, 2, 3]);
+    expect(testee.clone().shrinkUntil(4).removeMany(100)).toEqual([-1, 1, 2, 3]);
 
-    expect(
-      testee
-        .clone()
-        .shrinkUntil(4, true)
-        .removeMany(100),
-    ).toEqual([-1, 1, 2, 3, 4]);
+    expect(testee.clone().shrinkUntil(4, true).removeMany(100)).toEqual([-1, 1, 2, 3, 4]);
   });
 });

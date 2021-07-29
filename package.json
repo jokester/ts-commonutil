@@ -14,8 +14,8 @@
     "typecheck": "tsc --noEmit",
     "typecheck:watch": "tsc --watch --noEmit",
     "build": "rm -rf lib && tsc -p tsconfig.esm.json && tsc -p tsconfig.json && ruby generate-exports.rb",
-    "lint": "    eslint 'src/**/*.@(ts|js|tsx|jsx)'",
-    "lint:fix": "eslint 'src/**/*.@(ts|js|tsx|jsx)' --fix"
+    "lint": "gts lint",
+    "lint:fix": "gts fix"
   },
   "files": [
     "lib"
@@ -25,6 +25,9 @@
     "TypeScript",
     "util"
   ],
+  "engines": {
+    "node": ">=10.17 >=11.14"
+  },
   "module": "lib/index.js",
   "main": "lib/index.js",
   "license": "MIT",
@@ -37,32 +40,27 @@
   "peerDependencies": {
   },
   "devDependencies": {
-    "@types/jest": "^25",
-    "@types/node": "^12",
-    "@types/react": "^16.9.19",
-    "@types/react-dom": "^16.9.5",
-    "@typescript-eslint/eslint-plugin": "^2.19.2",
-    "@typescript-eslint/parser": "^2.19.2",
-    "codecov": "^3.6.5",
-    "eslint": "6.8.0",
-    "eslint-config-prettier": "^6.10.0",
-    "eslint-plugin-prettier": "^3.1.2",
-    "eventemitter3": "<4",
-    "fp-ts": "<2",
-    "jest": "^25",
-    "loglevel": "^1.6.7",
-    "mobx": "^6.0.3",
-    "next": "^9.2.1",
-    "prettier": "^1.19.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "rxjs": "^6.6.3",
-    "ts-jest": "^25",
-    "ts-node": "^8.6.2",
-    "tslib": "^2.0.0",
-    "typescript": "^3.9",
-    "use-constant": "^1.0.0",
-    "winston": "^3.2.1"
+    "@types/jest": "^26",
+    "@types/node": "^14",
+    "@types/react": "^17.0.15",
+    "@types/react-dom": "^17.0.9",
+    "codecov": "^3.8.3",
+    "eventemitter3": "^4",
+    "fp-ts": "^2",
+    "gts": "^3.1.0",
+    "jest": "^27",
+    "loglevel": "^1.7.1",
+    "mobx": "^6.3.2",
+    "next": "^11.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "rxjs": "<7",
+    "ts-jest": "^27",
+    "ts-node": "^10.1.0",
+    "tslib": "^2.3.0",
+    "typescript": "^4.3",
+    "use-constant": "^1.1.0",
+    "winston": "^3.3.3"
   },
   "exports": {
     "./lib/algebra/monoid": {
@@ -133,10 +131,6 @@
       "import": "./lib/__esm/event-emitter/typed-event-emitter.js",
       "require": "./lib/event-emitter/typed-event-emitter.js"
     },
-    "./lib/fpts1/promise-to-either": {
-      "import": "./lib/__esm/fpts1/promise-to-either.js",
-      "require": "./lib/fpts1/promise-to-either.js"
-    },
     "./lib/frontend/measure-img": {
       "import": "./lib/__esm/frontend/measure-img.js",
       "require": "./lib/frontend/measure-img.js"
@@ -189,22 +183,6 @@
       "import": "./lib/__esm/obsolete/task-runner/unit.js",
       "require": "./lib/obsolete/task-runner/unit.js"
     },
-    "./lib/obsolete/ts-typegen/decl": {
-      "import": "./lib/__esm/obsolete/ts-typegen/decl.js",
-      "require": "./lib/obsolete/ts-typegen/decl.js"
-    },
-    "./lib/obsolete/ts-typegen/format": {
-      "import": "./lib/__esm/obsolete/ts-typegen/format.js",
-      "require": "./lib/obsolete/ts-typegen/format.js"
-    },
-    "./lib/obsolete/ts-typegen/index": {
-      "import": "./lib/__esm/obsolete/ts-typegen/index.js",
-      "require": "./lib/obsolete/ts-typegen/index.js"
-    },
-    "./lib/obsolete/ts-typegen/infer": {
-      "import": "./lib/__esm/obsolete/ts-typegen/infer.js",
-      "require": "./lib/obsolete/ts-typegen/infer.js"
-    },
     "./lib/react/component/aspect-ratio/aspect-ratio": {
       "import": "./lib/__esm/react/component/aspect-ratio/aspect-ratio.js",
       "require": "./lib/react/component/aspect-ratio/aspect-ratio.js"
@@ -216,10 +194,6 @@
     "./lib/react/component/pre-json": {
       "import": "./lib/__esm/react/component/pre-json.js",
       "require": "./lib/react/component/pre-json.js"
-    },
-    "./lib/react/fpts1/Eithered": {
-      "import": "./lib/__esm/react/fpts1/Eithered.js",
-      "require": "./lib/react/fpts1/Eithered.js"
     },
     "./lib/react/hoc/render-promise": {
       "import": "./lib/__esm/react/hoc/render-promise.js",
@@ -301,10 +275,6 @@
       "import": "./lib/__esm/type/omit.js",
       "require": "./lib/type/omit.js"
     },
-    "./lib/type/promisify": {
-      "import": "./lib/__esm/type/promisify.js",
-      "require": "./lib/type/promisify.js"
-    },
     "./lib/util/lru": {
       "import": "./lib/__esm/util/lru.js",
       "require": "./lib/util/lru.js"
@@ -317,5 +287,9 @@
       "import": "./lib/__esm/util/randoms.js",
       "require": "./lib/util/randoms.js"
     }
+  },
+  "resolutions": {
+    "@types/node": "^14",
+    "@types/react": "^17"
   }
 }

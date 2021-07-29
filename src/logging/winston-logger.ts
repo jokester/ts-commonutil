@@ -13,7 +13,7 @@ export function getWinstonLogger(srcFile: string, level: LogLevel = 'info', tag?
       format.label({ label }),
       format.timestamp(),
       format.splat(),
-      format.printf(info => {
+      format.printf((info) => {
         return `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`;
       }),
       // format.prettyPrint(),

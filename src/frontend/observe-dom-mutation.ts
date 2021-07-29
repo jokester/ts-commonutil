@@ -17,7 +17,7 @@ export function startObserve(
   options?: MutationObserverInit,
 ): () => void {
   const count = initialCount();
-  const observer = new MutationObserver(mutationList => {
+  const observer = new MutationObserver((mutationList) => {
     for (const m of mutationList) count[m.type]++;
     callback({ ...count });
   });

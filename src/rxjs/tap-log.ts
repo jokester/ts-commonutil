@@ -5,13 +5,13 @@ import { dematerialize, map, materialize } from 'rxjs/operators';
 export function tapLog<T>(logger: Logger): OperatorFunction<T, T> {
   return pipe(
     materialize(),
-    map(v => {
+    map((v) => {
       if (v.kind === 'N') {
-        logger.info(name, `next()`, v.value);
+        logger.info(name, 'next()', v.value);
       } else if (v.kind === 'C') {
-        logger.info(name, `complete()`, v.value);
+        logger.info(name, 'complete()', v.value);
       } else {
-        logger.error(name, `error()`, v.value);
+        logger.error(name, 'error()', v.value);
       }
       return v;
     }),

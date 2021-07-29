@@ -28,7 +28,7 @@ export class TaskRunner<T> {
         this.taskDef.set(name, taskDef[name]);
       }
     } else {
-      throw new Error(`expect taskDef to be Map or Object`);
+      throw new Error('expect taskDef to be Map or Object');
     }
   }
 
@@ -59,7 +59,7 @@ export class TaskRunner<T> {
     }
 
     targetStack.push(target);
-    const deps = (this.taskDef.get(target)!.dep || []).map(depName => {
+    const deps = (this.taskDef.get(target)!.dep || []).map((depName) => {
       if (!this.results.has(depName)) {
         this.results.set(depName, this.runSync(depName));
       }
@@ -67,7 +67,7 @@ export class TaskRunner<T> {
     });
     targetStack.pop();
 
-    return Promise.all(deps).then(depResults => {
+    return Promise.all(deps).then((depResults) => {
       return task.run.apply(task.thisArg, depResults);
     });
   }
