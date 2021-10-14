@@ -8,6 +8,7 @@ export interface Monoid<T> {
  * Fast computation for (a ⊗ k), when (a ⊕ b) forms a monoid
  *
  * @see https://jokester.io/post/2017-03/monoid-fast-exp/
+ * @deprecated use {@name monoidPow}
  */
 export function fastMul<T>(monoid: Monoid<T>, a: T, pow: number): T {
   if (pow >>> 0 !== pow || !(pow > 0)) {
