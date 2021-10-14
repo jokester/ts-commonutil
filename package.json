@@ -35,7 +35,8 @@
     "url": "https://github.com/jokester/ts-commonutil/issues"
   },
   "homepage": "https://github.com/jokester/ts-commonutil#readme",
-  "dependencies": {},
+  "dependencies": {
+  },
   "peerDependencies": {
     "tslib": "^2.3.1"
   },
@@ -113,6 +114,10 @@
       "import": "./lib/__esm/concurrency/deferred.js",
       "require": "./lib/concurrency/deferred.js"
     },
+    "./lib/concurrency/lazy-thenable": {
+      "import": "./lib/__esm/concurrency/lazy-thenable.js",
+      "require": "./lib/concurrency/lazy-thenable.js"
+    },
     "./lib/concurrency/promise-container": {
       "import": "./lib/__esm/concurrency/promise-container.js",
       "require": "./lib/concurrency/promise-container.js"
@@ -132,6 +137,10 @@
     "./lib/event-emitter/typed-event-emitter": {
       "import": "./lib/__esm/event-emitter/typed-event-emitter.js",
       "require": "./lib/event-emitter/typed-event-emitter.js"
+    },
+    "./lib/fp-ts-extension/monoid": {
+      "import": "./lib/__esm/fp-ts-extension/monoid.js",
+      "require": "./lib/fp-ts-extension/monoid.js"
     },
     "./lib/frontend/measure-img": {
       "import": "./lib/__esm/frontend/measure-img.js",
@@ -200,6 +209,10 @@
     "./lib/react/hoc/render-promise": {
       "import": "./lib/__esm/react/hoc/render-promise.js",
       "require": "./lib/react/hoc/render-promise.js"
+    },
+    "./lib/react/hook/use-async-effect": {
+      "import": "./lib/__esm/react/hook/use-async-effect.js",
+      "require": "./lib/react/hook/use-async-effect.js"
     },
     "./lib/react/hook/use-concurrency-control": {
       "import": "./lib/__esm/react/hook/use-concurrency-control.js",
