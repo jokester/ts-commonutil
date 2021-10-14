@@ -22,7 +22,7 @@ describe('Deferred', () => {
     p.reject('ho');
     expect(p.resolved).toBe(true);
 
-    let reason: string | null = null;
+    let reason: unknown;
     try {
       await p;
     } catch (e) {

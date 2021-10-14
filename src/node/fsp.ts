@@ -10,7 +10,7 @@ export const mv = async (oldPath: string, newPath: string): Promise<void> => {
   try {
     return await fsPromised.rename(oldPath, newPath);
   } catch (e) {
-    if (e && e.code === 'EXDEV') {
+    if (e && (e as { code?: unknown }).code === 'EXDEV') {
       /**
        * on "EXDEV: cross-device link not permitted" error
        * fallback to cp + unlink
