@@ -8,7 +8,7 @@
  *
  */
 /* eslint-disable */
-export type DeepReadonly<T> = T extends (string | number | symbol | null | undefined | void)
+export type DeepReadonly<T> = T extends string | number | symbol | null | undefined | void
   ? T
   : T extends RegExp
   ? T
@@ -37,7 +37,7 @@ export function freeze<T>(arg: T) {
   return arg as Readonly<T>;
 }
 
-type ArrayElem<T extends {}[]> = T extends (infer U)[] ? U : never;
+type ArrayElem<T extends unknown[]> = T extends ReadonlyArray<infer U> ? U : never;
 
 // XXX: not working
 type DeepReadonlyArray<T extends any[]> = T extends (infer U)[] ? DeepReadonly<U>[] : never;

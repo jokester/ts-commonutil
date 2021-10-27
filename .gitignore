@@ -1,11 +1,10 @@
 !.gitkeep
-
-/lib
-/cjs
 /node_modules
+/lib
 /*.tgz
 .DS_Store
-/.idea
+.idea
+*.map
 /coverage
 
 npm-debug.log*

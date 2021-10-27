@@ -6,15 +6,8 @@
     "moduleResolution": "node",
     "target": "es2017",
     "skipLibCheck": true,
-    "sourceRoot": "src",
     "rootDir": "src",
     "outDir": "lib"
   },
-  "exclude": [
-    "node_modules",
-    "coverage",
-    "lib",
-    "jest.config.js",
-    "babel.config.js"
-  ]
+  "exclude": ["node_modules", "coverage", "lib", "jest.config.js"]
 }
