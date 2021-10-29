@@ -1,7 +1,7 @@
 import React from 'react';
 import { usePromised } from '../hook/use-promised';
 
-interface RenderPromiseProps<T> extends React.PropsWithChildren<{}> {
+interface RenderPromiseProps<T> extends React.PropsWithChildren<Record<never, unknown>> {
   promise: Promise<T>;
   onPending?(): React.ReactElement;
   onReject?(e: unknown): React.ReactElement;

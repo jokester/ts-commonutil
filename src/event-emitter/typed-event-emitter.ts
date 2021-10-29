@@ -1,11 +1,16 @@
 import eventemitter3 from 'eventemitter3';
 
-type Listener<EventMap extends {}, K extends keyof EventMap, Ret = void> = (ev: EventMap[K]) => Ret;
+// eslint-disable-next-line @typescript-eslint/ban-types
+type EventMapValue = object;
+
+type Listener<EventMap extends Record<string, EventMapValue>, K extends keyof EventMap, Ret = void> = (
+  ev: EventMap[K],
+) => Ret;
 
 /**
  * Refined to simpler API / typed events
  */
-export class TypedEventEmitter<EventMap extends {}> {
+export class TypedEventEmitter<EventMap extends Record<string, EventMapValue>> {
   private readonly realE = new eventemitter3.EventEmitter<string & keyof EventMap>();
 
   on<K extends string & keyof EventMap>(event: K, listener: Listener<EventMap, K>) {
