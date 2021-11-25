@@ -14,7 +14,11 @@ interface SubprocessOutput {
  *
  * rejects on (spawn error) or (non-zero exit code)
  */
-export function getSubprocessOutput(command: string, args: string[] = [], options?: ExecFileOptions) {
+export function getSubprocessOutput(
+  command: string,
+  args: string[] = [],
+  options?: ExecFileOptions,
+): Promise<SubprocessOutput> {
   return new Promise<SubprocessOutput>((fulfill, reject) => {
     execFile(command, args, options, (error, stdout, stderr) => {
       if (error) {

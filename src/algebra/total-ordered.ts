@@ -1,3 +1,6 @@
+/**
+ * @deprecated just use {@name Ord} from fp-ts
+ */
 export class TotalOrdered<T> {
   static invert<T>(orig: TotalOrdered<T>): TotalOrdered<T> {
     return new TotalOrdered<T>((a, b) => -orig.compare(a, b) as 1 | 0 | -1);

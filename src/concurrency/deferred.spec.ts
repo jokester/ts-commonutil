@@ -1,4 +1,5 @@
 import { Deferred } from './deferred';
+import fs from 'fs';
 
 describe('Deferred', () => {
   it('resolves when fulfill() is called', async () => {
@@ -62,5 +63,10 @@ describe('Deferred', () => {
         (r) => r,
       ),
     ).toEqual('err');
+  });
+
+  it('provides callback api', async () => {
+    const f = await Deferred.fromCallback<Buffer>((callback) => fs.readFile(__filename, callback));
+    expect(f).toBeInstanceOf(Buffer);
   });
 });

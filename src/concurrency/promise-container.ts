@@ -1,6 +1,6 @@
 import { Doomed } from './timing';
 
-export const enum PromiseState {
+export enum PromiseState {
   pending = 'pending',
   fulfilled = 'fulfilled',
   rejected = 'rejected',

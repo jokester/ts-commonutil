@@ -6,6 +6,19 @@ export class Deferred<T> implements PromiseLike<T> {
   private _reject: (e: any) => void = nop;
   private _resolved = false;
 
+  static fromCallback<T>(
+    creator: (callback: (error: unknown, value: T) => void) => void,
+    strict?: boolean,
+  ): Deferred<T> {
+    const d = new Deferred<T>(strict);
+    try {
+      creator(d.completeCallback);
+    } catch (e) {
+      d.reject(e);
+    }
+    return d;
+  }
+
   private readonly _promise = new Promise<T>((fulfill, reject) => {
     this._fulfill = (v: T) => {
       fulfill(v);
@@ -21,7 +34,7 @@ export class Deferred<T> implements PromiseLike<T> {
 
   constructor(private readonly strict = false) {}
 
-  get resolved() {
+  get resolved(): boolean {
     return this._resolved;
   }
 
@@ -30,7 +43,7 @@ export class Deferred<T> implements PromiseLike<T> {
   /**
    * @param v the value
    */
-  fulfill(v: T) {
+  fulfill(v: T): void {
     if (this.strict && this._resolved) {
       throw new Error('already resolved');
     } else {
@@ -38,7 +51,7 @@ export class Deferred<T> implements PromiseLike<T> {
     }
   }
 
-  reject(e: unknown) {
+  reject(e: unknown): void {
     if (this.strict && this._resolved) {
       throw new Error('already resolved');
     } else {
@@ -51,7 +64,7 @@ export class Deferred<T> implements PromiseLike<T> {
    * @param error
    * @param resolved
    */
-  readonly completeCallback = (error: unknown, resolved: T) => {
+  readonly completeCallback = (error: unknown, resolved: T): void => {
     if (error) {
       this.reject(error);
     } else {
