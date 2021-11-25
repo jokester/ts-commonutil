@@ -182,14 +182,6 @@
       "import": "./lib/__esm/obsolete/array-monad.js",
       "require": "./lib/obsolete/array-monad.js"
     },
-    "./lib/obsolete/task-runner/runner": {
-      "import": "./lib/__esm/obsolete/task-runner/runner.js",
-      "require": "./lib/obsolete/task-runner/runner.js"
-    },
-    "./lib/obsolete/task-runner/unit": {
-      "import": "./lib/__esm/obsolete/task-runner/unit.js",
-      "require": "./lib/obsolete/task-runner/unit.js"
-    },
     "./lib/react/component/aspect-ratio/aspect-ratio": {
       "import": "./lib/__esm/react/component/aspect-ratio/aspect-ratio.js",
       "require": "./lib/react/component/aspect-ratio/aspect-ratio.js"

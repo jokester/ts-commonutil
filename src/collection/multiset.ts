@@ -4,7 +4,7 @@ export class Multiset<T> {
   private map = new DefaultMap</* count */ number, /* objects */ Set<T>>((k) => new Set());
   private countMap = new Map</* object*/ T, /* count */ number>();
 
-  setCount(obj: T, count: number, removeOnZeroFreq = true) {
+  setCount(obj: T, count: number, removeOnZeroFreq = true): void {
     const existedCount = this.countMap.get(obj);
 
     if (existedCount === count) {
@@ -46,7 +46,7 @@ export class Multiset<T> {
     return 0;
   }
 
-  touch(obj: T) {
+  touch(obj: T): void {
     const existedCount = this.countMap.get(obj);
 
     if (existedCount === undefined) {
@@ -56,9 +56,9 @@ export class Multiset<T> {
   }
 
   /**
-   * deference objects with freq=0
+   * dereference objects with freq=0
    */
-  shrink() {
+  shrink(): void {
     const nils = this.map.get(0);
     if (nils) {
       for (const obj of nils) {
@@ -68,7 +68,7 @@ export class Multiset<T> {
     }
   }
 
-  maxCount() {
+  maxCount(): number {
     return Math.max(0, ...Array.from(this.map.keys()));
   }
 

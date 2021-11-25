@@ -13,7 +13,9 @@ entries = src_dir
   .reject{|fn| fn.to_s =~ /\.spec\./ }
 
 exports = Hash[
-  entries.map do |e|
+  entries
+  .sort
+  .map do |e|
     r = e.relative_path_from(src_dir).sub(/\.[tj]sx?$/i, '').to_s
     [ "./lib/#{r}",
       { import: "./lib/__esm/#{r}.js", require: "./lib/#{r}.js" }
