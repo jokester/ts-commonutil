@@ -1,6 +1,6 @@
 {
   "name": "@jokester/ts-commonutil",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "author": "Wang Guan <momocraft@gmail.com>",
   "description": "Common TypeScript code for my multiple projects",
   "repository": {
@@ -35,8 +35,7 @@
     "url": "https://github.com/jokester/ts-commonutil/issues"
   },
   "homepage": "https://github.com/jokester/ts-commonutil#readme",
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {
     "tslib": "^2.3.1"
   },
@@ -56,8 +55,8 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "rxjs": "<7",
-    "tslib": "^2.3.1",
     "ts-jest": "^27",
+    "tslib": "^2.3.1",
     "typescript": "^4.4",
     "winston": "^3.3.3"
   },
