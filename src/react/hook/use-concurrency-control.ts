@@ -4,7 +4,11 @@ import { useCallback, useState } from 'react';
 const inc = (_: number) => _ + 1;
 const dec = (_: number) => _ - 1;
 
-export function useConcurrencyControl(maxConcurrency = 1) {
+interface RunWithLock {
+  <T>(fn: (mounted: { readonly current: boolean }) => Promise<T>): Promise<T>;
+}
+
+export function useConcurrencyControl(maxConcurrency = 1): readonly [RunWithLock, number] {
   const mounted = useMounted();
   /**
    * using useState instead of useRef: UI may infer pending/blocked from it
