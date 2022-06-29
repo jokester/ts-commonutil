@@ -14,17 +14,17 @@ export class TypedEventEmitter<EventMap extends Record<string, EventMapValue>> {
   private readonly realE = new eventemitter3.EventEmitter<string & keyof EventMap>();
 
   on<K extends string & keyof EventMap>(event: K, listener: Listener<EventMap, K>) {
-    this.realE.on(event as any, listener);
+    this.realE.on(event as any, listener as any);
     return this;
   }
 
   once<K extends keyof EventMap & string>(event: K, listener: Listener<EventMap, K>) {
-    this.realE.once(event as any, listener);
+    this.realE.once(event as any, listener as any);
     return this;
   }
 
   protected onceInternal<T>(event: string, listener: (v: T) => void) {
-    this.realE.once(event as any, listener);
+    this.realE.once(event as any, listener as any);
     return this;
   }
 
@@ -38,11 +38,11 @@ export class TypedEventEmitter<EventMap extends Record<string, EventMapValue>> {
   smartOnce<K extends keyof EventMap & string>(event: K, listener: Listener<EventMap, K, boolean>) {
     const actualListener: Listener<EventMap, K> = (ev: EventMap[K]) => {
       if (listener(ev)) {
-        this.realE.removeListener(event as any, actualListener);
+        this.realE.removeListener(event as any, actualListener as any);
       }
     };
 
-    this.realE.on(event as any, actualListener);
+    this.realE.on(event as any, actualListener as any);
 
     return this;
   }
