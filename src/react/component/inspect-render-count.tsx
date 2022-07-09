@@ -57,31 +57,3 @@ export const DomMutationObserver: React.FunctionComponent<{
 export const DomMutationLogger: React.FunctionComponent<{ target: HTMLElementResolvable }> = ({ target }) => {
   return <DomMutationObserver target={target} render={RenderCountsToConsole as any} />;
 };
-
-/**
- * Like as {@ref DomMutationObserver}, but obtains target from rendered child (child must have ref of a HTMLElement)
- * @param children a single React.Element that returns a HTMLElement ref
- * @param out an optional HTMLElement to render report widget in. must not be within target
- * @constructor
- */
-export const DomMutationObserverContainer: React.FunctionComponent<{
-  children: React.ReactElement<HTMLElement>;
-  render?: (counts: MutationCounts) => React.ReactElement;
-  out?: HTMLElementResolvable;
-}> = ({ children, out, render }) => {
-  const ref = useRef<HTMLElement>();
-  const [rendered, setRendered] = useState<null | React.ReactElement>(null);
-  useEffect(() => {
-    if (ref.current instanceof HTMLElement) {
-      setRendered(<DomMutationObserver target={ref.current} out={out} render={render} />);
-    } else {
-      console.warn('DomMutationObserver: expected to obtain a HTMLElement ref from child. the child was', children);
-    }
-  });
-  return (
-    <>
-      {React.cloneElement(children, { ref })}
-      {rendered}
-    </>
-  );
-};
