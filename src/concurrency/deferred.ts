@@ -43,21 +43,21 @@ export class Deferred<T> implements PromiseLike<T> {
   /**
    * @param v the value
    */
-  fulfill(v: T): void {
+  readonly fulfill = (v: T): void => {
     if (this.strict && this._resolved) {
       throw new Error('already resolved');
     } else {
       this._fulfill(v);
     }
-  }
+  };
 
-  reject(e: unknown): void {
+  readonly reject = (e: unknown): void => {
     if (this.strict && this._resolved) {
       throw new Error('already resolved');
     } else {
       this._reject(e);
     }
-  }
+  };
 
   /**
    * complete the Deferred with a node-style callback
