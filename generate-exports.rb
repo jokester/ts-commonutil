@@ -7,18 +7,26 @@ here = Pathname.new(__dir__)
 
 src_dir = here / 'src'
 
-entries = src_dir
+tsx_files = src_dir
   .find
   .select{|fn| fn.file? and fn.to_s =~ /\.tsx?$/i }
   .reject{|fn| fn.to_s =~ /\.spec\./ }
 
 exports = Hash[
-  entries
+  tsx_files
   .sort
   .map do |e|
-    r = e.relative_path_from(src_dir).sub(/\.[tj]sx?$/i, '').to_s
-    [ "./lib/#{r}",
-      { import: "./lib/__esm/#{r}.js", require: "./lib/#{r}.js", type: "./lib/#{r}.d.ts" }
+    relative_path = e.relative_path_from(src_dir)
+    relative_path_wo_ext = relative_path.sub(/\.[tj]sx?$/i, '').to_s
+    js_ext = if relative_path.fnmatch? '*.tsx' then 'jsx' else 'js' end
+
+    [
+      "./lib/#{relative_path_wo_ext}",
+      {
+        import: "./lib/__esm/#{relative_path_wo_ext}.#{js_ext}",
+        require: "./lib/#{relative_path_wo_ext}.#{js_ext}",
+        type: "./lib/#{relative_path_wo_ext}.d.ts"
+      }
     ]
   end
 ]

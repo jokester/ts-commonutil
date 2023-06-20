@@ -243,18 +243,18 @@
       "type": "./lib/react/component/aspect-ratio/aspect-ratio.d.ts"
     },
     "./lib/react/component/font-awesome": {
-      "import": "./lib/__esm/react/component/font-awesome.js",
-      "require": "./lib/react/component/font-awesome.js",
+      "import": "./lib/__esm/react/component/font-awesome.jsx",
+      "require": "./lib/react/component/font-awesome.jsx",
       "type": "./lib/react/component/font-awesome.d.ts"
     },
     "./lib/react/component/inspect-render-count": {
-      "import": "./lib/__esm/react/component/inspect-render-count.js",
-      "require": "./lib/react/component/inspect-render-count.js",
+      "import": "./lib/__esm/react/component/inspect-render-count.jsx",
+      "require": "./lib/react/component/inspect-render-count.jsx",
       "type": "./lib/react/component/inspect-render-count.d.ts"
     },
     "./lib/react/component/pre-json": {
-      "import": "./lib/__esm/react/component/pre-json.js",
-      "require": "./lib/react/component/pre-json.js",
+      "import": "./lib/__esm/react/component/pre-json.jsx",
+      "require": "./lib/react/component/pre-json.jsx",
       "type": "./lib/react/component/pre-json.d.ts"
     },
     "./lib/react/hook/use-async-effect": {
@@ -318,8 +318,8 @@
       "type": "./lib/react/mobx/use-derived.d.ts"
     },
     "./lib/react/next/link-a": {
-      "import": "./lib/__esm/react/next/link-a.js",
-      "require": "./lib/react/next/link-a.js",
+      "import": "./lib/__esm/react/next/link-a.jsx",
+      "require": "./lib/react/next/link-a.jsx",
       "type": "./lib/react/next/link-a.d.ts"
     },
     "./lib/react/next/wrapped-next-router": {
@@ -368,8 +368,8 @@
       "type": "./lib/type/index.d.ts"
     },
     "./lib/type/omit": {
-      "import": "./lib/__esm/type/omit.js",
-      "require": "./lib/type/omit.js",
+      "import": "./lib/__esm/type/omit.jsx",
+      "require": "./lib/type/omit.jsx",
       "type": "./lib/type/omit.d.ts"
     },
     "./lib/util/lru": {
