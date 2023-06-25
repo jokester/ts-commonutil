@@ -35,8 +35,7 @@
     "url": "https://github.com/jokester/ts-commonutil/issues"
   },
   "homepage": "https://github.com/jokester/ts-commonutil#readme",
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {
     "tslib": "^2.4.0"
   },
@@ -53,6 +52,8 @@
     "loglevel": "^1.8.0",
     "mobx": "^6.6.1",
     "next": "^12.2",
+    "playwright": "^1.32.1",
+    "puppeteer": "^19.8.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rxjs": "^7",
