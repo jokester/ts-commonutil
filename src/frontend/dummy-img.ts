@@ -14,6 +14,6 @@ export const dummyImage = (props: { size?: string; bg?: string; fg?: string; tex
 
 export const dummyImages = {
   /** 1x1 transparent GIF */
-  transparent: `data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==`,
+  transparent: 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==',
   dummyImage,
 } as const;
