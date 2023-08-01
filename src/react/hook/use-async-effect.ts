@@ -2,7 +2,10 @@ import { RefObject, useEffect, DependencyList } from 'react';
 import { Deferred } from '../../concurrency/deferred';
 
 export function useAsyncEffect(
-  effectCallback: (running: RefObject<boolean>, released: PromiseLike<void>) => Promise</* cleanup should be done with released */void>,
+  effectCallback: (
+    running: RefObject<boolean>,
+    released: PromiseLike<void>,
+  ) => Promise</* cleanup should be done with released */ void>,
   deps?: DependencyList,
 ): void {
   useEffect(() => {

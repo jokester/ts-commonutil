@@ -4,7 +4,7 @@
     "jsx": "preserve",
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es2017",
+    "target": "es2021",
     "skipLibCheck": true,
     "rootDir": "src",
     "outDir": "lib"
