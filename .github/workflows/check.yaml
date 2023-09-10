@@ -22,6 +22,7 @@ jobs:
         node-version: 18
         cache: yarn
         cache-dependency-path: 'yarn.lock'
+    - run: yarn
     - run: yarn typecheck
     - run: yarn lint
     - run: yarn test:coverage
@@ -37,6 +38,7 @@ jobs:
         node-version: 18
         cache: yarn
         cache-dependency-path: 'yarn.lock'
+    - run: yarn
     - run: yarn build
     - run: ruby generate-exports.rb && git diff
     - uses: JS-DevTools/npm-publish@v2
