@@ -1,6 +1,6 @@
 {
   "name": "@jokester/ts-commonutil",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "author": "Wang Guan <momocraft@gmail.com>",
   "description": "Common TypeScript code for my multiple projects",
   "repository": {
@@ -35,7 +35,8 @@
     "url": "https://github.com/jokester/ts-commonutil/issues"
   },
   "homepage": "https://github.com/jokester/ts-commonutil#readme",
-  "dependencies": {},
+  "dependencies": {
+  },
   "peerDependencies": {
     "tslib": "^2.4.0"
   },
@@ -132,6 +133,11 @@
       "import": "./lib/__esm/collection/sets.js",
       "require": "./lib/collection/sets.js",
       "type": "./lib/collection/sets.d.ts"
+    },
+    "./lib/concurrency/async-throttle": {
+      "import": "./lib/__esm/concurrency/async-throttle.js",
+      "require": "./lib/concurrency/async-throttle.js",
+      "type": "./lib/concurrency/async-throttle.d.ts"
     },
     "./lib/concurrency/deferred": {
       "import": "./lib/__esm/concurrency/deferred.js",
@@ -237,6 +243,16 @@
       "import": "./lib/__esm/obsolete/array-monad.js",
       "require": "./lib/obsolete/array-monad.js",
       "type": "./lib/obsolete/array-monad.d.ts"
+    },
+    "./lib/puppeteer/puppeteer": {
+      "import": "./lib/__esm/puppeteer/puppeteer.js",
+      "require": "./lib/puppeteer/puppeteer.js",
+      "type": "./lib/puppeteer/puppeteer.d.ts"
+    },
+    "./lib/puppeteer/watch-res": {
+      "import": "./lib/__esm/puppeteer/watch-res.js",
+      "require": "./lib/puppeteer/watch-res.js",
+      "type": "./lib/puppeteer/watch-res.d.ts"
     },
     "./lib/react/component/aspect-ratio/aspect-ratio": {
       "import": "./lib/__esm/react/component/aspect-ratio/aspect-ratio.js",
