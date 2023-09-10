@@ -14,27 +14,32 @@ defaults:
 
 jobs:
   check:
-    name: Check
-    runs-on: ubuntu-20.04
-
+    runs-on: ubuntu-22.04
     steps:
-
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
       with:
-        submodules: recursive
-
-    - uses: bahmutov/npm-install@v1
-
-    - name: Type Check
-      run: yarn typecheck
-
-    - name: Lint
-      run: yarn lint
-
-    - name: Test
-      run: yarn test
-
-    - name: Collect Coverage
-      run: yarn test:coverage
-
+        node-version: 18
+        cache: yarn
+        cache-dependency-path: 'yarn.lock'
+    - run: yarn typecheck
+    - run: yarn lint
+    - run: yarn test:coverage
     - uses: codecov/codecov-action@v1
+
+  publish:
+    needs: [check]
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        cache: yarn
+        cache-dependency-path: 'yarn.lock'
+    - run: yarn build
+    - run: ruby generate-exports.rb && git diff
+    - uses: JS-DevTools/npm-publish@v2
+      with:
+        token: ${{ secrets.NPM_TOKEN }}
+        dry-run: ${{ github.event_name != 'push' }}
