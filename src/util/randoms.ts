@@ -10,7 +10,3 @@ function sample<T>(from: ReadonlyArray<T>, count: number): T[] {
 
   return sampled;
 }
-
-export const Randoms = {
-  sample,
-};
