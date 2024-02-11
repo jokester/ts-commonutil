@@ -25,7 +25,10 @@ export class SegmentTree<T> {
    */
   private readonly sums: T[];
 
-  constructor(private readonly monoid: Monoid<T>, init: T[]) {
+  constructor(
+    private readonly monoid: Monoid<T>,
+    init: T[],
+  ) {
     const lenSums = powOf2.nextPowOf2(init.length);
 
     this.elems = init.slice();

@@ -42,5 +42,5 @@ export async function withRetry<T>(
       await wait(delayBeforeRetry(i)); // and continue
     }
   }
-  throw new Error(`should not be here`);
+  throw new Error('should not be here');
 }

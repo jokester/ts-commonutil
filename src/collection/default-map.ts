@@ -1,5 +1,8 @@
 export class DefaultMap<K, V> extends Map<K, V> {
-  constructor(private readonly createDefault: (k: K) => V, entries?: readonly [K, V][]) {
+  constructor(
+    private readonly createDefault: (k: K) => V,
+    entries?: readonly [K, V][],
+  ) {
     super(entries);
   }
 
