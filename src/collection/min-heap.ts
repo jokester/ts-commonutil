@@ -5,7 +5,11 @@ export class MinHeap<T> {
   private readonly tree: T[] = [];
   slice = this.tree.slice.bind(this.tree);
 
-  constructor(private readonly order: TotalOrdered<T>, private readonly strict = false, initialTree?: T[]) {
+  constructor(
+    private readonly order: TotalOrdered<T>,
+    private readonly strict = false,
+    initialTree?: T[],
+  ) {
     if (initialTree) this.tree.push(...initialTree);
     if (strict) this.assertInvariants();
   }

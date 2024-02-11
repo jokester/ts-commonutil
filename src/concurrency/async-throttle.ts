@@ -24,6 +24,7 @@ export function asyncThrottle<T>(func: () => T | PromiseLike<T>, wait = 0): () =
 /**
  * @param func a supposedly idempotent function
  * @param wait
+ * TODO should add a "longest wait"
  */
 export function asyncDebounce<T>(func: () => T | PromiseLike<T>, wait = 0): () => PromiseLike<T> {
   let pending: {

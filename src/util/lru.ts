@@ -5,9 +5,9 @@
  * i.e. they do no use timeout/promise/async,await,
  *      and will not run before/after function calls.
  *
- * @export
  * @class SingleThreadedLRU
  * @template T {type} type of cached values, must be non-falsy
+ * @deprecated prefer npm/flru instead, as fox said
  */
 export class SingleThreadedLRU<T> {
   private readonly values = new Map<string, T>();

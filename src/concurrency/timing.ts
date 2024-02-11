@@ -30,20 +30,26 @@ export async function withTimeout<T>(p: PromiseLike<T>, delayMs: number): Promis
 }
 
 /**
- * @param {number} minimumPeriod
- * @param {() => Promise<T>} task
- * @param waitOnException {boolean=true} wait even if task() throws
- * @returns {Promise<T>}
+ * @param minDuration in ms
+ * @param io
+ * @param waitOnException wait even if task() throws
+ * @returns result of io()
  */
 export async function withMinimumDuration<T>(
-  minimumPeriod: number,
-  task: () => Promise<T>,
+  minDuration: number,
+  io: () => Promise<T>,
   waitOnException = true,
 ): Promise<T> {
+  const start = Date.now();
   try {
-    return wait(minimumPeriod, task());
+    return await wait(minDuration, io());
   } catch (e) {
-    if (waitOnException) await wait(minimumPeriod);
+    if (waitOnException) {
+      const elapsed = Date.now() - start;
+      if (elapsed < minDuration) {
+        await wait(minDuration - elapsed);
+      }
+    }
     throw e;
   }
 }

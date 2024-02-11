@@ -1,6 +1,6 @@
 {
   "name": "@jokester/ts-commonutil",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "author": "Wang Guan <momocraft@gmail.com>",
   "description": "Common TypeScript code for my multiple projects",
   "repository": {
@@ -26,41 +26,35 @@
     "util"
   ],
   "engines": {
-    "node": ">=12"
+    "node": ">=16"
   },
-  "module": "lib/index.js",
-  "main": "lib/index.js",
+  "engineStrict": true,
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jokester/ts-commonutil/issues"
   },
   "homepage": "https://github.com/jokester/ts-commonutil#readme",
   "dependencies": {
-  },
-  "peerDependencies": {
-    "tslib": "^2.4.0"
+    "tslib": "^2.6"
   },
   "devDependencies": {
     "@types/jest": "^28",
-    "@types/node": "^16",
+    "@types/node": "^18",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "codecov": "^3.8.3",
     "eventemitter3": "^4",
     "fp-ts": "<3",
-    "gts": "^3.1.0",
+    "gts": "^5.2.0",
     "jest": "^28",
     "loglevel": "^1.8.0",
     "mobx": "^6.6.1",
-    "next": "^12.2",
-    "playwright": "^1.32.1",
     "puppeteer": "^19.8.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rxjs": "^7",
     "ts-jest": "^28",
-    "tslib": "^2.4.0",
-    "typescript": "^4.7",
+    "typescript": "^5.3",
     "winston": "^3.8.0"
   },
   "exports": {
@@ -174,10 +168,10 @@
       "require": "./lib/event-emitter/typed-event-emitter.js",
       "type": "./lib/event-emitter/typed-event-emitter.d.ts"
     },
-    "./lib/fp-ts-extension/monoid": {
-      "import": "./lib/__esm/fp-ts-extension/monoid.js",
-      "require": "./lib/fp-ts-extension/monoid.js",
-      "type": "./lib/fp-ts-extension/monoid.d.ts"
+    "./lib/fp-ts/monoid": {
+      "import": "./lib/__esm/fp-ts/monoid.js",
+      "require": "./lib/fp-ts/monoid.js",
+      "type": "./lib/fp-ts/monoid.d.ts"
     },
     "./lib/frontend/dummy-img": {
       "import": "./lib/__esm/frontend/dummy-img.js",
@@ -243,11 +237,6 @@
       "import": "./lib/__esm/obsolete/array-monad.js",
       "require": "./lib/obsolete/array-monad.js",
       "type": "./lib/obsolete/array-monad.d.ts"
-    },
-    "./lib/puppeteer/puppeteer": {
-      "import": "./lib/__esm/puppeteer/puppeteer.js",
-      "require": "./lib/puppeteer/puppeteer.js",
-      "type": "./lib/puppeteer/puppeteer.d.ts"
     },
     "./lib/puppeteer/watch-res": {
       "import": "./lib/__esm/puppeteer/watch-res.js",
@@ -334,16 +323,6 @@
       "require": "./lib/react/mobx/use-derived.js",
       "type": "./lib/react/mobx/use-derived.d.ts"
     },
-    "./lib/react/next/link-a": {
-      "import": "./lib/__esm/react/next/link-a.jsx",
-      "require": "./lib/react/next/link-a.jsx",
-      "type": "./lib/react/next/link-a.d.ts"
-    },
-    "./lib/react/next/wrapped-next-router": {
-      "import": "./lib/__esm/react/next/wrapped-next-router.js",
-      "require": "./lib/react/next/wrapped-next-router.js",
-      "type": "./lib/react/next/wrapped-next-router.d.ts"
-    },
     "./lib/react/util/prop-of": {
       "import": "./lib/__esm/react/util/prop-of.js",
       "require": "./lib/react/util/prop-of.js",
@@ -358,11 +337,6 @@
       "import": "./lib/__esm/rxjs/stochastic-processes.js",
       "require": "./lib/rxjs/stochastic-processes.js",
       "type": "./lib/rxjs/stochastic-processes.d.ts"
-    },
-    "./lib/rxjs/tap-log": {
-      "import": "./lib/__esm/rxjs/tap-log.js",
-      "require": "./lib/rxjs/tap-log.js",
-      "type": "./lib/rxjs/tap-log.d.ts"
     },
     "./lib/text/chunk-to-lines": {
       "import": "./lib/__esm/text/chunk-to-lines.js",
@@ -385,8 +359,8 @@
       "type": "./lib/type/index.d.ts"
     },
     "./lib/type/omit": {
-      "import": "./lib/__esm/type/omit.jsx",
-      "require": "./lib/type/omit.jsx",
+      "import": "./lib/__esm/type/omit.js",
+      "require": "./lib/type/omit.js",
       "type": "./lib/type/omit.d.ts"
     },
     "./lib/util/lru": {
@@ -403,6 +377,11 @@
       "import": "./lib/__esm/util/randoms.js",
       "require": "./lib/util/randoms.js",
       "type": "./lib/util/randoms.d.ts"
+    },
+    "./lib/util/with-retry": {
+      "import": "./lib/__esm/util/with-retry.js",
+      "require": "./lib/util/with-retry.js",
+      "type": "./lib/util/with-retry.d.ts"
     }
   },
   "resolutions": {

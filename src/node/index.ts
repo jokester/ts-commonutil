@@ -1,5 +1,7 @@
 /**
  * Read stream until end
+ * @deprecated use 'node:stream/consumers' instead.
+ * @see https://nodejs.org/api/webstreams.html#streamconsumersjsonstream
  */
 export function readStream(stream: NodeJS.ReadableStream): Promise<Buffer> {
   return new Promise<Buffer>((resolve, reject) => {
@@ -19,6 +21,9 @@ export function readStream(stream: NodeJS.ReadableStream): Promise<Buffer> {
   });
 }
 
+/**
+ * @deprecated use 'node:fs/promises' instead.
+ */
 import * as fsp from './fsp';
 
 export { fsp };
