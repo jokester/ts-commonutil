@@ -10,7 +10,7 @@ interface RetryOptions {
    * callback on error
    * return truthy to break on errors beyond save
    */
-  shouldBreak?(error: unknown): boolean | PromiseLike<boolean>;
+  shouldBreak?(error: unknown, tried: number): boolean | PromiseLike<boolean>;
   /**
    * callback before 2nd attempt and on
    * defaults to be exponential delay (0.1s, 0.2s, 0.4s, ...) , plus a random jitter between 0 and 0.1s
@@ -27,13 +27,13 @@ function defaultDelayBeforeRetry(tried: number): number {
 
 export async function withRetry<T>(
   io: () => PromiseLike<T>,
-  { maxAttempts = 3, shouldBreak, delayBeforeRetry = defaultDelayBeforeRetry }: RetryOptions,
+  { maxAttempts = 3, shouldBreak, delayBeforeRetry = defaultDelayBeforeRetry }: RetryOptions = {},
 ): Promise<T> {
   for (let i = 1; i <= maxAttempts; i++) {
     try {
       return await io();
     } catch (e) {
-      if (shouldBreak && (await shouldBreak(e))) {
+      if (shouldBreak && (await shouldBreak(e, i))) {
         throw e;
       }
       if (i === maxAttempts) {
