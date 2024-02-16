@@ -2,9 +2,9 @@
  * Deferred: a wrapper for Promise that exposes fulfill / reject / resolved
  */
 export class Deferred<T> implements PromiseLike<T> {
-  private _fulfill: (v: T | PromiseLike<T>) => void = nop;
-  private _reject: (e: any) => void = nop;
-  private _resolved = false;
+  #fulfill: (v: T | PromiseLike<T>) => void = nop;
+  #reject: (e: any) => void = nop;
+  #resolved: boolean = false;
 
   static fromCallback<T>(
     creator: (callback: (error: unknown, value: T) => void) => void,
@@ -20,22 +20,22 @@ export class Deferred<T> implements PromiseLike<T> {
   }
 
   private readonly _promise = new Promise<T>((fulfill, reject) => {
-    this._fulfill = (v: T | PromiseLike<T>) => {
+    this.#fulfill = (v: T | PromiseLike<T>) => {
       fulfill(v);
-      this._resolved = true;
-      this._fulfill = this._reject = nop;
+      this.#resolved = true;
+      this.#fulfill = this.#reject = nop;
     };
-    this._reject = (e: unknown) => {
+    this.#reject = (e: unknown) => {
       reject(e);
-      this._resolved = true;
-      this._fulfill = this._reject = nop;
+      this.#resolved = true;
+      this.#fulfill = this.#reject = nop;
     };
   });
 
   constructor(private readonly strict = false) {}
 
   get resolved(): boolean {
-    return this._resolved;
+    return this.#resolved;
   }
 
   readonly then = this._promise.then.bind(this._promise);
@@ -44,18 +44,18 @@ export class Deferred<T> implements PromiseLike<T> {
    * @param v the value
    */
   readonly fulfill = (v: T | PromiseLike<T>): void => {
-    if (this.strict && this._resolved) {
+    if (this.strict && this.#resolved) {
       throw new Error('already resolved');
     } else {
-      this._fulfill(v);
+      this.#fulfill(v);
     }
   };
 
   readonly reject = (e: unknown): void => {
-    if (this.strict && this._resolved) {
+    if (this.strict && this.#resolved) {
       throw new Error('already resolved');
     } else {
-      this._reject(e);
+      this.#reject(e);
     }
   };
 
