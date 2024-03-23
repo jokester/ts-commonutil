@@ -9,28 +9,21 @@ export function useAsyncEffect(
     released: PromiseLike<void>,
   ) => Promise</* cleanup should be done with released */ void>,
   deps?: DependencyList,
-  preventDuplicatedRun = false,
 ): void {
   useEffect(() => {
     const mounted = { current: true };
-
     const effectReleased = new Deferred<void>(true);
-
-    const run = preventDuplicatedRun
-      ? async () => {
-          await nextTick;
-          if (!mounted.current) return;
-          return effectCallback(mounted, effectReleased);
-        }
-      : () => effectCallback(mounted, effectReleased);
-    if (typeof setImmediate === 'function') {
-      setImmediate(run);
-    } else {
-      setTimeout(run);
-    }
+    nextTick
+      .then(() => {
+        if (!mounted.current) return;
+        return effectCallback(mounted, effectReleased);
+      })
+      .catch((e) => {
+        console.error('useAsyncEffect error', e);
+      });
 
     return () => {
-      effectReleased.fulfill();
+      effectReleased.fulfill(undefined);
       mounted.current = false;
     };
   }, deps);
