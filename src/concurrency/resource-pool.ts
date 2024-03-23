@@ -71,7 +71,7 @@ export class ResourcePool<T> {
     const targetFreeCount = condition.freeCount ?? NaN;
     const targetQueueLength = condition.queueLength ?? NaN;
     if (Number.isNaN(targetFreeCount) && Number.isNaN(targetQueueLength)) {
-      throw new Error(`ResourcePool.wait(): at least 1 of freeCount and queueLength must be specified`);
+      throw new Error('ResourcePool.wait(): at least 1 of freeCount and queueLength must be specified');
     }
     const start = Date.now();
     // eslint-disable-next-line no-constant-condition

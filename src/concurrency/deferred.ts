@@ -4,7 +4,7 @@
 export class Deferred<T> implements PromiseLike<T> {
   #fulfill: (v: T | PromiseLike<T>) => void = nop;
   #reject: (e: any) => void = nop;
-  #resolved: boolean = false;
+  #resolved = false;
 
   static fromCallback<T>(
     creator: (callback: (error: unknown, value: T) => void) => void,
