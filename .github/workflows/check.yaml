@@ -25,9 +25,9 @@ jobs:
     - run: yarn
     - run: yarn typecheck
     - run: yarn lint
-      if: true
+      if: ${{ success() || failure() }}
     - run: yarn test:coverage
-      if: true
+      if: ${{ success() || failure() }}
     - uses: codecov/codecov-action@v1
 
   publish:
