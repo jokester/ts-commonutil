@@ -13,10 +13,10 @@ describe(ResourcePool.name, () => {
   });
 
   describe('multi resources: pool-like', () => {
-    describe('waitComplete', () => {
+    describe('wait', () => {
       it('returns true when no other tasks', async () => {
         const testee = ResourcePool.multiple([1, 2]);
-        const isEmpty = await Promise.race([testee.waitComplete(), wait(0.1e3, false)]);
+        const isEmpty = await Promise.race([testee.wait({ queueLength: 0 }), wait(0.1e3, false)]);
         expect(isEmpty).toBeTruthy();
       });
 
@@ -24,7 +24,7 @@ describe(ResourcePool.name, () => {
         const start = Date.now();
         const testee = ResourcePool.multiple([1, 2]);
         testee.use(() => wait(0.5e3));
-        const becameEmpty = await testee.waitComplete();
+        const becameEmpty = await testee.wait({ freeCount: 2 });
         expect(becameEmpty).toBeTruthy();
         expect(Date.now() - start).toBeGreaterThan(0.5e3);
       });
@@ -33,7 +33,7 @@ describe(ResourcePool.name, () => {
         const testee = ResourcePool.multiple([1, 2]);
         testee.use(() => Never);
 
-        const noOtherTask = await testee.waitComplete(1e3);
+        const noOtherTask = await testee.wait({ freeCount: 2 }, 1e3);
         expect(noOtherTask).toBeFalsy();
       });
     });
