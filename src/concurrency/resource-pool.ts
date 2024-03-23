@@ -64,21 +64,21 @@ export class ResourcePool<T> {
    * @return true if the target condition (either) is met, false if timeout
    */
   async wait(
-    condition: { freeCount?: number; consumerCount?: number },
+    condition: { freeCount?: number; queueLength?: number },
     timeout = 5e3,
     precision = 0.05e3,
   ): Promise<boolean> {
-    const targetFree = condition.freeCount ?? NaN;
-    const targetConsumer = condition.consumerCount ?? NaN;
-    if (Number.isNaN(targetFree) && Number.isNaN(targetConsumer)) {
-      throw new Error(`ResourcePool.wait(): at least 1 of freeCount and consumerCount must be specified`);
+    const targetFreeCount = condition.freeCount ?? NaN;
+    const targetQueueLength = condition.queueLength ?? NaN;
+    if (Number.isNaN(targetFreeCount) && Number.isNaN(targetQueueLength)) {
+      throw new Error(`ResourcePool.wait(): at least 1 of freeCount and queueLength must be specified`);
     }
     const start = Date.now();
     // eslint-disable-next-line no-constant-condition
     while (true) {
-      if (this.freeCount >= targetFree) {
+      if (this.freeCount >= targetFreeCount) {
         return true;
-      } else if (this.consumerCount <= targetConsumer) {
+      } else if (this.consumerCount <= targetQueueLength) {
         return true;
       } else if (Date.now() > start + timeout) {
         return false;
