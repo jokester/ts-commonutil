@@ -22,7 +22,7 @@ export class ResourcePool<T> {
    * (free) resource objects
    */
   private readonly resources: T[] = [];
-  private readonly resourceCount: number;
+  readonly resourceCount: number;
 
   private constructor(_resources: readonly T[]) {
     this.resources = _resources.slice();
@@ -33,7 +33,7 @@ export class ResourcePool<T> {
     return this.resources.length;
   }
 
-  get consumerCount(): number {
+  get queueLength(): number {
     return this.consumers.length;
   }
 
@@ -78,7 +78,7 @@ export class ResourcePool<T> {
     while (true) {
       if (this.freeCount >= targetFreeCount) {
         return true;
-      } else if (this.consumerCount <= targetQueueLength) {
+      } else if (this.queueLength <= targetQueueLength) {
         return true;
       } else if (Date.now() > start + timeout) {
         return false;
