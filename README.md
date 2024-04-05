@@ -5,7 +5,7 @@
 Common TypeScript code I used in multiple app.
 
 ![Check](https://github.com/jokester/ts-commonutil/workflows/Check/badge.svg)
-[![codecov](https://codecov.io/gh/jokester/ts-commonutil/branch/master/graph/badge.svg)](https://codecov.io/gh/jokester/ts-commonutil)
+[![codecov](https://codecov.io/gh/jokester/ts-commonutil/graph/badge.svg?token=95f53H027x)](https://codecov.io/gh/jokester/ts-commonutil)
 [![npm version](https://badge.fury.io/js/%40jokester%2Fts-commonutil.svg)](https://badge.fury.io/js/%40jokester%2Fts-commonutil)
 
 ## How to Use
