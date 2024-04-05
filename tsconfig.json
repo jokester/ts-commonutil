@@ -9,5 +9,5 @@
     "rootDir": "src",
     "outDir": "lib"
   },
-  "exclude": ["node_modules", "coverage", "lib", "jest.config.js"]
+  "exclude": ["node_modules", "coverage", "lib", "jest.config.js", "obsolete"]
 }
