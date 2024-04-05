@@ -38,6 +38,7 @@
     "tslib": "^2"
   },
   "devDependencies": {
+    "@babel/plugin-syntax-jsx": "^7.24.1",
     "@types/jest": "^29",
     "@types/node": "^18",
     "@types/react": "latest",
@@ -55,8 +56,7 @@
     "typescript": "^5.4",
     "winston": "^3.8.0"
   },
-  "exports": {
-  },
+  "exports": {},
   "resolutions": {
     "@types/node": "18",
     "@types/react": "^18"
