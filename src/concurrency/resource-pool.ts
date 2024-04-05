@@ -5,6 +5,8 @@
  * - NOT supported: replace / refresh / timeout of tasks
  */
 import { wait } from './timing';
+import { Lease } from './locks/lockable';
+import { lazyThenable } from './lazy-thenable';
 
 export class ResourcePool<T> {
   // can be used as a mutex
@@ -38,16 +40,11 @@ export class ResourcePool<T> {
   }
 
   async use<R>(task: (res: T) => R): Promise<Awaited<R>> {
-    const r = await this.borrow();
-    try {
-      return await task(r);
-    } finally {
-      this.resources.push(r);
-      this.balance();
-    }
+    await using lease = await this.borrow();
+    return await task(lease.value);
   }
 
-  tryUse<R>(task: (res: T | null) => R): R | Promise<R> {
+  tryUse<R>(task: (res: T | null) => R): R | Promise<Awaited<R>> {
     if (/** some resource is immediately available */ this.freeCount > 0) {
       return this.use(task);
     } else {
@@ -88,11 +85,31 @@ export class ResourcePool<T> {
     }
   }
 
-  private borrow(): Promise<T> {
+  async borrow(timeout?: number): Promise<Lease<T>> {
+    const v = await this._borrow();
+
+    const _return = lazyThenable(async () => {
+      this._return(v);
+    });
+
+    return {
+      value: v,
+      async [Symbol.asyncDispose]() {
+        await _return;
+      },
+    };
+  }
+
+  private _borrow(): Promise<T> {
     return new Promise<T>((f) => {
       this.consumers.push(f);
       this.balance();
     });
+  }
+
+  private _return(value: T): void {
+    this.resources.push(value);
+    this.balance();
   }
 
   private balance(): void {
