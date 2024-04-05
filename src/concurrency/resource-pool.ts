@@ -37,7 +37,7 @@ export class ResourcePool<T> {
     return this.consumers.length;
   }
 
-  async use<R>(task: (res: T) => R): Promise<R> {
+  async use<R>(task: (res: T) => R): Promise<Awaited<R>> {
     const r = await this.borrow();
     try {
       return await task(r);
