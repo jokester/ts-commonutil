@@ -29,8 +29,8 @@ export function resolveHTMLElement(maybeElem: HTMLElementResolvable): HTMLElemen
   return maybeElem instanceof HTMLElement
     ? maybeElem
     : typeof maybeElem === 'string'
-    ? document.getElementById(maybeElem)
-    : maybeElem && maybeElem.current
-    ? maybeElem.current
-    : null;
+      ? document.getElementById(maybeElem)
+      : maybeElem && maybeElem.current
+        ? maybeElem.current
+        : null;
 }

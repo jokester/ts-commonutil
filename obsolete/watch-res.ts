@@ -1,5 +1,5 @@
 import type * as puppeteer from 'puppeteer';
-import { Deferred } from '../concurrency/deferred';
+import { Deferred } from '../src/concurrency/deferred';
 
 export async function waitRes(
   p: puppeteer.Page,

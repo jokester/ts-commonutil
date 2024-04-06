@@ -13,12 +13,13 @@ describe(lazyThenable, () => {
     await wait(0);
     expect(called).toEqual(1);
     expect(await converted).toEqual(1);
+    expect(await lazy1).toEqual(1);
     expect(called).toEqual(1);
   });
 
   it('run actual action at most once', async () => {
     let called = 0;
-    const lazy2 = lazyThenable(async () => ++called);
+    const lazy2 = lazyThenable(() => ++called);
 
     expect(await lazy2).toEqual(1);
     for (let i = 0; i < 10; i++) {
