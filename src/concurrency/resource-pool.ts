@@ -89,16 +89,11 @@ export class ResourcePool<T> {
     // TODO: implement timeout
     const v = await this._borrow();
 
-    // console.log('borrowed', v);
-
-    const _return = lazyThenable(async () => {
-      this._return(v);
-      // console.log('returned', v);
-    });
+    const _return = lazyThenable(() => this._return(v));
 
     return {
       value: v,
-      dispose(): PromiseLike<void> {
+      async dispose(): Promise<void> {
         return _return;
       },
       [Symbol.asyncDispose]() {
