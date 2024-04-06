@@ -40,8 +40,12 @@ export class ResourcePool<T> {
   }
 
   async use<R>(task: (res: T) => R): Promise<Awaited<R>> {
-    await using lease = await this.borrow();
-    return await task(lease.value);
+    const lease = await this.borrow();
+    try {
+      return await task(lease.value);
+    } finally {
+      await lease[Symbol.asyncDispose]();
+    }
   }
 
   tryUse<R>(task: (res: T | null) => R): R | Promise<Awaited<R>> {
@@ -88,13 +92,16 @@ export class ResourcePool<T> {
   async borrow(timeout?: number): Promise<Lease<T>> {
     const v = await this._borrow();
 
+    // console.log('borrowed', v);
+
     const _return = lazyThenable(async () => {
       this._return(v);
+      // console.log('returned', v);
     });
 
     return {
       value: v,
-      async [Symbol.asyncDispose]() {
+      [Symbol.asyncDispose]: async () => {
         await _return;
       },
     };
