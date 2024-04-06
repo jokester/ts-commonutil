@@ -5,7 +5,7 @@
  * - NOT supported: replace / refresh / timeout of tasks
  */
 import { wait } from './timing';
-import { Lease } from './locks/lockable';
+import { Lease } from './lease';
 import { lazyThenable } from './lazy-thenable';
 
 export class ResourcePool<T> {
@@ -41,7 +41,7 @@ export class ResourcePool<T> {
 
   async use<R>(task: (res: T) => R): Promise<Awaited<R>> {
     await using lease = await this.borrow();
-    return await task(lease.value);
+    return /* must not omit 'await' here */ await task(lease.value);
   }
 
   tryUse<R>(task: (res: T | null) => R): R | Promise<Awaited<R>> {
@@ -85,7 +85,8 @@ export class ResourcePool<T> {
     }
   }
 
-  async borrow(timeout?: number): Promise<Lease<T>> {
+  async borrow(): Promise<Lease<T>> {
+    // TODO: implement timeout
     const v = await this._borrow();
 
     // console.log('borrowed', v);
@@ -97,8 +98,11 @@ export class ResourcePool<T> {
 
     return {
       value: v,
-      [Symbol.asyncDispose]: async () => {
-        await _return;
+      dispose(): PromiseLike<void> {
+        return _return;
+      },
+      [Symbol.asyncDispose]() {
+        return _return;
       },
     };
   }
