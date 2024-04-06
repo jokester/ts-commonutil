@@ -16,4 +16,5 @@ module.exports = {
   collectCoverageFrom: ['src/**/*.(ts|tsx)', '!build/', '!**/node_modules', '!/coverage'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   coverageReporters: ['json', 'lcov', 'text', 'html'],
+  setupFiles: ['core-js'],
 };

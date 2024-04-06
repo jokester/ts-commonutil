@@ -40,12 +40,8 @@ export class ResourcePool<T> {
   }
 
   async use<R>(task: (res: T) => R): Promise<Awaited<R>> {
-    const lease = await this.borrow();
-    try {
-      return await task(lease.value);
-    } finally {
-      await lease[Symbol.asyncDispose]();
-    }
+    await using lease = await this.borrow();
+    return await task(lease.value);
   }
 
   tryUse<R>(task: (res: T | null) => R): R | Promise<Awaited<R>> {
