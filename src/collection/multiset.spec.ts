@@ -16,8 +16,8 @@ describe(Multiset, () => {
     testee.setCount('abc', 0);
     testee.setCount('abc', 1);
     testee.setCount('abc', 1);
-    testee.setCount('abc', 0, false);
-    expect(testee.maxCount()).toEqual(1);
+    testee.setCount('abc', 0);
+    expect(testee.maxCount()).toBe(1);
     expect(testee.getCount('abc')).toEqual(0);
     expect(testee.getCount('abd')).toEqual(1);
     expect(testee.findByCount(0)).toEqual(['abc']);

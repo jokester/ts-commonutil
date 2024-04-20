@@ -4,7 +4,7 @@ export class Multiset<T> {
   private map = new DefaultMap</* count */ number, /* objects */ Set<T>>((k) => new Set());
   private countMap = new Map</* object*/ T, /* count */ number>();
 
-  setCount(obj: T, count: number, removeOnZeroFreq = true): void {
+  setCount(obj: T, count: number): void {
     const existedCount = this.countMap.get(obj);
 
     if (existedCount === count) {
@@ -16,7 +16,7 @@ export class Multiset<T> {
 
       const existedSet = this.map.get(existedCount)!;
       existedSet.delete(obj);
-      if (!existedSet.size && removeOnZeroFreq) {
+      if (!existedSet.size) {
         this.map.delete(existedCount);
       }
     } else {

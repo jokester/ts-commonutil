@@ -89,3 +89,11 @@ export const Iterables = {
 
 type GeneralIterable<T> = Iterable<T> | AsyncIterable<T>;
 type MaybePromise<T> = T | PromiseLike<T>;
+
+export function toMap<T, K>(items: Iterable<T>, keyer: (t: T) => K): Map<K, T> {
+  const ret = new Map<K, T>();
+  for (const i of items) {
+    ret.set(keyer(i), i);
+  }
+  return ret;
+}

@@ -37,7 +37,7 @@ describe(ResourcePool.name, () => {
         testee.use(() => wait(0.5e3));
         const becameEmpty = await testee.wait({ freeCount: 2 });
         expect(becameEmpty).toBeTruthy();
-        expect(Date.now() - start).toBeGreaterThan(0.5e3);
+        expect(Date.now() - start).toBeGreaterThanOrEqual(0.5e3);
       });
 
       it('returns false when other tasks running', async () => {

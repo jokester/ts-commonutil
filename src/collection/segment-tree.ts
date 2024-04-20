@@ -1,4 +1,4 @@
-import { Monoid } from '../algebra/monoid';
+import { Monoid } from 'fp-ts/lib/Monoid';
 import { positions, powOf2 } from './btree';
 
 /**
@@ -35,7 +35,7 @@ export class SegmentTree<T> {
     const sums: T[] = (this.sums = []);
 
     for (let i = 0; i < lenSums; i++) {
-      sums[i] = this.monoid.id;
+      sums[i] = this.monoid.empty;
     }
 
     // FIXME: set

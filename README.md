@@ -2,7 +2,7 @@
 
 ---
 
-Common TypeScript code I used in multiple app.
+Simply and generic TypeScript utils.
 
 ![Check](https://github.com/jokester/ts-commonutil/workflows/Check/badge.svg)
 [![codecov](https://codecov.io/gh/jokester/ts-commonutil/graph/badge.svg?token=95f53H027x)](https://codecov.io/gh/jokester/ts-commonutil)
@@ -10,10 +10,14 @@ Common TypeScript code I used in multiple app.
 
 ## How to Use
 
-```
-yarn add @jokester/ts-commonutil
+install `@jokester/ts-commonutil` from NPM.
 
-```
+## Not included but my go-to libraries
+
+- LRU: [lru-cache](https://www.npmjs.com/package/lru-cache)
+- fp: [fp-ts](https://www.npmjs.com/package/fp-ts)
+- React hooks
+  - [foxact](https://foxact.skk.moe/)
 
 ## Content
 
