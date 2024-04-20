@@ -2,7 +2,7 @@ import { Multiset } from './multiset';
 
 describe(Multiset, () => {
   it('keeps elements and count', () => {
-    const testee = new Multiset<string>();
+    const testee = new Multiset<string>(false);
 
     testee.setCount('abc', 1);
     testee.setCount('abc', 2);
@@ -16,7 +16,7 @@ describe(Multiset, () => {
     testee.setCount('abc', 0);
     testee.setCount('abc', 1);
     testee.setCount('abc', 1);
-    testee.setCount('abc', 0, false);
+    testee.setCount('abc', 0);
     expect(testee.maxCount()).toEqual(1);
     expect(testee.getCount('abc')).toEqual(0);
     expect(testee.getCount('abd')).toEqual(1);

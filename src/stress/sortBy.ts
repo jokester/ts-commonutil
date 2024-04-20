@@ -1,10 +1,10 @@
 /**
- * (for more complicated case, consider fp-ts Order<T> typeclass)
+ * (for more complicated case, consider fp-ts Ord<T> typeclass)
  * @param values
- * @param key
+ * @param key (if it should be cached, caller should use a cached impl)
  * @param asc
  */
-export function orderBy<T, O>(values: T[], key: (v: T) => O, asc = false): T[] {
+export function sortBy<T, O>(values: T[], key: (v: T) => O, asc = true): T[] {
   const indexes = values.map((v, i) => ({ v, i }));
   return indexes.sort((a, b) => (asc ? compare(a.v, b.v) : -compare(a.v, b.v))).map((_) => _.v);
 }

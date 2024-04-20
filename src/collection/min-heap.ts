@@ -1,12 +1,16 @@
-import { TotalOrdered } from '../algebra/total-ordered';
 import { positions } from './btree';
+import { Ord } from 'fp-ts/Ord';
+
+function isBefore<T>(ord: Ord<T>, a: T, b: T): boolean {
+  return ord.compare(a, b) < 0;
+}
 
 export class MinHeap<T> {
   private readonly tree: T[] = [];
   slice = this.tree.slice.bind(this.tree);
 
   constructor(
-    private readonly order: TotalOrdered<T>,
+    private readonly order: Ord<T>,
     private readonly strict = false,
     initialTree?: T[],
   ) {
@@ -27,7 +31,7 @@ export class MinHeap<T> {
       j = positions.parent(i);
     this.tree[i] = value;
 
-    while (i && this.order.before(value /* i.e. this.tree[i] */, this.tree[j])) {
+    while (i && isBefore(this.order, value /* i.e. this.tree[i] */, this.tree[j])) {
       this.tree[i] = this.tree[j];
       this.tree[j] = value;
 
@@ -61,12 +65,12 @@ export class MinHeap<T> {
          */
         if (r < this.tree.length) {
           // when it has 2 children
-          if (this.order.before(this.tree[l], this.tree[r]) && this.order.before(this.tree[l], v)) {
+          if (isBefore(this.order, this.tree[l], this.tree[r]) && isBefore(this.order, this.tree[l], v)) {
             // swap [i] and [l] and continue
             this.tree[i] = this.tree[l];
             this.tree[l] = v;
             i = l;
-          } else if (this.order.before(this.tree[r], this.tree[l]) && this.order.before(this.tree[r], v)) {
+          } else if (isBefore(this.order, this.tree[r], this.tree[l]) && isBefore(this.order, this.tree[r], v)) {
             // swap [i] and [l] and continue
             this.tree[i] = this.tree[r];
             this.tree[r] = v;
@@ -74,7 +78,7 @@ export class MinHeap<T> {
           } else {
             break; // v is already before all children
           }
-        } else if (l < this.tree.length && this.order.before(this.tree[l], v)) {
+        } else if (l < this.tree.length && isBefore(this.order, this.tree[l], v)) {
           this.tree[i] = this.tree[l];
           this.tree[l] = v;
           break; // there cannot be next level
@@ -119,7 +123,7 @@ export class MinHeap<T> {
     const afterShrink: T[] = [];
     while (
       this.tree.length &&
-      (this.order.before(this.tree[0], v) || (inclusive && this.order.equal(this.tree[0], v)))
+      (isBefore(this.order, this.tree[0], v) || (inclusive && !this.order.compare(this.tree[0], v)))
     ) {
       afterShrink.push(this.remove()!);
     }
@@ -130,7 +134,7 @@ export class MinHeap<T> {
   private assertInvariants() {
     for (let i = 1; i < this.tree.length; i++) {
       const p = positions.parent(i);
-      if (!this.order.before(this.tree[p], this.tree[i])) {
+      if (!this.order.compare(this.tree[p], this.tree[i])) {
         throw new Error(`MinHeap#assertInvariants(): expected this.tree[${p} to be ordered before this.tree[${i}]`);
       }
     }
