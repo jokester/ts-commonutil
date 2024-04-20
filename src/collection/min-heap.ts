@@ -32,6 +32,7 @@ export class MinHeap<T> {
     this.tree[i] = value;
 
     while (i && isBefore(this.order, value /* i.e. this.tree[i] */, this.tree[j])) {
+      // pop up new value
       this.tree[i] = this.tree[j];
       this.tree[j] = value;
 
@@ -134,7 +135,7 @@ export class MinHeap<T> {
   private assertInvariants() {
     for (let i = 1; i < this.tree.length; i++) {
       const p = positions.parent(i);
-      if (!this.order.compare(this.tree[p], this.tree[i])) {
+      if (!isBefore(this.order, this.tree[p], this.tree[i])) {
         throw new Error(`MinHeap#assertInvariants(): expected this.tree[${p} to be ordered before this.tree[${i}]`);
       }
     }
