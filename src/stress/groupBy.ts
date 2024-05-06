@@ -3,7 +3,7 @@ import { DefaultMap } from '../collection/default-map';
 export function groupBy<T, K extends string | number | symbol>(
   values: Iterable<T>,
   keyer: (value: T) => K,
-): Record<K, T[]> {
+): Record<K, undefined | T[]> {
   return Object.fromEntries(groupByAsMap(values, keyer)) as Record<K, T[]>;
 }
 
