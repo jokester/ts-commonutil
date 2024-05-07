@@ -3,14 +3,18 @@
  * @param io
  * @return
  */
-export function lazyThenable<T>(io: () => T): PromiseLike<Awaited<T>> {
+export function lazyThenable<T>(io: () => T): LazyThenable<Awaited<T>> {
   let r: null | Promise<Awaited<T>> = null;
   return {
-    then<TResult1, TResult2 = never>(
-      onfulfilled?: ((value: Awaited<T>) => PromiseLike<TResult1> | TResult1) | undefined | null,
-      onrejected?: ((reason: any) => PromiseLike<TResult2> | TResult2) | undefined | null,
-    ): PromiseLike<TResult1 | TResult2> {
+    get executed(): boolean {
+      return r !== null;
+    },
+    then(onfulfilled, onrejected): PromiseLike<any> {
       return (r ??= Promise.resolve(io())).then(onfulfilled, onrejected);
     },
   };
+}
+
+interface LazyThenable<T> extends PromiseLike<T> {
+  get executed(): boolean;
 }
