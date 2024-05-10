@@ -11,7 +11,7 @@ describe(lazyThenable, () => {
 
     const converted = Promise.resolve(lazy1);
     expect(called).toEqual(0);
-    expect(lazy1.executed).toBe(true);
+    expect(lazy1.executed).toBe(false);
     await wait(0);
     expect(lazy1.executed).toBe(true);
     expect(called).toEqual(1);
