@@ -39,7 +39,6 @@
     "./node/fsp": "./src/node/fsp.ts",
     "./node/index": "./src/node/index.ts",
     "./node/subprocess": "./src/node/subprocess.ts",
-    "./react/component/aspect-ratio/aspect-ratio": "./src/react/component/aspect-ratio/aspect-ratio.ts",
     "./react/component/font-awesome": "./src/react/component/font-awesome.tsx",
     "./react/component/inspect-render-count": "./src/react/component/inspect-render-count.tsx",
     "./react/component/pre-json": "./src/react/component/pre-json.tsx",
