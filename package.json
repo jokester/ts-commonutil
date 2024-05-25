@@ -57,35 +57,25 @@
     "winston": "^3.8.0"
   },
   "exports": {
-    "./lib/algebra/monoid": {
-      "import": "./lib/__esm/algebra/monoid.js",
-      "require": "./lib/algebra/monoid.js",
-      "type": "./lib/algebra/monoid.d.ts"
-    },
     "./lib/algebra/topological-sort": {
       "import": "./lib/__esm/algebra/topological-sort.js",
       "require": "./lib/algebra/topological-sort.js",
       "type": "./lib/algebra/topological-sort.d.ts"
     },
-    "./lib/algebra/total-ordered": {
-      "import": "./lib/__esm/algebra/total-ordered.js",
-      "require": "./lib/algebra/total-ordered.js",
-      "type": "./lib/algebra/total-ordered.d.ts"
+    "./lib/bytes/array-buffer": {
+      "import": "./lib/__esm/bytes/array-buffer.js",
+      "require": "./lib/bytes/array-buffer.js",
+      "type": "./lib/bytes/array-buffer.d.ts"
     },
-    "./lib/binary-conversion/array-buffer": {
-      "import": "./lib/__esm/binary-conversion/array-buffer.js",
-      "require": "./lib/binary-conversion/array-buffer.js",
-      "type": "./lib/binary-conversion/array-buffer.d.ts"
+    "./lib/bytes/string": {
+      "import": "./lib/__esm/bytes/string.js",
+      "require": "./lib/bytes/string.js",
+      "type": "./lib/bytes/string.d.ts"
     },
-    "./lib/binary-conversion/string": {
-      "import": "./lib/__esm/binary-conversion/string.js",
-      "require": "./lib/binary-conversion/string.js",
-      "type": "./lib/binary-conversion/string.d.ts"
-    },
-    "./lib/binary-conversion/web": {
-      "import": "./lib/__esm/binary-conversion/web.js",
-      "require": "./lib/binary-conversion/web.js",
-      "type": "./lib/binary-conversion/web.d.ts"
+    "./lib/bytes/web": {
+      "import": "./lib/__esm/bytes/web.js",
+      "require": "./lib/bytes/web.js",
+      "type": "./lib/bytes/web.d.ts"
     },
     "./lib/collection/btree": {
       "import": "./lib/__esm/collection/btree.js",
@@ -101,11 +91,6 @@
       "import": "./lib/__esm/collection/iterables.js",
       "require": "./lib/collection/iterables.js",
       "type": "./lib/collection/iterables.d.ts"
-    },
-    "./lib/collection/maps": {
-      "import": "./lib/__esm/collection/maps.js",
-      "require": "./lib/collection/maps.js",
-      "type": "./lib/collection/maps.d.ts"
     },
     "./lib/collection/min-heap": {
       "import": "./lib/__esm/collection/min-heap.js",
@@ -147,16 +132,6 @@
       "require": "./lib/concurrency/lease.js",
       "type": "./lib/concurrency/lease.d.ts"
     },
-    "./lib/concurrency/lockable": {
-      "import": "./lib/__esm/concurrency/lockable.js",
-      "require": "./lib/concurrency/lockable.js",
-      "type": "./lib/concurrency/lockable.d.ts"
-    },
-    "./lib/concurrency/promise-container": {
-      "import": "./lib/__esm/concurrency/promise-container.js",
-      "require": "./lib/concurrency/promise-container.js",
-      "type": "./lib/concurrency/promise-container.d.ts"
-    },
     "./lib/concurrency/resource-pool": {
       "import": "./lib/__esm/concurrency/resource-pool.js",
       "require": "./lib/concurrency/resource-pool.js",
@@ -172,35 +147,10 @@
       "require": "./lib/concurrency/timing.js",
       "type": "./lib/concurrency/timing.d.ts"
     },
-    "./lib/event-emitter/typed-event-emitter": {
-      "import": "./lib/__esm/event-emitter/typed-event-emitter.js",
-      "require": "./lib/event-emitter/typed-event-emitter.js",
-      "type": "./lib/event-emitter/typed-event-emitter.d.ts"
-    },
     "./lib/fp-ts/monoid": {
       "import": "./lib/__esm/fp-ts/monoid.js",
       "require": "./lib/fp-ts/monoid.js",
       "type": "./lib/fp-ts/monoid.d.ts"
-    },
-    "./lib/frontend/dummy-img": {
-      "import": "./lib/__esm/frontend/dummy-img.js",
-      "require": "./lib/frontend/dummy-img.js",
-      "type": "./lib/frontend/dummy-img.d.ts"
-    },
-    "./lib/frontend/fps-observable": {
-      "import": "./lib/__esm/frontend/fps-observable.js",
-      "require": "./lib/frontend/fps-observable.js",
-      "type": "./lib/frontend/fps-observable.d.ts"
-    },
-    "./lib/frontend/measure-img": {
-      "import": "./lib/__esm/frontend/measure-img.js",
-      "require": "./lib/frontend/measure-img.js",
-      "type": "./lib/frontend/measure-img.d.ts"
-    },
-    "./lib/frontend/observe-dom-mutation": {
-      "import": "./lib/__esm/frontend/observe-dom-mutation.js",
-      "require": "./lib/frontend/observe-dom-mutation.js",
-      "type": "./lib/frontend/observe-dom-mutation.d.ts"
     },
     "./lib/index": {
       "import": "./lib/__esm/index.js",
@@ -241,6 +191,16 @@
       "import": "./lib/__esm/node/subprocess.js",
       "require": "./lib/node/subprocess.js",
       "type": "./lib/node/subprocess.d.ts"
+    },
+    "./lib/random/number": {
+      "import": "./lib/__esm/random/number.js",
+      "require": "./lib/random/number.js",
+      "type": "./lib/random/number.d.ts"
+    },
+    "./lib/random/series": {
+      "import": "./lib/__esm/random/series.js",
+      "require": "./lib/random/series.js",
+      "type": "./lib/random/series.d.ts"
     },
     "./lib/react/component/font-awesome": {
       "import": "./lib/__esm/react/component/font-awesome.jsx",
@@ -317,20 +277,35 @@
       "require": "./lib/react/mobx/use-derived.js",
       "type": "./lib/react/mobx/use-derived.d.ts"
     },
+    "./lib/react/mobx/use-mobx-derived": {
+      "import": "./lib/__esm/react/mobx/use-mobx-derived.js",
+      "require": "./lib/react/mobx/use-mobx-derived.js",
+      "type": "./lib/react/mobx/use-mobx-derived.d.ts"
+    },
     "./lib/react/util/prop-of": {
       "import": "./lib/__esm/react/util/prop-of.js",
       "require": "./lib/react/util/prop-of.js",
       "type": "./lib/react/util/prop-of.d.ts"
     },
-    "./lib/rxjs/distributions": {
-      "import": "./lib/__esm/rxjs/distributions.js",
-      "require": "./lib/rxjs/distributions.js",
-      "type": "./lib/rxjs/distributions.d.ts"
+    "./lib/rxjs/poisson-observable": {
+      "import": "./lib/__esm/rxjs/poisson-observable.js",
+      "require": "./lib/rxjs/poisson-observable.js",
+      "type": "./lib/rxjs/poisson-observable.d.ts"
     },
-    "./lib/rxjs/stochastic-processes": {
-      "import": "./lib/__esm/rxjs/stochastic-processes.js",
-      "require": "./lib/rxjs/stochastic-processes.js",
-      "type": "./lib/rxjs/stochastic-processes.d.ts"
+    "./lib/stress/chunk": {
+      "import": "./lib/__esm/stress/chunk.js",
+      "require": "./lib/stress/chunk.js",
+      "type": "./lib/stress/chunk.d.ts"
+    },
+    "./lib/stress/groupBy": {
+      "import": "./lib/__esm/stress/groupBy.js",
+      "require": "./lib/stress/groupBy.js",
+      "type": "./lib/stress/groupBy.d.ts"
+    },
+    "./lib/stress/sortBy": {
+      "import": "./lib/__esm/stress/sortBy.js",
+      "require": "./lib/stress/sortBy.js",
+      "type": "./lib/stress/sortBy.d.ts"
     },
     "./lib/text/chunk-to-lines": {
       "import": "./lib/__esm/text/chunk-to-lines.js",
@@ -357,25 +332,30 @@
       "require": "./lib/type/omit.js",
       "type": "./lib/type/omit.d.ts"
     },
-    "./lib/util/lru": {
-      "import": "./lib/__esm/util/lru.js",
-      "require": "./lib/util/lru.js",
-      "type": "./lib/util/lru.d.ts"
-    },
-    "./lib/util/proxys": {
-      "import": "./lib/__esm/util/proxys.js",
-      "require": "./lib/util/proxys.js",
-      "type": "./lib/util/proxys.d.ts"
-    },
-    "./lib/util/randoms": {
-      "import": "./lib/__esm/util/randoms.js",
-      "require": "./lib/util/randoms.js",
-      "type": "./lib/util/randoms.d.ts"
-    },
     "./lib/util/with-retry": {
       "import": "./lib/__esm/util/with-retry.js",
       "require": "./lib/util/with-retry.js",
       "type": "./lib/util/with-retry.d.ts"
+    },
+    "./lib/web/dummy-img": {
+      "import": "./lib/__esm/web/dummy-img.js",
+      "require": "./lib/web/dummy-img.js",
+      "type": "./lib/web/dummy-img.d.ts"
+    },
+    "./lib/web/fps-observable": {
+      "import": "./lib/__esm/web/fps-observable.js",
+      "require": "./lib/web/fps-observable.js",
+      "type": "./lib/web/fps-observable.d.ts"
+    },
+    "./lib/web/measure-img": {
+      "import": "./lib/__esm/web/measure-img.js",
+      "require": "./lib/web/measure-img.js",
+      "type": "./lib/web/measure-img.d.ts"
+    },
+    "./lib/web/observe-dom-mutation": {
+      "import": "./lib/__esm/web/observe-dom-mutation.js",
+      "require": "./lib/web/observe-dom-mutation.js",
+      "type": "./lib/web/observe-dom-mutation.d.ts"
     }
   },
   "resolutions": {
