@@ -19,7 +19,7 @@ export class Deferred<T> implements PromiseLike<T> {
     return d;
   }
 
-  private readonly _promise = new Promise<T>((fulfill, reject) => {
+  readonly #promise = new Promise<T>((fulfill, reject) => {
     this.#fulfill = (v: T | PromiseLike<T>) => {
       fulfill(v);
       this.#resolved = true;
@@ -38,7 +38,7 @@ export class Deferred<T> implements PromiseLike<T> {
     return this.#resolved;
   }
 
-  readonly then = this._promise.then.bind(this._promise);
+  readonly then = this.#promise.then.bind(this.#promise);
 
   /**
    * @param v the value

@@ -1,6 +1,6 @@
 import { PromiseContainer, PromiseState } from './promise-container';
-import { wait } from './timing';
-import { TicToc } from './tic-toc';
+import { wait } from '../../src/concurrency/timing';
+import { TicToc } from '../../src/concurrency/tic-toc';
 
 describe('promise-container', () => {
   it('keeps promised value', async () => {
