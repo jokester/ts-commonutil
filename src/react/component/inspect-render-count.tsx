@@ -6,7 +6,7 @@ import {
   MutationCounts,
   resolveHTMLElement,
   startObserve,
-} from '../../frontend/observe-dom-mutation';
+} from '../../web/observe-dom-mutation';
 
 export const RenderCountsToWidget: React.FC<MutationCounts> = (counter) => (
   <>

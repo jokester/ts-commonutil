@@ -1,4 +1,4 @@
-import { Doomed } from './timing';
+import { Doomed } from '../../src/concurrency/timing';
 
 export enum PromiseState {
   pending = 'pending',

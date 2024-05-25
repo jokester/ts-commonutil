@@ -1,4 +1,4 @@
-import { promises as fsPromised } from 'fs';
+import fsPromised from 'node:fs/promises';
 import { chunkToLines } from '../text/chunk-to-lines';
 
 export const readText = (filename: string, encoding: BufferEncoding = 'utf-8'): Promise<string> =>
