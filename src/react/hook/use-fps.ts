@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { createFpsObservable } from '../../frontend/fps-observable';
+import { createFpsObservable } from '../../web/fps-observable';
 import { useExternalObservable } from './use-observable-store';
 
 export function useFps(windowSize: number): number {
