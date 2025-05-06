@@ -14,10 +14,13 @@ describe('sample', () => {
 });
 
 describe('sampleSize', () => {
-  it('picks specified size', () => {
-    expect(sampleSize([1, 2, 3], 2, fakeRng)).toMatchSnapshot('sampleSize([1,2,3], 2)');
+  it('return all elements when count==input.len', () => {
+    expect(sampleSize([1, 2, 3], 3, fakeRng)).toEqual([1, 2, 3]);
   });
-  it('returns undefined on empty array', () => {
-    expect(sampleSize([2, 3], 3, fakeRng)).toHaveLength(2);
+  it('return {count} elements when input is sufficient', () => {
+    expect(sampleSize([1, 2, 3], 2, fakeRng)).toEqual([1, 3]);
+  });
+  it('return {input.length} elements when input is insufficient', () => {
+    expect(sampleSize([2, 3], 3, fakeRng)).toEqual([2, 3]);
   });
 });
