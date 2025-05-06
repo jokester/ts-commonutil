@@ -60,4 +60,6 @@ export function asyncDebounce<T>(func: () => T | PromiseLike<T>, waitWindow: num
  * @param waitWindow
  * @param waitLimit
  */
-export function asyncDebounceWithLimit<T>(func: () => T | PromiseLike<T>, waitWindow: number, waitLimit: number) {}
+export function asyncDebounceWithLimit<T>(func: () => T | PromiseLike<T>, waitWindow: number, waitLimit: number) {
+  throw new Error('not implemented');
+}
