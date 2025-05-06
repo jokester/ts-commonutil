@@ -1,10 +1,10 @@
-name: Check + Publish
+name: Check
 
 on:
   push:
-    branches:
-      - main
-  pull_request: {}
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
 
 defaults:
   run:
@@ -29,21 +29,3 @@ jobs:
     - uses: codecov/codecov-action@v4
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-
-  publish:
-    needs: [check]
-    runs-on: ubuntu-22.04
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 18
-        cache: yarn
-        cache-dependency-path: 'yarn.lock'
-    - run: yarn
-    - run: yarn build
-    - run: ruby generate-exports.rb && git diff
-    - uses: JS-DevTools/npm-publish@v2
-      with:
-        token: ${{ secrets.NPM_TOKEN }}
-        dry-run: ${{ github.event_name != 'push' }}
