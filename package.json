@@ -1,6 +1,6 @@
 {
   "name": "@jokester/ts-commonutil",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "author": "Wang Guan <momocraft@gmail.com>",
   "description": "Common TypeScript code for my multiple projects",
   "repository": {
@@ -62,6 +62,26 @@
       "import": "./lib/__esm/algebra/topological-sort.js",
       "require": "./lib/algebra/topological-sort.js",
       "type": "./lib/algebra/topological-sort.d.ts"
+    },
+    "./lib/baseline/chunk": {
+      "import": "./lib/__esm/baseline/chunk.js",
+      "require": "./lib/baseline/chunk.js",
+      "type": "./lib/baseline/chunk.d.ts"
+    },
+    "./lib/baseline/groupBy": {
+      "import": "./lib/__esm/baseline/groupBy.js",
+      "require": "./lib/baseline/groupBy.js",
+      "type": "./lib/baseline/groupBy.d.ts"
+    },
+    "./lib/baseline/sample": {
+      "import": "./lib/__esm/baseline/sample.js",
+      "require": "./lib/baseline/sample.js",
+      "type": "./lib/baseline/sample.d.ts"
+    },
+    "./lib/baseline/sortBy": {
+      "import": "./lib/__esm/baseline/sortBy.js",
+      "require": "./lib/baseline/sortBy.js",
+      "type": "./lib/baseline/sortBy.d.ts"
     },
     "./lib/bytes/array-buffer": {
       "import": "./lib/__esm/bytes/array-buffer.js",
@@ -132,6 +152,11 @@
       "import": "./lib/__esm/concurrency/lease.js",
       "require": "./lib/concurrency/lease.js",
       "type": "./lib/concurrency/lease.d.ts"
+    },
+    "./lib/concurrency/resource-pool-basic": {
+      "import": "./lib/__esm/concurrency/resource-pool-basic.js",
+      "require": "./lib/concurrency/resource-pool-basic.js",
+      "type": "./lib/concurrency/resource-pool-basic.d.ts"
     },
     "./lib/concurrency/resource-pool": {
       "import": "./lib/__esm/concurrency/resource-pool.js",
@@ -278,11 +303,6 @@
       "require": "./lib/react/mobx/use-derived.js",
       "type": "./lib/react/mobx/use-derived.d.ts"
     },
-    "./lib/react/mobx/use-mobx-derived": {
-      "import": "./lib/__esm/react/mobx/use-mobx-derived.js",
-      "require": "./lib/react/mobx/use-mobx-derived.js",
-      "type": "./lib/react/mobx/use-mobx-derived.d.ts"
-    },
     "./lib/react/util/prop-of": {
       "import": "./lib/__esm/react/util/prop-of.js",
       "require": "./lib/react/util/prop-of.js",
@@ -292,21 +312,6 @@
       "import": "./lib/__esm/rxjs/poisson-observable.js",
       "require": "./lib/rxjs/poisson-observable.js",
       "type": "./lib/rxjs/poisson-observable.d.ts"
-    },
-    "./lib/stress/chunk": {
-      "import": "./lib/__esm/stress/chunk.js",
-      "require": "./lib/stress/chunk.js",
-      "type": "./lib/stress/chunk.d.ts"
-    },
-    "./lib/stress/groupBy": {
-      "import": "./lib/__esm/stress/groupBy.js",
-      "require": "./lib/stress/groupBy.js",
-      "type": "./lib/stress/groupBy.d.ts"
-    },
-    "./lib/stress/sortBy": {
-      "import": "./lib/__esm/stress/sortBy.js",
-      "require": "./lib/stress/sortBy.js",
-      "type": "./lib/stress/sortBy.d.ts"
     },
     "./lib/text/chunk-to-lines": {
       "import": "./lib/__esm/text/chunk-to-lines.js",
