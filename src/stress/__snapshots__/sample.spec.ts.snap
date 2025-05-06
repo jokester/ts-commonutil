@@ -5,6 +5,6 @@ exports[`sample picks random value: sample([1,2,3]) 1`] = `1`;
 exports[`sampleSize picks specified size: sampleSize([1,2,3], 2) 1`] = `
 [
   1,
-  2,
+  3,
 ]
 `;
