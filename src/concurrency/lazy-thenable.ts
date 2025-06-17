@@ -3,7 +3,7 @@
  * @param io
  * @return
  */
-export function lazyThenable<T>(io: () => T): LazyThenable<Awaited<T>> {
+export function lazyThenable<T>(io: () => T | PromiseLike<T>): LazyThenable<Awaited<T>> {
   let r: null | Promise<Awaited<T>> = null;
   return {
     get executed(): boolean {
