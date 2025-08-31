@@ -19,8 +19,7 @@ export function useAsyncEffect(
       if (effectCallback.length >= 3) {
         abortController = new AbortController();
       }
-    } catch (ignored: unknown) {
-    }
+    } catch (ignored: unknown) {}
     nextTick
       .then(() => {
         if (!mounted.current) return;
